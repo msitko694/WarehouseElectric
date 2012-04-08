@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ElectricWarehouse" Class="LinqDataLayerDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=MSITKO;Initial Catalog=ElectricWarehouse;Persist Security Info=True;User ID=test" SettingsObjectName="WarehouseElectric.Properties.Settings" SettingsPropertyName="ElectricWarehouseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.WO_Workers" Member="WO_Workers">
+    <Type Name="WO_Worker">
+      <Column Name="WO_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WO_PO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WO_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="WO_SURNAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="WO_PHONE" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="WO_BIRTH_DATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WO_WORKING_SINCE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WO_PESEL" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="WO_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WO_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="WO_Worker_IN_Invoice" Member="IN_Invoices" ThisKey="WO_ID" OtherKey="IN_WO_ID" Type="IN_Invoice" />
+      <Association Name="WO_Worker_OR_Order" Member="OR_Orders" ThisKey="WO_ID" OtherKey="OR_WO_ID" Type="OR_Order" />
+      <Association Name="WO_Worker_US_User" Member="US_Users" ThisKey="WO_ID" OtherKey="US_WO_ID" Type="US_User" />
+      <Association Name="PO_Position_WO_Worker" Member="PO_Position" ThisKey="WO_PO_ID" OtherKey="PO_ID" Type="PO_Position" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CU_Customers" Member="CU_Customers">
+    <Type Name="CU_Customer">
+      <Column Name="CU_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CU_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CU_STREET" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CU_POST_CODE" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="CU_TOWN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CU_PHONE" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="CU_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CU_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="CU_Customer_IN_Invoice" Member="IN_Invoices" ThisKey="CU_ID" OtherKey="IN_CU_ID" Type="IN_Invoice" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IE_InvoicesItems" Member="IE_InvoicesItems">
+    <Type Name="IE_InvoicesItem">
+      <Column Name="IE_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IE_IN_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IE_PR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IE_QUANTITY" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="IE_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IE_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IE_UNIT_PRICE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="IE_TOTAL_NETTO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="IE_TOTAL_VAT" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="IE_TOTAL_BRUTTO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="IE_VAT_RATE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="IN_Invoice_IE_InvoicesItem" Member="IN_Invoice" ThisKey="IE_IN_ID" OtherKey="IN_ID" Type="IN_Invoice" IsForeignKey="true" />
+      <Association Name="PR_Product_IE_InvoicesItem" Member="PR_Product" ThisKey="IE_PR_ID" OtherKey="PR_ID" Type="PR_Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IN_Invoices" Member="IN_Invoices">
+    <Type Name="IN_Invoice">
+      <Column Name="IN_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IN_CU_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IN_WO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IN_SP_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IN_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IN_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IN_TOTAL" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="IN_SPEDITION_COST" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Association Name="IN_Invoice_IE_InvoicesItem" Member="IE_InvoicesItems" ThisKey="IN_ID" OtherKey="IE_IN_ID" Type="IE_InvoicesItem" />
+      <Association Name="CU_Customer_IN_Invoice" Member="CU_Customer" ThisKey="IN_CU_ID" OtherKey="CU_ID" Type="CU_Customer" IsForeignKey="true" />
+      <Association Name="WO_Worker_IN_Invoice" Member="WO_Worker" ThisKey="IN_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
+      <Association Name="SP_Spedition_IN_Invoice" Member="SP_Spedition" ThisKey="IN_SP_ID" OtherKey="SP_ID" Type="SP_Spedition" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OE_OrderItems" Member="OE_OrderItems">
+    <Type Name="OE_OrderItem">
+      <Column Name="OE_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OE_PR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OE_OR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OE_QUANTITY" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="OE_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OE_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OE_UNIT_PRICE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="OE_TOTAL_NETTO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="OE_TOTAL_VAT" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="OE_TOTAL_BRUTTO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="OE_VAT_RATE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="OR_Order_OE_OrderItem" Member="OR_Order" ThisKey="OE_OR_ID" OtherKey="OR_ID" Type="OR_Order" IsForeignKey="true" />
+      <Association Name="PR_Product_OE_OrderItem" Member="PR_Product" ThisKey="OE_PR_ID" OtherKey="PR_ID" Type="PR_Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OR_Orders" Member="OR_Orders">
+    <Type Name="OR_Order">
+      <Column Name="OR_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OR_SU_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OR_WO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OR_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OR_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="OR_Order_OE_OrderItem" Member="OE_OrderItems" ThisKey="OR_ID" OtherKey="OE_OR_ID" Type="OE_OrderItem" />
+      <Association Name="WO_Worker_OR_Order" Member="WO_Worker" ThisKey="OR_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
+      <Association Name="SU_Supplier_OR_Order" Member="SU_Supplier" ThisKey="OR_SU_ID" OtherKey="SU_ID" Type="SU_Supplier" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PC_ProductCategories" Member="PC_ProductCategories">
+    <Type Name="PC_ProductCategory">
+      <Column Name="PC_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PC_PC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PC_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="PC_ProductCategory_PC_ProductCategory" Member="PC_ProductCategories" ThisKey="PC_ID" OtherKey="PC_PC_ID" Type="PC_ProductCategory" />
+      <Association Name="PC_ProductCategory_PR_Product" Member="PR_Products" ThisKey="PC_ID" OtherKey="PR_PC_ID" Type="PR_Product" />
+      <Association Name="PC_ProductCategory_PC_ProductCategory" Member="PC_ProductCategory1" ThisKey="PC_PC_ID" OtherKey="PC_ID" Type="PC_ProductCategory" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PO_Positions" Member="PO_Positions">
+    <Type Name="PO_Position">
+      <Column Name="PO_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PO_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="PO_Position_WO_Worker" Member="WO_Workers" ThisKey="PO_ID" OtherKey="WO_PO_ID" Type="WO_Worker" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PR_Products" Member="PR_Products">
+    <Type Name="PR_Product">
+      <Column Name="PR_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PR_PC_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PR_QT_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PR_NAME" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="PR_DEPOT_QUANTITY" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="PR_UNIT_PRICE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PR_ADDED" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PR_LAST_MODIFIED" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PR_IS_ACTIVE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PR_USED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="PR_Product_IE_InvoicesItem" Member="IE_InvoicesItems" ThisKey="PR_ID" OtherKey="IE_PR_ID" Type="IE_InvoicesItem" />
+      <Association Name="PR_Product_OE_OrderItem" Member="OE_OrderItems" ThisKey="PR_ID" OtherKey="OE_PR_ID" Type="OE_OrderItem" />
+      <Association Name="PC_ProductCategory_PR_Product" Member="PC_ProductCategory" ThisKey="PR_PC_ID" OtherKey="PC_ID" Type="PC_ProductCategory" IsForeignKey="true" />
+      <Association Name="QT_QuantityType_PR_Product" Member="QT_QuantityType" ThisKey="PR_QT_ID" OtherKey="QT_ID" Type="QT_QuantityType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.QT_QuantityTypes" Member="QT_QuantityTypes">
+    <Type Name="QT_QuantityType">
+      <Column Name="QT_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QT_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="QT_QuantityType_PR_Product" Member="PR_Products" ThisKey="QT_ID" OtherKey="PR_QT_ID" Type="PR_Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SP_Spedition" Member="SP_Speditions">
+    <Type Name="SP_Spedition">
+      <Column Name="SP_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SP_NAME" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="SP_Spedition_IN_Invoice" Member="IN_Invoices" ThisKey="SP_ID" OtherKey="IN_SP_ID" Type="IN_Invoice" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SU_Suppliers" Member="SU_Suppliers">
+    <Type Name="SU_Supplier">
+      <Column Name="SU_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SU_NAME" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SU_STREET" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="SU_POST_CODE" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="SU_TOWN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SU_PHONE" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="SU_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SU_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="SU_Supplier_OR_Order" Member="OR_Orders" ThisKey="SU_ID" OtherKey="OR_SU_ID" Type="OR_Order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.US_Users" Member="US_Users">
+    <Type Name="US_User">
+      <Column Name="US_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="US_WO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="US_USERNAME" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="US_PASSWORD" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="US_IS_ADMIN" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="US_IS_CASHIER" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="US_IS_STOREKEEPER" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="US_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="US_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="WO_Worker_US_User" Member="WO_Worker" ThisKey="US_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
