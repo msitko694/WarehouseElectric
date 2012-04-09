@@ -65,10 +65,32 @@
     <Compile Include="LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomersManager.cs" />
+    <Compile Include="Models\ICustomersManager.cs" />
+    <Compile Include="Models\IInvoicesItemsManager.cs" />
+    <Compile Include="Models\IInvoicesManager.cs" />
+    <Compile Include="Models\InvoicesItemsManager.cs" />
+    <Compile Include="Models\InvoicesManager.cs" />
+    <Compile Include="Models\IOrderItemsManager.cs" />
+    <Compile Include="Models\IOrdersManager.cs" />
+    <Compile Include="Models\IPositionsManager.cs" />
     <Compile Include="Models\IProductCategoriesManager.cs" />
+    <Compile Include="Models\IProductsManager.cs" />
+    <Compile Include="Models\IQuantityTypesManager.cs" />
+    <Compile Include="Models\ISpeditionManager.cs" />
+    <Compile Include="Models\ISuppliersManager.cs" />
     <Compile Include="Models\IUserManager.cs" />
+    <Compile Include="Models\IWorkersManager.cs" />
+    <Compile Include="Models\OrderItemsManager.cs" />
+    <Compile Include="Models\OrdersManager.cs" />
+    <Compile Include="Models\PositionsManager.cs" />
     <Compile Include="Models\ProductCategoriesManager.cs" />
+    <Compile Include="Models\ProductsManager.cs" />
+    <Compile Include="Models\QuantityTypesManager.cs" />
+    <Compile Include="Models\SpeditionManager.cs" />
+    <Compile Include="Models\SuppliersManager.cs" />
     <Compile Include="Models\UsersManager.cs" />
+    <Compile Include="Models\WorkersManager.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
