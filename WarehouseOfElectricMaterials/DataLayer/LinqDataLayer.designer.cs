@@ -3515,21 +3515,21 @@ namespace WarehouseElectric.DataLayer
 		
 		private int _US_ID;
 		
-		private int _US_WO_ID;
+		private System.Nullable<int> _US_WO_ID;
 		
 		private string _US_USERNAME;
 		
 		private string _US_PASSWORD;
 		
-		private System.Nullable<bool> _US_IS_ADMIN;
+		private bool _US_IS_ADMIN;
 		
-		private System.Nullable<bool> _US_IS_CASHIER;
+		private bool _US_IS_CASHIER;
 		
-		private System.Nullable<bool> _US_IS_STOREKEEPER;
+		private bool _US_IS_STOREKEEPER;
 		
-		private System.Nullable<System.DateTime> _US_ADDED;
+		private System.DateTime _US_ADDED;
 		
-		private System.Nullable<System.DateTime> _US_LAST_MODIFIED;
+		private System.DateTime _US_LAST_MODIFIED;
 		
 		private EntityRef<WO_Worker> _WO_Worker;
 		
@@ -3539,21 +3539,21 @@ namespace WarehouseElectric.DataLayer
     partial void OnCreated();
     partial void OnUS_IDChanging(int value);
     partial void OnUS_IDChanged();
-    partial void OnUS_WO_IDChanging(int value);
+    partial void OnUS_WO_IDChanging(System.Nullable<int> value);
     partial void OnUS_WO_IDChanged();
     partial void OnUS_USERNAMEChanging(string value);
     partial void OnUS_USERNAMEChanged();
     partial void OnUS_PASSWORDChanging(string value);
     partial void OnUS_PASSWORDChanged();
-    partial void OnUS_IS_ADMINChanging(System.Nullable<bool> value);
+    partial void OnUS_IS_ADMINChanging(bool value);
     partial void OnUS_IS_ADMINChanged();
-    partial void OnUS_IS_CASHIERChanging(System.Nullable<bool> value);
+    partial void OnUS_IS_CASHIERChanging(bool value);
     partial void OnUS_IS_CASHIERChanged();
-    partial void OnUS_IS_STOREKEEPERChanging(System.Nullable<bool> value);
+    partial void OnUS_IS_STOREKEEPERChanging(bool value);
     partial void OnUS_IS_STOREKEEPERChanged();
-    partial void OnUS_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnUS_ADDEDChanging(System.DateTime value);
     partial void OnUS_ADDEDChanged();
-    partial void OnUS_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnUS_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnUS_LAST_MODIFIEDChanged();
     #endregion
 		
@@ -3563,7 +3563,7 @@ namespace WarehouseElectric.DataLayer
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int US_ID
 		{
 			get
@@ -3583,8 +3583,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_WO_ID", DbType="Int NOT NULL")]
-		public int US_WO_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_WO_ID", DbType="Int")]
+		public System.Nullable<int> US_WO_ID
 		{
 			get
 			{
@@ -3607,7 +3607,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_USERNAME", DbType="VarChar(1)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_USERNAME", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
 		public string US_USERNAME
 		{
 			get
@@ -3627,7 +3627,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_PASSWORD", DbType="VarChar(1)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_PASSWORD", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
 		public string US_PASSWORD
 		{
 			get
@@ -3647,8 +3647,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_IS_ADMIN", DbType="Bit")]
-		public System.Nullable<bool> US_IS_ADMIN
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_IS_ADMIN", DbType="Bit NOT NULL")]
+		public bool US_IS_ADMIN
 		{
 			get
 			{
@@ -3667,8 +3667,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_IS_CASHIER", DbType="Bit")]
-		public System.Nullable<bool> US_IS_CASHIER
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_IS_CASHIER", DbType="Bit NOT NULL")]
+		public bool US_IS_CASHIER
 		{
 			get
 			{
@@ -3687,8 +3687,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_IS_STOREKEEPER", DbType="Bit")]
-		public System.Nullable<bool> US_IS_STOREKEEPER
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_IS_STOREKEEPER", DbType="Bit NOT NULL")]
+		public bool US_IS_STOREKEEPER
 		{
 			get
 			{
@@ -3707,8 +3707,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> US_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime US_ADDED
 		{
 			get
 			{
@@ -3727,8 +3727,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> US_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime US_LAST_MODIFIED
 		{
 			get
 			{
@@ -3774,7 +3774,7 @@ namespace WarehouseElectric.DataLayer
 					}
 					else
 					{
-						this._US_WO_ID = default(int);
+						this._US_WO_ID = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("WO_Worker");
 				}
