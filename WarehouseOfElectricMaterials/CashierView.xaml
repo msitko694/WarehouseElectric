@@ -1,0 +1,33 @@
+﻿<Window x:Class="WarehouseElectric.CashierView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CashierView" Height="470" Width="670">
+    <Grid Height="434" Width="652">
+        <Button Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="button1" VerticalAlignment="Top" Width="107" />
+        <Button Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="button2" VerticalAlignment="Top" Width="105" />
+        <Label Content="Użytkownik:" Height="25" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" Width="74" />
+        <TabControl Height="371" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControl1" VerticalAlignment="Top" Width="629">
+            <TabItem Header="Faktury" Name="tabItem1" Background="#FF4BE255">
+                <Grid Background="#FFDEDEDE" Height="346" Width="628">
+                    <Button Content="NOWA FAKTURA" Height="113" Margin="20,12,0,0" Name="button3" VerticalAlignment="Top" Background="#FF4599CE" HorizontalAlignment="Left" Width="223" />
+                    <DataGrid AutoGenerateColumns="True" Height="261" HorizontalAlignment="Left" Margin="267,45,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="347" />
+                    <TextBox Height="27" HorizontalAlignment="Left" Margin="267,12,0,0" Name="textBox1" VerticalAlignment="Top" Width="314" />
+                    <Button Content="Button" Height="27" HorizontalAlignment="Right" Margin="0,12,14,0" Name="button4" VerticalAlignment="Top" Width="27" />
+                    <Button Content="Button" Height="24" HorizontalAlignment="Left" Margin="267,312,0,0" Name="button5" VerticalAlignment="Top" Width="347" />
+                    <Label Height="28" HorizontalAlignment="Left" Margin="20,156,0,0" Name="label2" VerticalAlignment="Top" Width="174" Content="Dzisiejsze statystyki faktur:" FontSize="13" />
+                    <Label Content="ilość:" HorizontalAlignment="Left" Margin="20,182,0,0" Name="label3" Width="49" Height="28" VerticalAlignment="Top" />
+                    <Label Content="wartość:" Height="28" HorizontalAlignment="Left" Margin="20,208,0,0" Name="label4" VerticalAlignment="Top" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Magazyn" Name="tabItem2" Background="#FFF5893F">
+                <Grid Background="#FFDEDEDE" />
+            </TabItem>
+            <TabItem Header="Klienci" Name="tabItem3" Background="#FF3EE5CB">
+                <Grid Background="#FFDEDEDE" />
+            </TabItem>
+            <TabItem Name="tabItem4" Header="Raporty" Background="#FFDB46DB">
+                <Grid Background="#FFDEDEDE" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

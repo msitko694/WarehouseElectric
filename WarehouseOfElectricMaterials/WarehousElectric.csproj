@@ -59,6 +59,9 @@
     <Compile Include="AdminView.xaml.cs">
       <DependentUpon>AdminView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CashierView.xaml.cs">
+      <DependentUpon>CashierView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ChoosePanelView.xaml.cs">
       <DependentUpon>ChoosePanelView.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Page Include="AdminView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CashierView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
