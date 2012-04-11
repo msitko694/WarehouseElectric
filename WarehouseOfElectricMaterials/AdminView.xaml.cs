@@ -23,6 +23,7 @@ namespace WarehouseElectric
             InitializeComponent();
         }
 
+     
 
     }
 }
