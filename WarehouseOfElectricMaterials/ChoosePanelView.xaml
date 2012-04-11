@@ -1,12 +1,17 @@
 ﻿<Window x:Class="WarehouseElectric.ChoosePanelView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ChoosePanelView" Height="378" Width="706">
+        Title="ChoosePanelView" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="200" Width="440">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="207*" />
+            <ColumnDefinition Width="211*" />
+        </Grid.ColumnDefinitions>
         <Label Content="Użytkownik:" Height="23" HorizontalAlignment="Left" Margin="12,10,0,0" Name="usernameLabel" VerticalAlignment="Top" Width="74" />
-        <Button IsEnabled="{Binding Path=CashierPanelIsEnabled}" Content="Panel Kasjera" Height="23" HorizontalAlignment="Left" Margin="12,54,0,0" Name="goCashierPanel" VerticalAlignment="Top" Width="115" Visibility="Visible" />
-        <Button IsEnabled="{Binding Path=StorekeeperPanelIsEnabled}" Content="Panel Magazyniera" Height="23" HorizontalAlignment="Left" Margin="12,83,0,0" Name="goStorekeeperPanel" VerticalAlignment="Top" Width="115" />
-        <Button IsEnabled="{Binding Path=AdminPanelIsEnabled}" Content="Panel administratora" Height="23" HorizontalAlignment="Left" Margin="12,112,0,0" Name="goAdminPanel" VerticalAlignment="Top" Width="115" />
-        <TextBlock Height="18" HorizontalAlignment="Right" Margin="0,15,526,0" Name="usernameTextBlock" Text="{Binding Path=UsernameText}" VerticalAlignment="Top" Width="78" />
+        <Button IsEnabled="{Binding Path=CashierPanelIsEnabled}" Content="Panel kasjera" Height="23" HorizontalAlignment="Left" Margin="12,54,0,0" Name="goCashierPanel" VerticalAlignment="Top" Width="115" Visibility="Visible" />
+        <Button IsEnabled="{Binding Path=StorekeeperPanelIsEnabled}" Content="Panel magazyniera" Height="23" HorizontalAlignment="Left" Margin="12,83,0,0" Name="goStorekeeperPanel" VerticalAlignment="Top" Width="115" />
+        <Button Command="{Binding Path=GoAdminPanelCommand}" IsEnabled="{Binding Path=AdminPanelIsEnabled}" Content="Panel administratora" Height="23" HorizontalAlignment="Left" Margin="12,112,0,0" Name="goAdminPanel" VerticalAlignment="Top" Width="115" />
+        <TextBlock Height="22" HorizontalAlignment="Left" Margin="84,15,0,0" Name="usernameTextBlock" Text="{Binding Path=UsernameText}" VerticalAlignment="Top" Width="123" />
+        <Button Command="{Binding Path=LogOutCommand}" Content="Wyloguj" Grid.Column="1" Height="25" HorizontalAlignment="Left" Margin="92,12,0,0" Name="button1" VerticalAlignment="Top" Width="107" />
     </Grid>
 </Window>

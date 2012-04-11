@@ -34,8 +34,6 @@ namespace WarehouseElectric.ViewModels
                 AdminPanelIsEnabled = true;
 
             UsernameText = user.US_USERNAME;
-
-           
         }
 
         #endregion //Constructors
@@ -47,10 +45,46 @@ namespace WarehouseElectric.ViewModels
         private Boolean _StorekeeperPanelIsEnabled;
         private Boolean _AdminPanelIsEnabled;
         private String _UsernameText;
+        private RelayCommand _GoAdminPanelCommand;
+        private RelayCommand _LogOutCommand;
 
         #endregion //Fields
 
         #region "Properties"
+
+        public RelayCommand LogOutCommand
+        {
+            get
+            {
+                if (_LogOutCommand == null)
+                {
+                    _LogOutCommand = new RelayCommand(LogOut);
+                    _LogOutCommand.CanUndo = (obj) => false;
+                }
+                return _LogOutCommand;
+            }
+            set
+            {
+                _GoAdminPanelCommand = value;
+            }
+        }
+
+        public RelayCommand GoAdminPanelCommand
+        {
+            get
+            {
+                if (_GoAdminPanelCommand == null)
+                {
+                    _GoAdminPanelCommand = new RelayCommand(GoAdminPanel);
+                    _GoAdminPanelCommand.CanUndo = (obj) => false;
+                }
+                return _GoAdminPanelCommand;
+            }
+            set
+            {
+                _GoAdminPanelCommand = value;
+            }
+        }
 
         public Boolean CashierPanelIsEnabled
         {
@@ -108,6 +142,20 @@ namespace WarehouseElectric.ViewModels
         #endregion //Properties
 
         #region "Methods"
+        public void GoAdminPanel(Object obj)
+        {
+            Application.Current.MainWindow = new AdminView();
+            Application.Current.MainWindow.Show();
+            _choosePanelView.Close();
+        }
+        public void LogOut(Object obj)
+        {
+            SessionHelper.LogOut();
+
+            Application.Current.MainWindow = new LoginView();
+            Application.Current.MainWindow.Show();
+            _choosePanelView.Close();
+        }
 
         #endregion //Methods
     }
