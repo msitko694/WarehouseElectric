@@ -12,7 +12,6 @@ namespace WarehouseElectric.ViewModels
     class LoginViewModel : ViewModelBase
     {
         #region "Constructors"
-
         public LoginViewModel(LoginView loginView, PasswordBox passwordBox)
         {
             _loginView = loginView;
@@ -103,7 +102,10 @@ namespace WarehouseElectric.ViewModels
             {
                 if(_userPassword.Password == user.US_PASSWORD)
                 {
-                    Application.Current.MainWindow = new MainWindow();
+                    //zapisujemy id użytkownika który się zalogował
+                    SessionHelper.userId = user.US_ID;
+
+                    Application.Current.MainWindow = new ChoosePanelView();
                     Application.Current.MainWindow.Show();
                     _loginView.Close();         
                 }

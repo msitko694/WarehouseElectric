@@ -1,0 +1,30 @@
+﻿<Window x:Class="WarehouseElectric.AdminView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AdminView" Height="479" Width="690">
+    <Grid Height="431" Width="655">
+        <TabControl Height="369" HorizontalAlignment="Left" Margin="12,50,0,0" Name="tabControl1" VerticalAlignment="Top" Width="631">
+            <TabItem Header="Użytkownicy" Name="tabItem1">
+                <Grid />
+            </TabItem>
+            <TabItem Header="Pracownicy" Name="tabItem2">
+                <Grid />
+            </TabItem>
+            <TabItem Header="Typy wysyłki" Name="tabItem3">
+                <Grid />
+            </TabItem>
+            <TabItem Header="Jednostki" Name="tabItem4">
+                <Grid />
+            </TabItem>
+            <TabItem Header="Kategorie" Name="tabItem5">
+                <Grid />
+            </TabItem>
+            <TabItem Header="Stanowiska" Name="tabItem6">
+                <Grid Width="488" Height="323" />
+            </TabItem>
+        </TabControl>
+        <Label Content="Użytkownik:" Height="27" HorizontalAlignment="Left" Margin="16,12,0,0" Name="label1" VerticalAlignment="Top" Width="154" />
+        <Button Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="536,12,0,0" Name="LogOut" VerticalAlignment="Top" Width="107" />
+        <Button Content="Zmień panel" Height="27" HorizontalAlignment="Left" Margin="428,12,0,0" Name="ChangePanel" VerticalAlignment="Top" Width="102" />
+    </Grid>
+</Window>

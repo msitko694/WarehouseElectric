@@ -1,0 +1,12 @@
+﻿<Window x:Class="WarehouseElectric.ChoosePanelView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ChoosePanelView" Height="378" Width="706">
+    <Grid>
+        <Label Content="Użytkownik:" Height="23" HorizontalAlignment="Left" Margin="12,10,0,0" Name="usernameLabel" VerticalAlignment="Top" Width="74" />
+        <Button IsEnabled="{Binding Path=CashierPanelIsEnabled}" Content="Panel Kasjera" Height="23" HorizontalAlignment="Left" Margin="12,54,0,0" Name="goCashierPanel" VerticalAlignment="Top" Width="115" Visibility="Visible" />
+        <Button IsEnabled="{Binding Path=StorekeeperPanelIsEnabled}" Content="Panel Magazyniera" Height="23" HorizontalAlignment="Left" Margin="12,83,0,0" Name="goStorekeeperPanel" VerticalAlignment="Top" Width="115" />
+        <Button IsEnabled="{Binding Path=AdminPanelIsEnabled}" Content="Panel administratora" Height="23" HorizontalAlignment="Left" Margin="12,112,0,0" Name="goAdminPanel" VerticalAlignment="Top" Width="115" />
+        <TextBlock Height="18" HorizontalAlignment="Right" Margin="0,15,526,0" Name="usernameTextBlock" Text="{Binding Path=UsernameText}" VerticalAlignment="Top" Width="78" />
+    </Grid>
+</Window>

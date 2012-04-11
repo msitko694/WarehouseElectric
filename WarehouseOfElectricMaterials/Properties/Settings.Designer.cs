@@ -26,8 +26,8 @@ namespace WarehouseElectric.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=MSITKO;Initial Catalog=ElectricWarehouse;Persist Security Info=True;U" +
-            "ser ID=test;Password=test")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=ALBATROS\\SQLEXPRESS;Initial Catalog=warehouse;Integrated Security=Tru" +
+            "e")]
         public string ElectricWarehouseConnectionString {
             get {
                 return ((string)(this["ElectricWarehouseConnectionString"]));
