@@ -41,13 +41,13 @@ namespace WarehouseElectric.ViewModels
         #region "Fields"
 
         private ChoosePanelView _choosePanelView;
-        private Boolean _CashierPanelIsEnabled;
-        private Boolean _StorekeeperPanelIsEnabled;
-        private Boolean _AdminPanelIsEnabled;
-        private String _UsernameText;
-        private RelayCommand _GoCashierPanelCommand;
-        private RelayCommand _GoAdminPanelCommand;
-        private RelayCommand _LogOutCommand;
+        private Boolean _cashierPanelIsEnabled;
+        private Boolean _storekeeperPanelIsEnabled;
+        private Boolean _adminPanelIsEnabled;
+        private String _usernameText;
+        private RelayCommand _goCashierPanelCommand;
+        private RelayCommand _goAdminPanelCommand;
+        private RelayCommand _logOutCommand;
 
         #endregion //Fields
 
@@ -57,16 +57,16 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if (_LogOutCommand == null)
+                if (_logOutCommand == null)
                 {
-                    _LogOutCommand = new RelayCommand(LogOut);
-                    _LogOutCommand.CanUndo = (obj) => false;
+                    _logOutCommand = new RelayCommand(LogOut);
+                    _logOutCommand.CanUndo = (obj) => false;
                 }
-                return _LogOutCommand;
+                return _logOutCommand;
             }
             set
             {
-                _GoAdminPanelCommand = value;
+                _goAdminPanelCommand = value;
             }
         }
 
@@ -74,16 +74,16 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if (_GoCashierPanelCommand == null)
+                if (_goCashierPanelCommand == null)
                 {
-                    _GoCashierPanelCommand = new RelayCommand(GoCashierPanel);
-                    _GoCashierPanelCommand.CanUndo = (obj) => false;
+                    _goCashierPanelCommand = new RelayCommand(GoCashierPanel);
+                    _goCashierPanelCommand.CanUndo = (obj) => false;
                 }
-                return _GoCashierPanelCommand;
+                return _goCashierPanelCommand;
             }
             set
             {
-                _GoCashierPanelCommand = value;
+                _goCashierPanelCommand = value;
             }
         }
 
@@ -91,16 +91,16 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if (_GoAdminPanelCommand == null)
+                if (_goAdminPanelCommand == null)
                 {
-                    _GoAdminPanelCommand = new RelayCommand(GoAdminPanel);
-                    _GoAdminPanelCommand.CanUndo = (obj) => false;
+                    _goAdminPanelCommand = new RelayCommand(GoAdminPanel);
+                    _goAdminPanelCommand.CanUndo = (obj) => false;
                 }
-                return _GoAdminPanelCommand;
+                return _goAdminPanelCommand;
             }
             set
             {
-                _GoAdminPanelCommand = value;
+                _goAdminPanelCommand = value;
             }
         }
 
@@ -108,11 +108,11 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                return _CashierPanelIsEnabled;
+                return _cashierPanelIsEnabled;
             }
             set
             {
-                _CashierPanelIsEnabled = value;
+                _cashierPanelIsEnabled = value;
                 OnPropertyChanged("CashierPanelIsEnabled");
             }
         }
@@ -121,11 +121,11 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                return _StorekeeperPanelIsEnabled;
+                return _storekeeperPanelIsEnabled;
             }
             set
             {
-                _StorekeeperPanelIsEnabled = value;
+                _storekeeperPanelIsEnabled = value;
                 OnPropertyChanged("StorekeeperPanelIsEnabled");
             }
         }
@@ -134,11 +134,11 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                return _AdminPanelIsEnabled;
+                return _adminPanelIsEnabled;
             }
             set
             {
-                _AdminPanelIsEnabled = value;
+                _adminPanelIsEnabled = value;
                 OnPropertyChanged("AdminPanelIsEnabled");
             }
         }
@@ -147,11 +147,11 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                return _UsernameText;
+                return _usernameText;
             }
             set
             {
-                _UsernameText = value;
+                _usernameText = value;
                 OnPropertyChanged("UsernameText");
             }
         }

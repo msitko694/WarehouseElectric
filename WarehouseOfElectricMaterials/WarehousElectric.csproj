@@ -149,7 +149,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DataLayer\LinqDataLayer.dbml.layout">
       <DependentUpon>LinqDataLayer.dbml</DependentUpon>
     </None>
