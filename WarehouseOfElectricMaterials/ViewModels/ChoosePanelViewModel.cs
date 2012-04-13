@@ -66,7 +66,7 @@ namespace WarehouseElectric.ViewModels
             }
             set
             {
-                _goAdminPanelCommand = value;
+                _logOutCommand = value;
             }
         }
 
