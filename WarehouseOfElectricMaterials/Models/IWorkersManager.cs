@@ -12,6 +12,7 @@ namespace WarehouseElectric.Models
         IList<WO_Worker> GetAll();
         WO_Worker Get(int id);
         WO_Worker GetByWorkerName(String workerName, String workerSurname);
+        IList<WO_Worker> GetByWorkerSurname(String workersurname);
         WO_Worker GetByWorkerPesel(String workerPesel);
         void Add(WO_Worker worker);
         void Delete(WO_Worker worker);

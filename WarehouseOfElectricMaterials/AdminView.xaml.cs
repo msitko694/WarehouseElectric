@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseElectric.ViewModels;
 
 namespace WarehouseElectric
 {
@@ -21,6 +22,7 @@ namespace WarehouseElectric
         public AdminView()
         {
             InitializeComponent();
+            DataContext = new AdminViewModel(this);
         }
 
      

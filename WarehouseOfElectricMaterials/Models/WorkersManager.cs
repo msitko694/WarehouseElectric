@@ -61,6 +61,31 @@ namespace WarehouseElectric.Models
 
 
         /// <summary>
+        /// Gets the worker by using his worker surname.
+        /// </summary>
+        /// <param name="workersurname">The worker name.</param>
+        /// <returns>Worker with specified name</returns>
+        public IList<WO_Worker> GetByWorkerSurname(String workersurname)
+        {
+            return (from worker in DataContext.WO_Workers
+                    where worker.WO_SURNAME == workersurname
+                    select worker).ToList<WO_Worker>();
+            /*
+            List<WO_Worker> workerList = (from worker in DataContext.WO_Workers
+                                          where (worker.WO_SURNAME == workersurname)
+                                          select worker).ToList<WO_Worker>();
+
+            if (workerList.Count > 0)
+            {
+                return workerList[0];
+            }
+            else
+            {
+                return null;
+            }*/
+        }
+
+        /// <summary>
         /// Gets the worker by using his worker pesel.
         /// </summary>
         /// <param name="workerpesel">The worker pesel.</param>
