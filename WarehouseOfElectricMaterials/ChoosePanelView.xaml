@@ -9,7 +9,7 @@
         </Grid.ColumnDefinitions>
         <Label Content="Użytkownik:" Height="23" HorizontalAlignment="Left" Margin="12,10,0,0" Name="usernameLabel" VerticalAlignment="Top" Width="74" />
         <Button Command="{Binding Path=GoCashierPanelCommand}" IsEnabled="{Binding Path=CashierPanelIsEnabled}" Content="Panel kasjera" Height="23" HorizontalAlignment="Left" Margin="12,54,0,0" Name="goCashierPanelButton" VerticalAlignment="Top" Width="115" Visibility="Visible" />
-        <Button IsEnabled="{Binding Path=StorekeeperPanelIsEnabled}" Content="Panel magazyniera" Height="23" HorizontalAlignment="Left" Margin="12,83,0,0" Name="goStorekeeperPanelButton" VerticalAlignment="Top" Width="115" />
+        <Button Command="{Binding Path=GoStorekeeperPanelCommand}" IsEnabled="{Binding Path=StorekeeperPanelIsEnabled}" Content="Panel magazyniera" Height="23" HorizontalAlignment="Left" Margin="12,83,0,0" Name="goStorekeeperPanelButton" VerticalAlignment="Top" Width="115" />
         <Button Command="{Binding Path=GoAdminPanelCommand}" IsEnabled="{Binding Path=AdminPanelIsEnabled}" Content="Panel administratora" Height="23" HorizontalAlignment="Left" Margin="12,112,0,0" Name="goAdminPanelButton" VerticalAlignment="Top" Width="115" />
         <TextBlock Height="22" HorizontalAlignment="Left" Margin="84,15,0,0" Name="usernameTextBlock" Text="{Binding Path=UsernameText}" VerticalAlignment="Top" Width="123" />
         <Button Command="{Binding Path=LogOutCommand}" Content="Wyloguj" Grid.Column="1" Height="25" HorizontalAlignment="Left" Margin="92,12,0,0" Name="logOutButton" VerticalAlignment="Top" Width="107" />
