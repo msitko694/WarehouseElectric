@@ -46,7 +46,6 @@ namespace WarehouseElectric.ViewModels
         private Boolean _adminPanelIsEnabled;
         private String _usernameText;
         private RelayCommand _goCashierPanelCommand;
-        private RelayCommand _goStorekeeperPanelCommand;        
         private RelayCommand _goAdminPanelCommand;
         private RelayCommand _logOutCommand;
 
@@ -85,23 +84,6 @@ namespace WarehouseElectric.ViewModels
             set
             {
                 _goCashierPanelCommand = value;
-            }
-        }
-
-        public RelayCommand GoStorekeeperPanelCommand
-        {
-            get
-            {
-                if (_goStorekeeperPanelCommand == null)
-                {
-                    _goStorekeeperPanelCommand = new RelayCommand(GoStorekeeperPanel);
-                    _goStorekeeperPanelCommand.CanUndo = (obj) => false;
-                }
-                return _goStorekeeperPanelCommand;
-            }
-            set
-            {
-                _goStorekeeperPanelCommand = value;
             }
         }
 
@@ -181,12 +163,6 @@ namespace WarehouseElectric.ViewModels
         public void GoCashierPanel(Object obj)
         {
             Application.Current.MainWindow = new CashierView();
-            Application.Current.MainWindow.Show();
-            _choosePanelView.Close();
-        }
-        public void GoStorekeeperPanel(Object obj)
-        {
-            Application.Current.MainWindow = new StorekeeperView();
             Application.Current.MainWindow.Show();
             _choosePanelView.Close();
         }
