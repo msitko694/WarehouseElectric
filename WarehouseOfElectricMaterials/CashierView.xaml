@@ -1,46 +1,31 @@
 ﻿<Window x:Class="WarehouseElectric.CashierView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="CashierView" Height="500" Width="670">
-    <Grid Height="450" Width="652">
-        <Button Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
-        <Button Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
+        Title="CashierView" Height="470" Width="670">
+    <Grid Height="434" Width="652">
+        <Button Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="button1" VerticalAlignment="Top" Width="107" />
+        <Button Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="button2" VerticalAlignment="Top" Width="105" />
         <Label Content="Użytkownik:" Height="25" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" Width="74" />
-        <TabControl Height="394" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControl1" VerticalAlignment="Top" Width="629">
-            <TabItem Header="Faktury" Name="tabItemInvoices" Background="#FF4BE255">
-                <Grid Background="#FFDEDEDE" Height="360" Width="622">
-                    <Button Content="NOWA FAKTURA" Height="113" Margin="6,12,0,0" Name="buttonNewInvoice" VerticalAlignment="Top" Background="#FF4599CE" HorizontalAlignment="Left" Width="196" />
-                    <DataGrid AutoGenerateColumns="True" Height="281" HorizontalAlignment="Left" Margin="208,45,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="408" />
-                    <TextBox Height="27" HorizontalAlignment="Left" Margin="208,12,0,0" Name="textBoxFindInvoice" VerticalAlignment="Top" Width="282" />
-                    <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,12,99,0" VerticalAlignment="Top" Width="27" Name="buttonFindInvoice" />
-                    <Button Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="207,332,0,0" Name="buttonOpenInvoice" VerticalAlignment="Top" Width="409" />
+        <TabControl Height="371" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControl1" VerticalAlignment="Top" Width="629">
+            <TabItem Header="Faktury" Name="tabItem1" Background="#FF4BE255">
+                <Grid Background="#FFDEDEDE" Height="346" Width="628">
+                    <Button Content="NOWA FAKTURA" Height="113" Margin="20,12,0,0" Name="button3" VerticalAlignment="Top" Background="#FF4599CE" HorizontalAlignment="Left" Width="223" />
+                    <DataGrid AutoGenerateColumns="True" Height="261" HorizontalAlignment="Left" Margin="267,45,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="347" />
+                    <TextBox Height="27" HorizontalAlignment="Left" Margin="267,12,0,0" Name="textBox1" VerticalAlignment="Top" Width="314" />
+                    <Button Content="Button" Height="27" HorizontalAlignment="Right" Margin="0,12,14,0" Name="button4" VerticalAlignment="Top" Width="27" />
+                    <Button Content="Button" Height="24" HorizontalAlignment="Left" Margin="267,312,0,0" Name="button5" VerticalAlignment="Top" Width="347" />
                     <Label Height="28" HorizontalAlignment="Left" Margin="20,156,0,0" Name="label2" VerticalAlignment="Top" Width="174" Content="Dzisiejsze statystyki faktur:" FontSize="13" />
                     <Label Content="ilość:" HorizontalAlignment="Left" Margin="20,182,0,0" Name="label3" Width="49" Height="28" VerticalAlignment="Top" />
                     <Label Content="wartość:" Height="28" HorizontalAlignment="Left" Margin="20,208,0,0" Name="label4" VerticalAlignment="Top" />
-                    <Button Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="529,12,0,0" Name="button8" VerticalAlignment="Top" Width="87" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Magazyn" Name="tabItemStore" Background="#FFF5893F">
-                <Grid Background="#FFDEDEDE">
-                    <TreeView Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeView1" VerticalAlignment="Top" Width="120" />
-                    <Button Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" Background="Red" />
-                    <DataGrid AutoGenerateColumns="False" Height="314" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" />
-                    <TextBox Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBox1" VerticalAlignment="Top" Width="448" />
-                    <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button2" VerticalAlignment="Top" Width="27" />
-                </Grid>
+            <TabItem Header="Magazyn" Name="tabItem2" Background="#FFF5893F">
+                <Grid Background="#FFDEDEDE" />
             </TabItem>
-            <TabItem Header="Klienci" Name="tabItemCustomers" Background="#FF3EE5CB">
-                <Grid Background="#FFDEDEDE">
-                    <DataGrid AutoGenerateColumns="False" Height="304" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGrid2" VerticalAlignment="Top" Width="504" />
-                    <TextBox Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBox2" VerticalAlignment="Top" Width="471" />
-                    <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="button4" VerticalAlignment="Top" Width="27" />
-                    <Button Content="Pokaż historię" Height="97" HorizontalAlignment="Left" Margin="516,51,0,0" Name="button3" VerticalAlignment="Top" Width="97" Background="#FFD1BA3E" />
-                    <Button Content="Dodaj notatkę" Height="97" HorizontalAlignment="Left" Margin="516,154,0,0" Name="button5" VerticalAlignment="Top" Width="97" Background="#FF59D879" />
-                    <Button Content="Zobacz notatki" Height="97" HorizontalAlignment="Left" Margin="516,258,0,0" Name="button6" VerticalAlignment="Top" Width="97" Background="#FF4949DB" />
-                    <Button Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="516,18,0,0" Name="button7" VerticalAlignment="Top" Width="97" />
-                </Grid>
+            <TabItem Header="Klienci" Name="tabItem3" Background="#FF3EE5CB">
+                <Grid Background="#FFDEDEDE" />
             </TabItem>
-            <TabItem Name="tabItemReports" Header="Raporty" Background="#FFDB46DB">
+            <TabItem Name="tabItem4" Header="Raporty" Background="#FFDB46DB">
                 <Grid Background="#FFDEDEDE" />
             </TabItem>
         </TabControl>
