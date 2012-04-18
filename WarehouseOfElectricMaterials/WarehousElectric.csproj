@@ -105,6 +105,7 @@
     <Compile Include="StorekeeperView.xaml.cs">
       <DependentUpon>StorekeeperView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CashierViewModel.cs" />
     <Compile Include="ViewModels\ChoosePanelViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
