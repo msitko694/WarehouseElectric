@@ -30,12 +30,12 @@ namespace WarehouseElectric.DataLayer
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertWO_Worker(WO_Worker instance);
-    partial void UpdateWO_Worker(WO_Worker instance);
-    partial void DeleteWO_Worker(WO_Worker instance);
     partial void InsertCU_Customer(CU_Customer instance);
     partial void UpdateCU_Customer(CU_Customer instance);
     partial void DeleteCU_Customer(CU_Customer instance);
+    partial void InsertWO_Worker(WO_Worker instance);
+    partial void UpdateWO_Worker(WO_Worker instance);
+    partial void DeleteWO_Worker(WO_Worker instance);
     partial void InsertIE_InvoicesItem(IE_InvoicesItem instance);
     partial void UpdateIE_InvoicesItem(IE_InvoicesItem instance);
     partial void DeleteIE_InvoicesItem(IE_InvoicesItem instance);
@@ -72,7 +72,7 @@ namespace WarehouseElectric.DataLayer
     #endregion
 		
 		public LinqDataLayerDataContext() : 
-				base(global::WarehouseElectric.Properties.Settings.Default.ElectricWarehouseConnectionString, mappingSource)
+				base(global::WarehouseElectric.Properties.Settings.Default.ElectricWarehouseConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -101,19 +101,19 @@ namespace WarehouseElectric.DataLayer
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<WO_Worker> WO_Workers
-		{
-			get
-			{
-				return this.GetTable<WO_Worker>();
-			}
-		}
-		
 		public System.Data.Linq.Table<CU_Customer> CU_Customers
 		{
 			get
 			{
 				return this.GetTable<CU_Customer>();
+			}
+		}
+		
+		public System.Data.Linq.Table<WO_Worker> WO_Workers
+		{
+			get
+			{
+				return this.GetTable<WO_Worker>();
 			}
 		}
 		
@@ -203,6 +203,264 @@ namespace WarehouseElectric.DataLayer
 			{
 				return this.GetTable<US_User>();
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CU_Customers")]
+	public partial class CU_Customer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _CU_ID;
+		
+		private string _CU_NAME;
+		
+		private string _CU_STREET;
+		
+		private string _CU_POST_CODE;
+		
+		private string _CU_TOWN;
+		
+		private string _CU_PHONE;
+		
+		private System.Nullable<System.DateTime> _CU_ADDED;
+		
+		private System.Nullable<System.DateTime> _CU_LAST_MODIFIED;
+		
+		private EntitySet<IN_Invoice> _IN_Invoices;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCU_IDChanging(int value);
+    partial void OnCU_IDChanged();
+    partial void OnCU_NAMEChanging(string value);
+    partial void OnCU_NAMEChanged();
+    partial void OnCU_STREETChanging(string value);
+    partial void OnCU_STREETChanged();
+    partial void OnCU_POST_CODEChanging(string value);
+    partial void OnCU_POST_CODEChanged();
+    partial void OnCU_TOWNChanging(string value);
+    partial void OnCU_TOWNChanged();
+    partial void OnCU_PHONEChanging(string value);
+    partial void OnCU_PHONEChanged();
+    partial void OnCU_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnCU_ADDEDChanged();
+    partial void OnCU_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnCU_LAST_MODIFIEDChanged();
+    #endregion
+		
+		public CU_Customer()
+		{
+			this._IN_Invoices = new EntitySet<IN_Invoice>(new Action<IN_Invoice>(this.attach_IN_Invoices), new Action<IN_Invoice>(this.detach_IN_Invoices));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int CU_ID
+		{
+			get
+			{
+				return this._CU_ID;
+			}
+			set
+			{
+				if ((this._CU_ID != value))
+				{
+					this.OnCU_IDChanging(value);
+					this.SendPropertyChanging();
+					this._CU_ID = value;
+					this.SendPropertyChanged("CU_ID");
+					this.OnCU_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_NAME", DbType="NVarChar(50)")]
+		public string CU_NAME
+		{
+			get
+			{
+				return this._CU_NAME;
+			}
+			set
+			{
+				if ((this._CU_NAME != value))
+				{
+					this.OnCU_NAMEChanging(value);
+					this.SendPropertyChanging();
+					this._CU_NAME = value;
+					this.SendPropertyChanged("CU_NAME");
+					this.OnCU_NAMEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_STREET", DbType="NVarChar(100)")]
+		public string CU_STREET
+		{
+			get
+			{
+				return this._CU_STREET;
+			}
+			set
+			{
+				if ((this._CU_STREET != value))
+				{
+					this.OnCU_STREETChanging(value);
+					this.SendPropertyChanging();
+					this._CU_STREET = value;
+					this.SendPropertyChanged("CU_STREET");
+					this.OnCU_STREETChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_POST_CODE", DbType="NVarChar(10)")]
+		public string CU_POST_CODE
+		{
+			get
+			{
+				return this._CU_POST_CODE;
+			}
+			set
+			{
+				if ((this._CU_POST_CODE != value))
+				{
+					this.OnCU_POST_CODEChanging(value);
+					this.SendPropertyChanging();
+					this._CU_POST_CODE = value;
+					this.SendPropertyChanged("CU_POST_CODE");
+					this.OnCU_POST_CODEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_TOWN", DbType="NVarChar(50)")]
+		public string CU_TOWN
+		{
+			get
+			{
+				return this._CU_TOWN;
+			}
+			set
+			{
+				if ((this._CU_TOWN != value))
+				{
+					this.OnCU_TOWNChanging(value);
+					this.SendPropertyChanging();
+					this._CU_TOWN = value;
+					this.SendPropertyChanged("CU_TOWN");
+					this.OnCU_TOWNChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_PHONE", DbType="NVarChar(15)")]
+		public string CU_PHONE
+		{
+			get
+			{
+				return this._CU_PHONE;
+			}
+			set
+			{
+				if ((this._CU_PHONE != value))
+				{
+					this.OnCU_PHONEChanging(value);
+					this.SendPropertyChanging();
+					this._CU_PHONE = value;
+					this.SendPropertyChanged("CU_PHONE");
+					this.OnCU_PHONEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_ADDED", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CU_ADDED
+		{
+			get
+			{
+				return this._CU_ADDED;
+			}
+			set
+			{
+				if ((this._CU_ADDED != value))
+				{
+					this.OnCU_ADDEDChanging(value);
+					this.SendPropertyChanging();
+					this._CU_ADDED = value;
+					this.SendPropertyChanged("CU_ADDED");
+					this.OnCU_ADDEDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_LAST_MODIFIED", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CU_LAST_MODIFIED
+		{
+			get
+			{
+				return this._CU_LAST_MODIFIED;
+			}
+			set
+			{
+				if ((this._CU_LAST_MODIFIED != value))
+				{
+					this.OnCU_LAST_MODIFIEDChanging(value);
+					this.SendPropertyChanging();
+					this._CU_LAST_MODIFIED = value;
+					this.SendPropertyChanged("CU_LAST_MODIFIED");
+					this.OnCU_LAST_MODIFIEDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CU_Customer_IN_Invoice", Storage="_IN_Invoices", ThisKey="CU_ID", OtherKey="IN_CU_ID")]
+		public EntitySet<IN_Invoice> IN_Invoices
+		{
+			get
+			{
+				return this._IN_Invoices;
+			}
+			set
+			{
+				this._IN_Invoices.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_IN_Invoices(IN_Invoice entity)
+		{
+			this.SendPropertyChanging();
+			entity.CU_Customer = this;
+		}
+		
+		private void detach_IN_Invoices(IN_Invoice entity)
+		{
+			this.SendPropertyChanging();
+			entity.CU_Customer = null;
 		}
 	}
 	
@@ -319,7 +577,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_NAME", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_NAME", DbType="NVarChar(50)")]
 		public string WO_NAME
 		{
 			get
@@ -339,7 +597,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_SURNAME", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_SURNAME", DbType="NVarChar(50)")]
 		public string WO_SURNAME
 		{
 			get
@@ -359,7 +617,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_PHONE", DbType="VarChar(15)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_PHONE", DbType="NVarChar(15)")]
 		public string WO_PHONE
 		{
 			get
@@ -419,7 +677,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_PESEL", DbType="VarChar(11)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_PESEL", DbType="NVarChar(11)")]
 		public string WO_PESEL
 		{
 			get
@@ -609,264 +867,6 @@ namespace WarehouseElectric.DataLayer
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CU_Customers")]
-	public partial class CU_Customer : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _CU_ID;
-		
-		private string _CU_NAME;
-		
-		private string _CU_STREET;
-		
-		private string _CU_POST_CODE;
-		
-		private string _CU_TOWN;
-		
-		private string _CU_PHONE;
-		
-		private System.Nullable<System.DateTime> _CU_ADDED;
-		
-		private System.Nullable<System.DateTime> _CU_LAST_MODIFIED;
-		
-		private EntitySet<IN_Invoice> _IN_Invoices;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCU_IDChanging(int value);
-    partial void OnCU_IDChanged();
-    partial void OnCU_NAMEChanging(string value);
-    partial void OnCU_NAMEChanged();
-    partial void OnCU_STREETChanging(string value);
-    partial void OnCU_STREETChanged();
-    partial void OnCU_POST_CODEChanging(string value);
-    partial void OnCU_POST_CODEChanged();
-    partial void OnCU_TOWNChanging(string value);
-    partial void OnCU_TOWNChanged();
-    partial void OnCU_PHONEChanging(string value);
-    partial void OnCU_PHONEChanged();
-    partial void OnCU_ADDEDChanging(System.Nullable<System.DateTime> value);
-    partial void OnCU_ADDEDChanged();
-    partial void OnCU_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
-    partial void OnCU_LAST_MODIFIEDChanged();
-    #endregion
-		
-		public CU_Customer()
-		{
-			this._IN_Invoices = new EntitySet<IN_Invoice>(new Action<IN_Invoice>(this.attach_IN_Invoices), new Action<IN_Invoice>(this.detach_IN_Invoices));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int CU_ID
-		{
-			get
-			{
-				return this._CU_ID;
-			}
-			set
-			{
-				if ((this._CU_ID != value))
-				{
-					this.OnCU_IDChanging(value);
-					this.SendPropertyChanging();
-					this._CU_ID = value;
-					this.SendPropertyChanged("CU_ID");
-					this.OnCU_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_NAME", DbType="VarChar(50)")]
-		public string CU_NAME
-		{
-			get
-			{
-				return this._CU_NAME;
-			}
-			set
-			{
-				if ((this._CU_NAME != value))
-				{
-					this.OnCU_NAMEChanging(value);
-					this.SendPropertyChanging();
-					this._CU_NAME = value;
-					this.SendPropertyChanged("CU_NAME");
-					this.OnCU_NAMEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_STREET", DbType="VarChar(100)")]
-		public string CU_STREET
-		{
-			get
-			{
-				return this._CU_STREET;
-			}
-			set
-			{
-				if ((this._CU_STREET != value))
-				{
-					this.OnCU_STREETChanging(value);
-					this.SendPropertyChanging();
-					this._CU_STREET = value;
-					this.SendPropertyChanged("CU_STREET");
-					this.OnCU_STREETChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_POST_CODE", DbType="VarChar(10)")]
-		public string CU_POST_CODE
-		{
-			get
-			{
-				return this._CU_POST_CODE;
-			}
-			set
-			{
-				if ((this._CU_POST_CODE != value))
-				{
-					this.OnCU_POST_CODEChanging(value);
-					this.SendPropertyChanging();
-					this._CU_POST_CODE = value;
-					this.SendPropertyChanged("CU_POST_CODE");
-					this.OnCU_POST_CODEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_TOWN", DbType="VarChar(50)")]
-		public string CU_TOWN
-		{
-			get
-			{
-				return this._CU_TOWN;
-			}
-			set
-			{
-				if ((this._CU_TOWN != value))
-				{
-					this.OnCU_TOWNChanging(value);
-					this.SendPropertyChanging();
-					this._CU_TOWN = value;
-					this.SendPropertyChanged("CU_TOWN");
-					this.OnCU_TOWNChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_PHONE", DbType="VarChar(15)")]
-		public string CU_PHONE
-		{
-			get
-			{
-				return this._CU_PHONE;
-			}
-			set
-			{
-				if ((this._CU_PHONE != value))
-				{
-					this.OnCU_PHONEChanging(value);
-					this.SendPropertyChanging();
-					this._CU_PHONE = value;
-					this.SendPropertyChanged("CU_PHONE");
-					this.OnCU_PHONEChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CU_ADDED
-		{
-			get
-			{
-				return this._CU_ADDED;
-			}
-			set
-			{
-				if ((this._CU_ADDED != value))
-				{
-					this.OnCU_ADDEDChanging(value);
-					this.SendPropertyChanging();
-					this._CU_ADDED = value;
-					this.SendPropertyChanged("CU_ADDED");
-					this.OnCU_ADDEDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CU_LAST_MODIFIED
-		{
-			get
-			{
-				return this._CU_LAST_MODIFIED;
-			}
-			set
-			{
-				if ((this._CU_LAST_MODIFIED != value))
-				{
-					this.OnCU_LAST_MODIFIEDChanging(value);
-					this.SendPropertyChanging();
-					this._CU_LAST_MODIFIED = value;
-					this.SendPropertyChanged("CU_LAST_MODIFIED");
-					this.OnCU_LAST_MODIFIEDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CU_Customer_IN_Invoice", Storage="_IN_Invoices", ThisKey="CU_ID", OtherKey="IN_CU_ID")]
-		public EntitySet<IN_Invoice> IN_Invoices
-		{
-			get
-			{
-				return this._IN_Invoices;
-			}
-			set
-			{
-				this._IN_Invoices.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_IN_Invoices(IN_Invoice entity)
-		{
-			this.SendPropertyChanging();
-			entity.CU_Customer = this;
-		}
-		
-		private void detach_IN_Invoices(IN_Invoice entity)
-		{
-			this.SendPropertyChanging();
-			entity.CU_Customer = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IE_InvoicesItems")]
 	public partial class IE_InvoicesItem : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -879,7 +879,7 @@ namespace WarehouseElectric.DataLayer
 		
 		private int _IE_PR_ID;
 		
-		private string _IE_QUANTITY;
+		private System.Nullable<decimal> _IE_QUANTITY;
 		
 		private System.Nullable<System.DateTime> _IE_ADDED;
 		
@@ -909,7 +909,7 @@ namespace WarehouseElectric.DataLayer
     partial void OnIE_IN_IDChanged();
     partial void OnIE_PR_IDChanging(int value);
     partial void OnIE_PR_IDChanged();
-    partial void OnIE_QUANTITYChanging(string value);
+    partial void OnIE_QUANTITYChanging(System.Nullable<decimal> value);
     partial void OnIE_QUANTITYChanged();
     partial void OnIE_ADDEDChanging(System.Nullable<System.DateTime> value);
     partial void OnIE_ADDEDChanged();
@@ -1002,8 +1002,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_QUANTITY", DbType="VarChar(1)")]
-		public string IE_QUANTITY
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_QUANTITY", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> IE_QUANTITY
 		{
 			get
 			{
@@ -1269,9 +1269,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private System.Nullable<System.DateTime> _IN_LAST_MODIFIED;
 		
-		private string _IN_TOTAL;
+		private System.Nullable<decimal> _IN_TOTAL;
 		
-		private string _IN_SPEDITION_COST;
+		private System.Nullable<decimal> _IN_SPEDITION_COST;
 		
 		private EntitySet<IE_InvoicesItem> _IE_InvoicesItems;
 		
@@ -1297,9 +1297,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnIN_ADDEDChanged();
     partial void OnIN_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
     partial void OnIN_LAST_MODIFIEDChanged();
-    partial void OnIN_TOTALChanging(string value);
+    partial void OnIN_TOTALChanging(System.Nullable<decimal> value);
     partial void OnIN_TOTALChanged();
-    partial void OnIN_SPEDITION_COSTChanging(string value);
+    partial void OnIN_SPEDITION_COSTChanging(System.Nullable<decimal> value);
     partial void OnIN_SPEDITION_COSTChanged();
     #endregion
 		
@@ -1444,8 +1444,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_TOTAL", DbType="VarChar(1)")]
-		public string IN_TOTAL
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_TOTAL", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> IN_TOTAL
 		{
 			get
 			{
@@ -1464,8 +1464,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_SPEDITION_COST", DbType="VarChar(1)")]
-		public string IN_SPEDITION_COST
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_SPEDITION_COST", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> IN_SPEDITION_COST
 		{
 			get
 			{
@@ -1644,7 +1644,7 @@ namespace WarehouseElectric.DataLayer
 		
 		private int _OE_OR_ID;
 		
-		private string _OE_QUANTITY;
+		private System.Nullable<decimal> _OE_QUANTITY;
 		
 		private System.Nullable<System.DateTime> _OE_ADDED;
 		
@@ -1674,7 +1674,7 @@ namespace WarehouseElectric.DataLayer
     partial void OnOE_PR_IDChanged();
     partial void OnOE_OR_IDChanging(int value);
     partial void OnOE_OR_IDChanged();
-    partial void OnOE_QUANTITYChanging(string value);
+    partial void OnOE_QUANTITYChanging(System.Nullable<decimal> value);
     partial void OnOE_QUANTITYChanged();
     partial void OnOE_ADDEDChanging(System.Nullable<System.DateTime> value);
     partial void OnOE_ADDEDChanged();
@@ -1767,8 +1767,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_QUANTITY", DbType="VarChar(1)")]
-		public string OE_QUANTITY
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_QUANTITY", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> OE_QUANTITY
 		{
 			get
 			{
@@ -2366,7 +2366,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PC_NAME", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PC_NAME", DbType="NVarChar(50)")]
 		public string PC_NAME
 		{
 			get
@@ -2539,7 +2539,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PO_NAME", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PO_NAME", DbType="NVarChar(50)")]
 		public string PO_NAME
 		{
 			get
@@ -2619,13 +2619,13 @@ namespace WarehouseElectric.DataLayer
 		
 		private string _PR_NAME;
 		
-		private string _PR_DEPOT_QUANTITY;
+		private System.Nullable<decimal> _PR_DEPOT_QUANTITY;
 		
-		private System.Nullable<int> _PR_UNIT_PRICE;
+		private System.Nullable<decimal> _PR_UNIT_PRICE;
 		
-		private System.Nullable<int> _PR_ADDED;
+		private System.Nullable<System.DateTime> _PR_ADDED;
 		
-		private System.Nullable<int> _PR_LAST_MODIFIED;
+		private System.Nullable<System.DateTime> _PR_LAST_MODIFIED;
 		
 		private System.Nullable<bool> _PR_IS_ACTIVE;
 		
@@ -2651,13 +2651,13 @@ namespace WarehouseElectric.DataLayer
     partial void OnPR_QT_IDChanged();
     partial void OnPR_NAMEChanging(string value);
     partial void OnPR_NAMEChanged();
-    partial void OnPR_DEPOT_QUANTITYChanging(string value);
+    partial void OnPR_DEPOT_QUANTITYChanging(System.Nullable<decimal> value);
     partial void OnPR_DEPOT_QUANTITYChanged();
-    partial void OnPR_UNIT_PRICEChanging(System.Nullable<int> value);
+    partial void OnPR_UNIT_PRICEChanging(System.Nullable<decimal> value);
     partial void OnPR_UNIT_PRICEChanged();
-    partial void OnPR_ADDEDChanging(System.Nullable<int> value);
+    partial void OnPR_ADDEDChanging(System.Nullable<System.DateTime> value);
     partial void OnPR_ADDEDChanged();
-    partial void OnPR_LAST_MODIFIEDChanging(System.Nullable<int> value);
+    partial void OnPR_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
     partial void OnPR_LAST_MODIFIEDChanged();
     partial void OnPR_IS_ACTIVEChanging(System.Nullable<bool> value);
     partial void OnPR_IS_ACTIVEChanged();
@@ -2742,7 +2742,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_NAME", DbType="VarChar(1)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_NAME", DbType="NVarChar(50)")]
 		public string PR_NAME
 		{
 			get
@@ -2762,8 +2762,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_DEPOT_QUANTITY", DbType="VarChar(1)")]
-		public string PR_DEPOT_QUANTITY
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_DEPOT_QUANTITY", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> PR_DEPOT_QUANTITY
 		{
 			get
 			{
@@ -2782,8 +2782,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_UNIT_PRICE", DbType="Int")]
-		public System.Nullable<int> PR_UNIT_PRICE
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_UNIT_PRICE", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> PR_UNIT_PRICE
 		{
 			get
 			{
@@ -2802,8 +2802,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_ADDED", DbType="Int")]
-		public System.Nullable<int> PR_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_ADDED", DbType="DateTime")]
+		public System.Nullable<System.DateTime> PR_ADDED
 		{
 			get
 			{
@@ -2822,8 +2822,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_LAST_MODIFIED", DbType="Int")]
-		public System.Nullable<int> PR_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_LAST_MODIFIED", DbType="DateTime")]
+		public System.Nullable<System.DateTime> PR_LAST_MODIFIED
 		{
 			get
 			{
@@ -3069,7 +3069,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QT_NAME", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QT_NAME", DbType="NVarChar(50)")]
 		public string QT_NAME
 		{
 			get
@@ -3183,7 +3183,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SP_NAME", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SP_NAME", DbType="NVarChar(50)")]
 		public string SP_NAME
 		{
 			get
@@ -3321,7 +3321,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_NAME", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_NAME", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
 		public string SU_NAME
 		{
 			get
@@ -3341,7 +3341,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_STREET", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_STREET", DbType="NVarChar(100)")]
 		public string SU_STREET
 		{
 			get
@@ -3361,7 +3361,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_POST_CODE", DbType="VarChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_POST_CODE", DbType="NVarChar(10)")]
 		public string SU_POST_CODE
 		{
 			get
@@ -3381,7 +3381,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_TOWN", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_TOWN", DbType="NVarChar(50)")]
 		public string SU_TOWN
 		{
 			get
@@ -3401,7 +3401,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_PHONE", DbType="VarChar(15)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_PHONE", DbType="NVarChar(15)")]
 		public string SU_PHONE
 		{
 			get
@@ -3527,9 +3527,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private bool _US_IS_STOREKEEPER;
 		
-		private System.DateTime _US_ADDED;
+		private System.Nullable<System.DateTime> _US_ADDED;
 		
-		private System.DateTime _US_LAST_MODIFIED;
+		private System.Nullable<System.DateTime> _US_LAST_MODIFIED;
 		
 		private EntityRef<WO_Worker> _WO_Worker;
 		
@@ -3551,9 +3551,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnUS_IS_CASHIERChanged();
     partial void OnUS_IS_STOREKEEPERChanging(bool value);
     partial void OnUS_IS_STOREKEEPERChanged();
-    partial void OnUS_ADDEDChanging(System.DateTime value);
+    partial void OnUS_ADDEDChanging(System.Nullable<System.DateTime> value);
     partial void OnUS_ADDEDChanged();
-    partial void OnUS_LAST_MODIFIEDChanging(System.DateTime value);
+    partial void OnUS_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
     partial void OnUS_LAST_MODIFIEDChanged();
     #endregion
 		
@@ -3607,7 +3607,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_USERNAME", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_USERNAME", DbType="NVarChar(50)")]
 		public string US_USERNAME
 		{
 			get
@@ -3627,7 +3627,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_PASSWORD", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_PASSWORD", DbType="NVarChar(50)")]
 		public string US_PASSWORD
 		{
 			get
@@ -3707,8 +3707,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_ADDED", DbType="DateTime NOT NULL")]
-		public System.DateTime US_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_ADDED", DbType="DateTime")]
+		public System.Nullable<System.DateTime> US_ADDED
 		{
 			get
 			{
@@ -3727,8 +3727,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_LAST_MODIFIED", DbType="DateTime NOT NULL")]
-		public System.DateTime US_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_LAST_MODIFIED", DbType="DateTime")]
+		public System.Nullable<System.DateTime> US_LAST_MODIFIED
 		{
 			get
 			{
