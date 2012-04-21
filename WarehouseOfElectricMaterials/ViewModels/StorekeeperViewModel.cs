@@ -18,7 +18,7 @@ namespace WarehouseElectric.ViewModels
 
             //podpinanie listy dostawców do dataGrida z dostawcami
             SuppliersManager suppliersManager = new SuppliersManager();
-            ListSuppliersToShow = suppliersManager.GetAll();
+            ListSuppliersToShow = suppliersManager.GetAll().ToList();
 
         }
         #endregion //Constructors
