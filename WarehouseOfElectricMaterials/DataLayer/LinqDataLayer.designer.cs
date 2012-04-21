@@ -72,7 +72,7 @@ namespace WarehouseElectric.DataLayer
     #endregion
 		
 		public LinqDataLayerDataContext() : 
-				base(global::WarehouseElectric.Properties.Settings.Default.ElectricWarehouseConnectionString1, mappingSource)
+				base(global::WarehouseElectric.Properties.Settings.Default.ElectricWarehouseConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
