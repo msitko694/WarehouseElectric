@@ -101,6 +101,7 @@ namespace WarehouseElectric.Helpers
                 US_USERNAME = "admin",
                 US_WO_ID = worker.WO_ID
             };
+            usersManager.Add(user);
                                         
             InvoicesManager invoiceManager = new InvoicesManager();
             IN_Invoice invoice = new IN_Invoice
