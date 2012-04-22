@@ -10,6 +10,7 @@ namespace WarehouseElectric.Models
     interface IPositionsManager : IDisposable
     {
         IList<PO_Position> GetAll();
+        List<String> GetAllName();
         PO_Position Get(int id);
         PO_Position GetByPositionName(String positionName);
         void Add(PO_Position position);

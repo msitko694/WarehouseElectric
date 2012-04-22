@@ -69,6 +69,15 @@ namespace WarehouseElectric.Models
         }
 
         /// <summary>
+        /// Gets all positions name.
+        /// </summary>
+        /// <returns>All positions name</returns>
+        public List<String> GetAllName()
+        {
+            return (from position in DataContext.PO_Positions select position.PO_NAME).ToList();
+        }
+
+        /// <summary>
         /// Gets the specified position.
         /// </summary>
         /// <param name="id">The id.</param>
