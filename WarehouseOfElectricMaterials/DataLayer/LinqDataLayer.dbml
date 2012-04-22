@@ -8,8 +8,8 @@
       <Column Name="CU_POST_CODE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="CU_TOWN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="CU_PHONE" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Column Name="CU_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CU_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CU_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CU_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="CU_Customer_IN_Invoice" Member="IN_Invoices" ThisKey="CU_ID" OtherKey="IN_CU_ID" Type="IN_Invoice" />
     </Type>
   </Table>
@@ -23,8 +23,8 @@
       <Column Name="WO_BIRTH_DATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="WO_WORKING_SINCE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="WO_PESEL" Type="System.String" DbType="NVarChar(11)" CanBeNull="true" />
-      <Column Name="WO_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="WO_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WO_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="WO_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="WO_Worker_IN_Invoice" Member="IN_Invoices" ThisKey="WO_ID" OtherKey="IN_WO_ID" Type="IN_Invoice" />
       <Association Name="WO_Worker_OR_Order" Member="OR_Orders" ThisKey="WO_ID" OtherKey="OR_WO_ID" Type="OR_Order" />
       <Association Name="WO_Worker_US_User" Member="US_Users" ThisKey="WO_ID" OtherKey="US_WO_ID" Type="US_User" />
@@ -36,14 +36,14 @@
       <Column Name="IE_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IE_IN_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IE_PR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IE_QUANTITY" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="IE_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="IE_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="IE_UNIT_PRICE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="IE_TOTAL_NETTO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="IE_TOTAL_VAT" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="IE_TOTAL_BRUTTO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="IE_VAT_RATE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="IE_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IE_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IE_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IE_UNIT_PRICE" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IE_TOTAL_NETTO" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IE_TOTAL_VAT" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IE_TOTAL_BRUTTO" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IE_VAT_RATE" Type="System.Decimal" DbType="Decimal(3,3)" CanBeNull="true" />
       <Association Name="IN_Invoice_IE_InvoicesItem" Member="IN_Invoice" ThisKey="IE_IN_ID" OtherKey="IN_ID" Type="IN_Invoice" IsForeignKey="true" />
       <Association Name="PR_Product_IE_InvoicesItem" Member="PR_Product" ThisKey="IE_PR_ID" OtherKey="PR_ID" Type="PR_Product" IsForeignKey="true" />
     </Type>
@@ -54,10 +54,10 @@
       <Column Name="IN_CU_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IN_WO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IN_SP_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IN_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="IN_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="IN_TOTAL" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="IN_SPEDITION_COST" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="IN_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IN_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IN_TOTAL" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IN_SPEDITION_COST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Association Name="IN_Invoice_IE_InvoicesItem" Member="IE_InvoicesItems" ThisKey="IN_ID" OtherKey="IE_IN_ID" Type="IE_InvoicesItem" />
       <Association Name="CU_Customer_IN_Invoice" Member="CU_Customer" ThisKey="IN_CU_ID" OtherKey="CU_ID" Type="CU_Customer" IsForeignKey="true" />
       <Association Name="WO_Worker_IN_Invoice" Member="WO_Worker" ThisKey="IN_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
@@ -69,14 +69,14 @@
       <Column Name="OE_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="OE_PR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="OE_OR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="OE_QUANTITY" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="OE_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="OE_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="OE_UNIT_PRICE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="OE_TOTAL_NETTO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="OE_TOTAL_VAT" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="OE_TOTAL_BRUTTO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="OE_VAT_RATE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="OE_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OE_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OE_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OE_UNIT_PRICE" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OE_TOTAL_NETTO" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OE_TOTAL_VAT" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OE_TOTAL_BRUTTO" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OE_VAT_RATE" Type="System.Decimal" DbType="Decimal(3,3)" CanBeNull="true" />
       <Association Name="OR_Order_OE_OrderItem" Member="OR_Order" ThisKey="OE_OR_ID" OtherKey="OR_ID" Type="OR_Order" IsForeignKey="true" />
       <Association Name="PR_Product_OE_OrderItem" Member="PR_Product" ThisKey="OE_PR_ID" OtherKey="PR_ID" Type="PR_Product" IsForeignKey="true" />
     </Type>
@@ -86,8 +86,8 @@
       <Column Name="OR_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="OR_SU_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="OR_WO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="OR_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="OR_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OR_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OR_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="OR_Order_OE_OrderItem" Member="OE_OrderItems" ThisKey="OR_ID" OtherKey="OE_OR_ID" Type="OE_OrderItem" />
       <Association Name="WO_Worker_OR_Order" Member="WO_Worker" ThisKey="OR_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
       <Association Name="SU_Supplier_OR_Order" Member="SU_Supplier" ThisKey="OR_SU_ID" OtherKey="SU_ID" Type="SU_Supplier" IsForeignKey="true" />
@@ -116,10 +116,10 @@
       <Column Name="PR_PC_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PR_QT_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PR_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PR_DEPOT_QUANTITY" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="PR_UNIT_PRICE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="PR_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="PR_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PR_DEPOT_QUANTITY" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="PR_UNIT_PRICE" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="PR_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="PR_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="PR_IS_ACTIVE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="PR_USED" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="PR_Product_IE_InvoicesItem" Member="IE_InvoicesItems" ThisKey="PR_ID" OtherKey="IE_PR_ID" Type="IE_InvoicesItem" />
@@ -150,8 +150,8 @@
       <Column Name="SU_POST_CODE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="SU_TOWN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="SU_PHONE" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Column Name="SU_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="SU_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SU_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="SU_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="SU_Supplier_OR_Order" Member="OR_Orders" ThisKey="SU_ID" OtherKey="OR_SU_ID" Type="OR_Order" />
     </Type>
   </Table>
@@ -164,8 +164,8 @@
       <Column Name="US_IS_ADMIN" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="US_IS_CASHIER" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="US_IS_STOREKEEPER" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="US_ADDED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="US_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="US_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="US_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="WO_Worker_US_User" Member="WO_Worker" ThisKey="US_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
     </Type>
   </Table>

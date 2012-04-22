@@ -72,7 +72,7 @@ namespace WarehouseElectric.DataLayer
     #endregion
 		
 		public LinqDataLayerDataContext() : 
-				base(global::WarehouseElectric.Properties.Settings.Default.ElectricWarehouseConnectionString1, mappingSource)
+				base(global::WarehouseElectric.Properties.Settings.Default.ElectricWarehouseConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -224,9 +224,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private string _CU_PHONE;
 		
-		private System.Nullable<System.DateTime> _CU_ADDED;
+		private System.DateTime _CU_ADDED;
 		
-		private System.Nullable<System.DateTime> _CU_LAST_MODIFIED;
+		private System.DateTime _CU_LAST_MODIFIED;
 		
 		private EntitySet<IN_Invoice> _IN_Invoices;
 		
@@ -246,9 +246,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnCU_TOWNChanged();
     partial void OnCU_PHONEChanging(string value);
     partial void OnCU_PHONEChanged();
-    partial void OnCU_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnCU_ADDEDChanging(System.DateTime value);
     partial void OnCU_ADDEDChanged();
-    partial void OnCU_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnCU_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnCU_LAST_MODIFIEDChanged();
     #endregion
 		
@@ -378,8 +378,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CU_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime CU_ADDED
 		{
 			get
 			{
@@ -398,8 +398,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CU_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CU_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime CU_LAST_MODIFIED
 		{
 			get
 			{
@@ -486,9 +486,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private string _WO_PESEL;
 		
-		private System.Nullable<System.DateTime> _WO_ADDED;
+		private System.DateTime _WO_ADDED;
 		
-		private System.Nullable<System.DateTime> _WO_LAST_MODIFIED;
+		private System.DateTime _WO_LAST_MODIFIED;
 		
 		private EntitySet<IN_Invoice> _IN_Invoices;
 		
@@ -518,9 +518,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnWO_WORKING_SINCEChanged();
     partial void OnWO_PESELChanging(string value);
     partial void OnWO_PESELChanged();
-    partial void OnWO_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnWO_ADDEDChanging(System.DateTime value);
     partial void OnWO_ADDEDChanged();
-    partial void OnWO_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnWO_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnWO_LAST_MODIFIEDChanged();
     #endregion
 		
@@ -697,8 +697,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> WO_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime WO_ADDED
 		{
 			get
 			{
@@ -717,8 +717,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> WO_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WO_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime WO_LAST_MODIFIED
 		{
 			get
 			{
@@ -881,9 +881,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private System.Nullable<decimal> _IE_QUANTITY;
 		
-		private System.Nullable<System.DateTime> _IE_ADDED;
+		private System.DateTime _IE_ADDED;
 		
-		private System.Nullable<System.DateTime> _IE_LAST_MODIFIED;
+		private System.DateTime _IE_LAST_MODIFIED;
 		
 		private System.Nullable<decimal> _IE_UNIT_PRICE;
 		
@@ -911,9 +911,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnIE_PR_IDChanged();
     partial void OnIE_QUANTITYChanging(System.Nullable<decimal> value);
     partial void OnIE_QUANTITYChanged();
-    partial void OnIE_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnIE_ADDEDChanging(System.DateTime value);
     partial void OnIE_ADDEDChanged();
-    partial void OnIE_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnIE_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnIE_LAST_MODIFIEDChanged();
     partial void OnIE_UNIT_PRICEChanging(System.Nullable<decimal> value);
     partial void OnIE_UNIT_PRICEChanged();
@@ -1002,7 +1002,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_QUANTITY", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_QUANTITY", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> IE_QUANTITY
 		{
 			get
@@ -1022,8 +1022,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> IE_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime IE_ADDED
 		{
 			get
 			{
@@ -1042,8 +1042,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> IE_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime IE_LAST_MODIFIED
 		{
 			get
 			{
@@ -1062,7 +1062,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_UNIT_PRICE", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_UNIT_PRICE", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> IE_UNIT_PRICE
 		{
 			get
@@ -1082,7 +1082,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_TOTAL_NETTO", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_TOTAL_NETTO", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> IE_TOTAL_NETTO
 		{
 			get
@@ -1102,7 +1102,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_TOTAL_VAT", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_TOTAL_VAT", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> IE_TOTAL_VAT
 		{
 			get
@@ -1122,7 +1122,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_TOTAL_BRUTTO", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_TOTAL_BRUTTO", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> IE_TOTAL_BRUTTO
 		{
 			get
@@ -1142,7 +1142,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_VAT_RATE", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IE_VAT_RATE", DbType="Decimal(3,3)")]
 		public System.Nullable<decimal> IE_VAT_RATE
 		{
 			get
@@ -1265,9 +1265,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private int _IN_SP_ID;
 		
-		private System.Nullable<System.DateTime> _IN_ADDED;
+		private System.DateTime _IN_ADDED;
 		
-		private System.Nullable<System.DateTime> _IN_LAST_MODIFIED;
+		private System.DateTime _IN_LAST_MODIFIED;
 		
 		private System.Nullable<decimal> _IN_TOTAL;
 		
@@ -1293,9 +1293,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnIN_WO_IDChanged();
     partial void OnIN_SP_IDChanging(int value);
     partial void OnIN_SP_IDChanged();
-    partial void OnIN_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnIN_ADDEDChanging(System.DateTime value);
     partial void OnIN_ADDEDChanged();
-    partial void OnIN_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnIN_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnIN_LAST_MODIFIEDChanged();
     partial void OnIN_TOTALChanging(System.Nullable<decimal> value);
     partial void OnIN_TOTALChanged();
@@ -1404,8 +1404,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> IN_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime IN_ADDED
 		{
 			get
 			{
@@ -1424,8 +1424,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> IN_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime IN_LAST_MODIFIED
 		{
 			get
 			{
@@ -1444,7 +1444,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_TOTAL", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_TOTAL", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> IN_TOTAL
 		{
 			get
@@ -1464,7 +1464,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_SPEDITION_COST", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IN_SPEDITION_COST", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> IN_SPEDITION_COST
 		{
 			get
@@ -1646,9 +1646,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private System.Nullable<decimal> _OE_QUANTITY;
 		
-		private System.Nullable<System.DateTime> _OE_ADDED;
+		private System.DateTime _OE_ADDED;
 		
-		private System.Nullable<System.DateTime> _OE_LAST_MODIFIED;
+		private System.DateTime _OE_LAST_MODIFIED;
 		
 		private System.Nullable<decimal> _OE_UNIT_PRICE;
 		
@@ -1676,9 +1676,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnOE_OR_IDChanged();
     partial void OnOE_QUANTITYChanging(System.Nullable<decimal> value);
     partial void OnOE_QUANTITYChanged();
-    partial void OnOE_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnOE_ADDEDChanging(System.DateTime value);
     partial void OnOE_ADDEDChanged();
-    partial void OnOE_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnOE_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnOE_LAST_MODIFIEDChanged();
     partial void OnOE_UNIT_PRICEChanging(System.Nullable<decimal> value);
     partial void OnOE_UNIT_PRICEChanged();
@@ -1767,7 +1767,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_QUANTITY", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_QUANTITY", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> OE_QUANTITY
 		{
 			get
@@ -1787,8 +1787,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> OE_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime OE_ADDED
 		{
 			get
 			{
@@ -1807,8 +1807,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> OE_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime OE_LAST_MODIFIED
 		{
 			get
 			{
@@ -1827,7 +1827,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_UNIT_PRICE", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_UNIT_PRICE", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> OE_UNIT_PRICE
 		{
 			get
@@ -1847,7 +1847,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_TOTAL_NETTO", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_TOTAL_NETTO", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> OE_TOTAL_NETTO
 		{
 			get
@@ -1867,7 +1867,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_TOTAL_VAT", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_TOTAL_VAT", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> OE_TOTAL_VAT
 		{
 			get
@@ -1887,7 +1887,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_TOTAL_BRUTTO", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_TOTAL_BRUTTO", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> OE_TOTAL_BRUTTO
 		{
 			get
@@ -1907,7 +1907,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_VAT_RATE", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OE_VAT_RATE", DbType="Decimal(3,3)")]
 		public System.Nullable<decimal> OE_VAT_RATE
 		{
 			get
@@ -2028,9 +2028,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private int _OR_WO_ID;
 		
-		private System.Nullable<System.DateTime> _OR_ADDED;
+		private System.DateTime _OR_ADDED;
 		
-		private System.Nullable<System.DateTime> _OR_LAST_MODIFIED;
+		private System.DateTime _OR_LAST_MODIFIED;
 		
 		private EntitySet<OE_OrderItem> _OE_OrderItems;
 		
@@ -2048,9 +2048,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnOR_SU_IDChanged();
     partial void OnOR_WO_IDChanging(int value);
     partial void OnOR_WO_IDChanged();
-    partial void OnOR_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnOR_ADDEDChanging(System.DateTime value);
     partial void OnOR_ADDEDChanged();
-    partial void OnOR_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnOR_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnOR_LAST_MODIFIEDChanged();
     #endregion
 		
@@ -2130,8 +2130,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OR_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> OR_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OR_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime OR_ADDED
 		{
 			get
 			{
@@ -2150,8 +2150,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OR_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> OR_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OR_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime OR_LAST_MODIFIED
 		{
 			get
 			{
@@ -2623,9 +2623,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private System.Nullable<decimal> _PR_UNIT_PRICE;
 		
-		private System.Nullable<System.DateTime> _PR_ADDED;
+		private System.DateTime _PR_ADDED;
 		
-		private System.Nullable<System.DateTime> _PR_LAST_MODIFIED;
+		private System.DateTime _PR_LAST_MODIFIED;
 		
 		private System.Nullable<bool> _PR_IS_ACTIVE;
 		
@@ -2655,9 +2655,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnPR_DEPOT_QUANTITYChanged();
     partial void OnPR_UNIT_PRICEChanging(System.Nullable<decimal> value);
     partial void OnPR_UNIT_PRICEChanged();
-    partial void OnPR_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnPR_ADDEDChanging(System.DateTime value);
     partial void OnPR_ADDEDChanged();
-    partial void OnPR_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnPR_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnPR_LAST_MODIFIEDChanged();
     partial void OnPR_IS_ACTIVEChanging(System.Nullable<bool> value);
     partial void OnPR_IS_ACTIVEChanged();
@@ -2762,7 +2762,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_DEPOT_QUANTITY", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_DEPOT_QUANTITY", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> PR_DEPOT_QUANTITY
 		{
 			get
@@ -2782,7 +2782,7 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_UNIT_PRICE", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_UNIT_PRICE", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> PR_UNIT_PRICE
 		{
 			get
@@ -2802,8 +2802,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> PR_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime PR_ADDED
 		{
 			get
 			{
@@ -2822,8 +2822,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> PR_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PR_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime PR_LAST_MODIFIED
 		{
 			get
 			{
@@ -3267,9 +3267,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private string _SU_PHONE;
 		
-		private System.Nullable<System.DateTime> _SU_ADDED;
+		private System.DateTime _SU_ADDED;
 		
-		private System.Nullable<System.DateTime> _SU_LAST_MODIFIED;
+		private System.DateTime _SU_LAST_MODIFIED;
 		
 		private EntitySet<OR_Order> _OR_Orders;
 		
@@ -3289,9 +3289,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnSU_TOWNChanged();
     partial void OnSU_PHONEChanging(string value);
     partial void OnSU_PHONEChanged();
-    partial void OnSU_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnSU_ADDEDChanging(System.DateTime value);
     partial void OnSU_ADDEDChanged();
-    partial void OnSU_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnSU_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnSU_LAST_MODIFIEDChanged();
     #endregion
 		
@@ -3421,8 +3421,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SU_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime SU_ADDED
 		{
 			get
 			{
@@ -3441,8 +3441,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SU_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SU_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime SU_LAST_MODIFIED
 		{
 			get
 			{
@@ -3527,9 +3527,9 @@ namespace WarehouseElectric.DataLayer
 		
 		private bool _US_IS_STOREKEEPER;
 		
-		private System.Nullable<System.DateTime> _US_ADDED;
+		private System.DateTime _US_ADDED;
 		
-		private System.Nullable<System.DateTime> _US_LAST_MODIFIED;
+		private System.DateTime _US_LAST_MODIFIED;
 		
 		private EntityRef<WO_Worker> _WO_Worker;
 		
@@ -3551,9 +3551,9 @@ namespace WarehouseElectric.DataLayer
     partial void OnUS_IS_CASHIERChanged();
     partial void OnUS_IS_STOREKEEPERChanging(bool value);
     partial void OnUS_IS_STOREKEEPERChanged();
-    partial void OnUS_ADDEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnUS_ADDEDChanging(System.DateTime value);
     partial void OnUS_ADDEDChanged();
-    partial void OnUS_LAST_MODIFIEDChanging(System.Nullable<System.DateTime> value);
+    partial void OnUS_LAST_MODIFIEDChanging(System.DateTime value);
     partial void OnUS_LAST_MODIFIEDChanged();
     #endregion
 		
@@ -3707,8 +3707,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_ADDED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> US_ADDED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime US_ADDED
 		{
 			get
 			{
@@ -3727,8 +3727,8 @@ namespace WarehouseElectric.DataLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_LAST_MODIFIED", DbType="DateTime")]
-		public System.Nullable<System.DateTime> US_LAST_MODIFIED
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_US_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime US_LAST_MODIFIED
 		{
 			get
 			{
