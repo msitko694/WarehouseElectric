@@ -67,6 +67,9 @@
     <Compile Include="ChoosePanelView.xaml.cs">
       <DependentUpon>ChoosePanelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomerFullView.xaml.cs">
+      <DependentUpon>CustomerFullView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataLayer\LinqDataLayer.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -130,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChoosePanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomerFullView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

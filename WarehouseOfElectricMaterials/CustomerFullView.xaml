@@ -1,0 +1,17 @@
+﻿<Window x:Class="WarehouseElectric.CustomerFullView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Klient - " Height="450" Width="600">
+    <Grid Height="416" Width="575">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="14*" />
+            <ColumnDefinition Width="554*" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Dane firmy:" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" Width="121" Grid.ColumnSpan="2" />
+        <Label Content="Nazwa:" Height="28" HorizontalAlignment="Left" Margin="0,46,0,0" Name="label2" VerticalAlignment="Top" Grid.Column="1" />
+        <Label Content="Ulica:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="0,80,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Miasto:" Height="28" HorizontalAlignment="Left" Margin="0,114,0,0" Name="label4" VerticalAlignment="Top" Grid.Column="1" />
+        <Label Content="Kod pocztowy:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,148,0,0" Name="label5" VerticalAlignment="Top" />
+        <Label Content="Telefon:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,182,0,0" Name="label6" VerticalAlignment="Top" />
+    </Grid>
+</Window>
