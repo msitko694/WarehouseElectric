@@ -1,8 +1,8 @@
 ﻿<Window x:Class="WarehouseElectric.CustomerFullView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Klient - " Height="450" Width="600">
-    <Grid Height="416" Width="575">
+        Title="Klient - " Height="485" Width="600">
+    <Grid Height="478" Width="575">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="14*" />
             <ColumnDefinition Width="554*" />
@@ -13,5 +13,8 @@
         <Label Content="Miasto:" Height="28" HorizontalAlignment="Left" Margin="0,114,0,0" Name="label4" VerticalAlignment="Top" Grid.Column="1" />
         <Label Content="Kod pocztowy:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,148,0,0" Name="label5" VerticalAlignment="Top" />
         <Label Content="Telefon:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,182,0,0" Name="label6" VerticalAlignment="Top" />
+        <DataGrid AutoGenerateColumns="False" Grid.Column="1" Height="163" HorizontalAlignment="Left" Margin="1,246,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="548" />
+        <Label Content="Historia faktur:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,225,0,0" Name="label7" VerticalAlignment="Top" />
+        <Button Content="Button" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="0,415,0,0" Name="button1" VerticalAlignment="Top" Width="548" />
     </Grid>
 </Window>

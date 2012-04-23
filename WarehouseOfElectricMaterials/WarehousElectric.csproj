@@ -116,6 +116,7 @@
     <Compile Include="ViewModels\CashierViewModel.cs" />
     <Compile Include="ViewModels\ChoosePanelViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\CustomerFullViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\StorekeeperViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
