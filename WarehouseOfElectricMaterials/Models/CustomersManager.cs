@@ -68,6 +68,13 @@ namespace WarehouseElectric.Models
            return (from customer in DataContext.CU_Customers select customer).ToList<CU_Customer>();
         }
 
+        public IList<CU_Customer> GetByName(string name)
+        {
+            return (from customer in DataContext.CU_Customers
+                    where customer.CU_NAME.Contains(name)
+                    select customer).ToList<CU_Customer>();
+        }
+
         /// <summary>
         /// Gets the customer.
         /// </summary>

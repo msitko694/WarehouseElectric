@@ -15,6 +15,10 @@ namespace WarehouseElectric.ViewModels
         public CashierViewModel(CashierView cashierView)
         {
             _cashierView = cashierView;
+
+            CustomersManager customersManager = new CustomersManager();
+            ListCustomersToShow = customersManager.GetAll().ToList();
+
         }
 
         #endregion //Constructors
@@ -22,9 +26,10 @@ namespace WarehouseElectric.ViewModels
         #region "Fields"
         private CashierView _cashierView;
         private RelayCommand _logOutCommand;
-
+        private RelayCommand _customerSearchCommand;
+        private IList<CU_Customer> _listCustomersToShow;
+        private String _customerNameToSearch;
         #endregion //Fields
-
 
         #region "Properties"
         public RelayCommand LogOutCommand
@@ -42,7 +47,46 @@ namespace WarehouseElectric.ViewModels
             {
                 _logOutCommand = value;
             }
-
+        }
+        public RelayCommand CustomerSearchCommand
+        {
+            get
+            {
+                if (_customerSearchCommand == null)
+                {
+                    _customerSearchCommand = new RelayCommand(CustomerSearch);
+                    _customerSearchCommand.CanUndo = (obj) => false;
+                }
+                return _customerSearchCommand; 
+            }
+            set
+            {
+                _customerSearchCommand = value;   
+            }
+        }
+        public IList<CU_Customer> ListCustomersToShow
+        {
+            get
+            {
+                return _listCustomersToShow;
+            }
+            set
+            {
+                _listCustomersToShow = value;
+                OnPropertyChanged("ListCustomersToShow");
+            }
+        }
+        public String CustomerNameToSearch
+        {
+            get
+            {
+                return _customerNameToSearch;
+            }
+            set
+            {
+                _customerNameToSearch = value;
+                OnPropertyChanged("CustomerNameToSearch");
+            }
         }
         #endregion //Properties
         
@@ -55,6 +99,13 @@ namespace WarehouseElectric.ViewModels
 
             _cashierView.Close();
 
+        }
+        public void CustomerSearch(Object obj)
+        {
+            CustomersManager customersManager = new CustomersManager();
+            ListCustomersToShow.Clear();
+            ListCustomersToShow = customersManager.GetByName(CustomerNameToSearch);
+          
         }
         #endregion //Methods
     }
