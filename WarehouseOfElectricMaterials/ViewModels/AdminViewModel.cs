@@ -49,6 +49,15 @@ namespace WarehouseElectric.ViewModels
             AddWorkerFailedWorkerPositionSelectedVisibilityLabel = Visibility.Hidden;
             AddWorkerFailedWorkerNameVisibilityLabel = Visibility.Hidden;
             AddWorkerFailedWorkerSurnameVisibilityLabel = Visibility.Hidden;
+
+            //zakładka pracownicy/zarządzanie
+            ListAllWorkersToModifyDataGrid = workerManager.GetAll();
+            //ListPositionsToModifyWorkerComboBox = positionsManager.GetAllName();
+            ModifyWorkerFailedPhoneVisibilityLabel = Visibility.Hidden;
+            ModifyWorkerFailedSelectedWorkerVisibilityLabel = Visibility.Hidden;
+            ModifyWorkerFailedBirthDateVisibilityLabel = Visibility.Hidden;
+            ModifyWorkerFailedEmploymentDateVisibilityLabel = Visibility.Hidden;
+            ModifyWorkerFailedPeselVisibilityLabel = Visibility.Hidden;
         }
 
         #endregion //Constructors
@@ -64,11 +73,16 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _modifyUserCommond; //modyfikacja użytkownika
         private RelayCommand _deleteUserCommond; //usuwanie użytkownika
         private RelayCommand _addWorkerCommond; //dodawanie nowego pracownika
+        private RelayCommand _findWorkerToModifyButtonCommand; //wyszukanie pracownika do modyfikacji (zakładka pracownicy/zarządzanie) 
+        private RelayCommand _modifyWorkerButtonCommond; //modyfikacja pracownika (zakładka pracownicy/zarządzanie)
         private IList<WO_Worker> _listWorkersAll;
+        private IList<WO_Worker> _listAllWorkersToModifyDataGrid; //wyświetlenie w datagrid listy pracowników (zakładka pracownicy/zarządzanie)
         private List<US_User> _listUserToModificationDataGrid; //wyświetlenie w datagrid listy userów do modyfikacji(zakładka użytkownicy/zarządzanie)
         private List<String> _listPositionsToAddWorkerComboBox; //dodanie do combobox listy pozycji pracowników (zakładka pracownicy/nowy)
         private WO_Worker _workerSelectedToAddUser;
-        private String _positionSelectedToAddWorker; //wybrana pozycja z comboboxa zakładka pracownicy/nowy 
+        private WO_Worker _workerSelectedToModifyInDataGrid; //wybrany pracownik do modyfikacji (zakładka pracownicy/zarządzanie)
+        private String _positionSelectedToAddWorker; //wybrana pozycja z comboboxa zakładka pracownicy/nowy
+        private String _positionSelectedToModifyWorker; //wybrana pozycja z comboboxa zakładka pracownicy/zarządzanie 
         private US_User _userSelectedToModificationInDataGrid;
         private String _findWorkerByNameToAddUser;
         private String _userNameToAddNewUser;
@@ -87,6 +101,17 @@ namespace WarehouseElectric.ViewModels
         private String _workerYearOfEmploymentToAddTextBox; //pobieranie roku zatrudnienia pracownika (zakładka pracownicy/nowy)
         private String _workerMonthOfEmploymentToAddTextBox; //pobieranie miesiąca zatrudnienia pracownika (zakładka pracownicy/nowy)
         private String _workerDayOfEmploymentToAddTextBox; //pobieranie dnia zatrudnienia pracownika (zakładka pracownicy/nowy)
+        private String _findWorkerByNameToModifyTextBox; //wyszukiwanie pracaownik do modyfikacji(zakładka pracownicy/zarządzanie)
+        private String _newWorkerNameTextBox; //pobranie nowego imienia pracownika (zakładka pracownicy/modyfikacja)
+        private String _newWorkerSurnameTextBox; //pobranie nowego nazwiska pracownika (zakładka pracownicy/modyfikacja)
+        private String _newWorkerPhoneTextBox; //pobranie nowego numeru telefonu pracownika (zakładka pracownicy/modyfikacja)
+        private String _newWorkerDayOfBirthdayTextBox; //pobieranie dnia urodzenia pracownida(zakładka pracownicy/modyfikacja)
+        private String _newWorkerYearOfBirthdayTextBox; //pobieranie roku urodzenia pracownida(zakładka pracownicy/modyfikacja)
+        private String _newWorkerMonthOfBirthdayTextBox; //pobieranie roku urodzenia pracownida(zakładka pracownicy/modyfikacja)
+        private String _newWorkerYearOfEmploymentTextBox; //pobieranie roku zatrudnienia pracownika(zakładka pracownicy/modyfikacja)
+        private String _newWorkerMonthOfEmploymentTextBox; //pobieranie miesiąca zatrudnienia pracownika(zakładka pracownicy/modyfikacja)
+        private String _newWorkerDayOfEmploymentTextBox; //pobieranie miesiąca zatrudnienia pracownika(zakładka pracownicy/modyfikacja)
+        private String _newWorkerPeselTextBox; //pobieranie nowego numeru pesel pracownika(zakładka pracownicy/modyfikacja)
         private bool _newUserIsAdmin;
         private bool _newUserIsCashier;
         private bool _newUserIsStorekeeper;
@@ -95,6 +120,7 @@ namespace WarehouseElectric.ViewModels
         private bool _modifiedUserIsAdminCheckBox; //modyfikowany użytkownik będzie administratorem
         private bool _modifiedUserIsCashierCheckBox; //modyfikowany użytkownik będzie kasjerem
         private bool _modifiedUserIsStorekeeperCheckBox; //modyfikowany użytkownik będzie magazynierem
+        private bool _unlockWorkerToModificationCheckBox; //checkbox odblokowywujący możliwość modyfikacji pracownika
         private Visibility _addUserFailedVisibility;
         private Visibility _addUserFailedUserNameVisibility;
         private Visibility _addUserFailedUserPasswordVisibility;
@@ -106,6 +132,11 @@ namespace WarehouseElectric.ViewModels
         private Visibility _addWorkerFailedWorkerPositionSelectedVisibilityLabel; //wyświetlenie informacji o błędnym wyborze pozycji przy dodawaniu pracownika
         private Visibility _addWorkerFailedWorkerNameVisibilityLabel; //wyświetlenie informacji o błędnym wprowadzeniu imienia przy dodawaniu pracownika
         private Visibility _addWorkerFailedWorkerSurnameVisibilityLabel; //wyświetlenie informacji o błędnym wprowadzeniu nazwiska przy dodawaniu pracownika
+        private Visibility _modifyWorkerFailedPhoneVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu numeru telefonu
+        private Visibility _modifyWorkerFailedSelectedWorkerVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu numeru telefonu
+        private Visibility _modifyWorkerFailedBirthDateVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu daty urodzenia
+        private Visibility _modifyWorkerFailedEmploymentDateVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu daty zatrudnienia(zakładka pracownicy/zarządzanie)
+        private Visibility _modifyWorkerFailedPeselVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu numeru pesel(zakładka pracownicy/zarządzanie)
 
 
         #endregion //Fields
@@ -241,8 +272,36 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public RelayCommand FindWorkerToModifyButtonCommand
+        {
+            get
+            {
+                _findWorkerToModifyButtonCommand = new RelayCommand(FindWorkerToModifyButton);
+                _findWorkerToModifyButtonCommand.CanUndo = (obj) => false;
 
+                return _findWorkerToModifyButtonCommand;
 
+            }
+            set
+            {
+                _findWorkerToModifyButtonCommand = value;
+            }
+        }
+
+        public RelayCommand ModifyWorkerButtonCommond
+        {
+            get
+            {
+                _modifyWorkerButtonCommond = new RelayCommand(ModifyWorkerButton);
+                _modifyWorkerButtonCommond.CanUndo = (obj) => false;
+
+                return _modifyWorkerButtonCommond;
+            }
+            set
+            {
+                _modifyWorkerButtonCommond = value;
+            }
+        }
 
         public IList<WO_Worker> ListWorkersAll
         {
@@ -257,6 +316,18 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public IList<WO_Worker> ListAllWorkersToModifyDataGrid
+        {
+            get
+            {
+                return _listAllWorkersToModifyDataGrid;
+            }
+            set
+            {
+                _listAllWorkersToModifyDataGrid = value;
+                OnPropertyChanged("ListAllWorkersToModifyDataGrid");
+            }
+        }
         
         public List<US_User> ListUserToModificationDataGrid
         {
@@ -284,6 +355,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+
         //zaznaczony pracownik w data gridzie
         public WO_Worker WorkerSelectedToAddUser
         {
@@ -295,6 +367,19 @@ namespace WarehouseElectric.ViewModels
             {
                 _workerSelectedToAddUser = value;
                 OnPropertyChanged("WorkerSelectedToAddUser");
+            }
+        }
+
+        public WO_Worker WorkerSelectedToModifyInDataGrid
+        {
+            get
+            {
+                return _workerSelectedToModifyInDataGrid;
+            }
+            set
+            {
+                _workerSelectedToModifyInDataGrid = value;
+                OnPropertyChanged("WorkerSelectedToModifyInDataGrid");
             }
         }
 
@@ -550,6 +635,162 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public String FindWorkerByNameToModifyTextBox
+        {
+            get
+            {
+                return _findWorkerByNameToModifyTextBox;
+            }
+            set
+            {
+                _findWorkerByNameToModifyTextBox = value;
+                OnPropertyChanged("FindWorkerByNameToModifyTextBox");
+            }
+        }
+
+        public String NewWorkerNameTextBox
+        {
+            get
+            {
+                return _newWorkerNameTextBox;
+            }
+            set
+            {
+                _newWorkerNameTextBox = value;
+                OnPropertyChanged("NewWorkerNameTextBox");
+            }
+        }
+
+        public String NewWorkerSurnameTextBox
+        {
+            get
+            {
+                return _newWorkerSurnameTextBox;
+            }
+            set
+            {
+                _newWorkerSurnameTextBox = value;
+                OnPropertyChanged("NewWorkerSurnameTextBox");
+            }
+        }
+
+        public String NewWorkerPhoneTextBox
+        {
+            get
+            {
+                return _newWorkerPhoneTextBox;
+            }
+            set
+            {
+                _newWorkerPhoneTextBox = value;
+                OnPropertyChanged("NewWorkerPhoneTextBox");
+            }
+        }
+
+        public String NewWorkerDayOfBirthdayTextBox
+        {
+            get
+            {
+                return _newWorkerDayOfBirthdayTextBox;
+            }
+            set
+            {
+                _newWorkerDayOfBirthdayTextBox = value;
+                OnPropertyChanged("NewWorkerDayOfBirthdayTextBox");
+            }
+        }
+
+        public String NewWorkerYearOfBirthdayTextBox
+        {
+            get 
+            {
+                return _newWorkerYearOfBirthdayTextBox;
+            }
+            set
+            {
+                _newWorkerYearOfBirthdayTextBox = value;
+                OnPropertyChanged("NewWorkerYearOfBirthdayTextBox");
+            }
+        }
+
+        public String NewWorkerMonthOfBirthdayTextBox
+        {
+            get
+            {
+                return _newWorkerMonthOfBirthdayTextBox;
+            }
+            set
+            {
+                _newWorkerMonthOfBirthdayTextBox = value;
+                OnPropertyChanged("NewWorkerMonthOfBirthdayTextBox");
+            }
+        }
+
+        public String NewWorkerYearOfEmploymentTextBox
+        {
+            get
+            {
+                return _newWorkerYearOfEmploymentTextBox;
+            }
+            set
+            {
+                _newWorkerYearOfEmploymentTextBox = value;
+                OnPropertyChanged("NewWorkerYearOfEmploymentTextBox");
+            }
+        }
+
+        public String NewWorkerMonthOfEmploymentTextBox
+        {
+            get
+            {
+                return _newWorkerMonthOfEmploymentTextBox;
+            }
+            set
+            {
+                _newWorkerMonthOfEmploymentTextBox = value;
+                OnPropertyChanged("NewWorkerMonthOfEmploymentTextBox");
+            }
+        }
+
+        public String NewWorkerDayOfEmploymentTextBox
+        {
+            get
+            {
+                return _newWorkerDayOfEmploymentTextBox;
+            }
+            set
+            {
+                _newWorkerDayOfEmploymentTextBox = value;
+                OnPropertyChanged("NewWorkerDayOfEmploymentTextBox");
+            }
+        }
+
+        public String PositionSelectedToModifyWorker
+        {
+            get
+            {
+                return _positionSelectedToModifyWorker;
+            }
+            set
+            {
+                _positionSelectedToModifyWorker = value;
+                OnPropertyChanged("PositionSelectedToModifyWorker");
+            }
+        }
+
+        public String NewWorkerPeselTextBox
+        {
+            get
+            {
+                return _newWorkerPeselTextBox;
+            }
+            set
+            {
+                _newWorkerPeselTextBox = value;
+                OnPropertyChanged("NewWorkerPeselTextBox");
+            }
+        }
+
         public bool NewUserIsAdmin
         {
             get
@@ -654,6 +895,18 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public bool UnlockWorkerToModificationCheckBox
+        {
+            get
+            {
+                return _unlockWorkerToModificationCheckBox;
+            }
+            set
+            {
+                _unlockWorkerToModificationCheckBox = value;
+                OnPropertyChanged("UnlockWorkerToModificationCheckBox");
+            }
+        }
 
         public Visibility AddUserFailedVisibility
         {
@@ -798,6 +1051,71 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public Visibility ModifyWorkerFailedPhoneVisibilityLabel
+        {
+            get
+            {
+                return _modifyWorkerFailedPhoneVisibilityLabel;
+            }
+            set
+            {
+                _modifyWorkerFailedPhoneVisibilityLabel = value;
+                OnPropertyChanged("ModifyWorkerFailedPhoneVisibilityLabel");
+            }
+        }
+
+        public Visibility ModifyWorkerFailedSelectedWorkerVisibilityLabel
+        {
+            get
+            {
+                return _modifyWorkerFailedSelectedWorkerVisibilityLabel;
+            }
+            set
+            {
+                _modifyWorkerFailedSelectedWorkerVisibilityLabel = value;
+                OnPropertyChanged("ModifyWorkerFailedSelectedWorkerVisibilityLabel");
+            }
+        }
+
+        public Visibility ModifyWorkerFailedBirthDateVisibilityLabel
+        {
+            get
+            {
+                return _modifyWorkerFailedBirthDateVisibilityLabel;
+            }
+            set
+            {
+                _modifyWorkerFailedBirthDateVisibilityLabel = value;
+                OnPropertyChanged("ModifyWorkerFailedBirthDateVisibilityLabel");
+            }
+        }
+
+        public Visibility ModifyWorkerFailedEmploymentDateVisibilityLabel
+        {
+            get
+            {
+                return _modifyWorkerFailedEmploymentDateVisibilityLabel;
+            }
+            set
+            {
+                _modifyWorkerFailedEmploymentDateVisibilityLabel = value;
+                OnPropertyChanged("ModifyWorkerFailedEmploymentDateVisibilityLabel");
+            }
+        }
+
+        public Visibility ModifyWorkerFailedPeselVisibilityLabel
+        {
+            get
+            {
+                return _modifyWorkerFailedPeselVisibilityLabel;
+            }
+            set
+            {
+                _modifyWorkerFailedPeselVisibilityLabel = value;
+                OnPropertyChanged("ModifyWorkerFailedPeselVisibilityLabel");
+            }
+        }
+
 
         #endregion //Properties
 
@@ -829,8 +1147,6 @@ namespace WarehouseElectric.ViewModels
             
             
         }
-
-        
 
         public void AddUser(Object obj)
         {
@@ -874,8 +1190,11 @@ namespace WarehouseElectric.ViewModels
 
                 userManager.Add(newUser);
 
+                MessageBox.Show("Dodano użytkownika");
+
                 //pobranie aktualnej listy uzytkowników do zakładki zarządzania użytkownikami
                 ListUserToModificationDataGrid = userManager.GetAll().ToList();
+
             }
             
 
@@ -920,7 +1239,7 @@ namespace WarehouseElectric.ViewModels
                 user.US_LAST_MODIFIED = DateTime.Now;
 
                 userManager.Update();
-
+                MessageBox.Show("Użytkownik został zmodyfikowany");
 
                 ListUserToModificationDataGrid = userManager.GetAll().ToList();
             }
@@ -934,6 +1253,7 @@ namespace WarehouseElectric.ViewModels
                 UsersManager userManager = new UsersManager();
                 US_User user = userManager.GetByUserName(UserSelectedToModificationInDataGrid.US_USERNAME);
                 userManager.Delete(user);
+                MessageBox.Show("Użytkownik został usunięty");
                 ListUserToModificationDataGrid = userManager.GetAll().ToList();
             }
             else
@@ -1003,8 +1323,8 @@ namespace WarehouseElectric.ViewModels
                 && AddWorkerFailedWorkerPositionSelectedVisibilityLabel == Visibility.Hidden && AddWorkerFailedWorkerNameVisibilityLabel == Visibility.Hidden
                 && AddWorkerFailedWorkerSurnameVisibilityLabel == Visibility.Hidden)
             {
-                birthDate = WorkerDayOfBirthdayToAddTextBox + "/" + WorkerMonthOfBirthdayToAddTextBox + "/" + WorkerYearOfBirthdayToAddTextBox;
-                employmentDate = WorkerDayOfEmploymentToAddTextBox + "/" + WorkerMonthOfEmploymentToAddTextBox + "/" + WorkerYearOfEmploymentToAddTextBox;
+                birthDate = WorkerMonthOfBirthdayToAddTextBox + "/" + WorkerDayOfBirthdayToAddTextBox + "/" + WorkerYearOfBirthdayToAddTextBox;
+                employmentDate = WorkerMonthOfEmploymentToAddTextBox + "/" + WorkerDayOfEmploymentToAddTextBox + "/" + WorkerYearOfEmploymentToAddTextBox;
                 dateOfBirthday = Convert.ToDateTime(birthDate);
                 dateOfEmployment = Convert.ToDateTime(employmentDate);
                 PositionsManager positionManager = new PositionsManager();
@@ -1026,8 +1346,129 @@ namespace WarehouseElectric.ViewModels
                 birthDate = null;
                 workerManager.Add(newWorker);
                 MessageBox.Show("Pracownik został dodany");
+                ListWorkersAll = workerManager.GetAll();
             }
             
+
+            
+        }
+        //zakładka pracownicy/zarządzanie
+        public void FindWorkerToModifyButton(Object obj)
+        {
+            WorkersManager workerManager = new WorkersManager();
+            ListAllWorkersToModifyDataGrid = workerManager.GetByWorkerSurname(FindWorkerByNameToModifyTextBox);
+        }
+
+        public void ModifyWorkerButton(Object obj)
+        {
+            Int32 result;
+            Int64 resultInt64;
+            String birthDate = null;
+            String employmentDate = null;
+            DateTime dateOfBirthday;
+            DateTime dateOfEmployment;
+            
+
+            if (WorkerSelectedToModifyInDataGrid != null)
+                ModifyWorkerFailedSelectedWorkerVisibilityLabel = Visibility.Hidden;
+            else
+                ModifyWorkerFailedSelectedWorkerVisibilityLabel = Visibility.Visible;
+            if (ModifyWorkerFailedSelectedWorkerVisibilityLabel == Visibility.Hidden)
+            {
+                WorkersManager workerManager = new WorkersManager();
+                WO_Worker newWorker = workerManager.Get(WorkerSelectedToModifyInDataGrid.WO_ID);
+                //sprawdzenie poprawnośći wprowadzenia daty urodzenia przy modyfikacji pracownika
+                if (NewWorkerYearOfBirthdayTextBox != null && NewWorkerYearOfBirthdayTextBox != ""
+                    || NewWorkerMonthOfBirthdayTextBox != null && NewWorkerMonthOfBirthdayTextBox != ""
+                    || NewWorkerDayOfBirthdayTextBox != null && NewWorkerDayOfBirthdayTextBox != "")
+                {
+                    if (!Int32.TryParse(NewWorkerYearOfBirthdayTextBox, out result) || NewWorkerYearOfBirthdayTextBox.Length != 4
+                         || !Int32.TryParse(NewWorkerMonthOfBirthdayTextBox, out result) || NewWorkerMonthOfBirthdayTextBox.Length != 2
+                         || !Int32.TryParse(NewWorkerDayOfBirthdayTextBox, out result) || NewWorkerDayOfBirthdayTextBox.Length != 2)
+
+                        ModifyWorkerFailedBirthDateVisibilityLabel = Visibility.Visible;
+                    else
+                    {
+                        ModifyWorkerFailedBirthDateVisibilityLabel = Visibility.Hidden;
+                        birthDate = NewWorkerYearOfBirthdayTextBox + "/" + NewWorkerMonthOfBirthdayTextBox + "/" + NewWorkerDayOfBirthdayTextBox;
+                        dateOfBirthday = Convert.ToDateTime(birthDate);
+                        newWorker.WO_BIRTH_DATE = dateOfBirthday;
+                    }
+                }
+                else
+                    ModifyWorkerFailedBirthDateVisibilityLabel = Visibility.Hidden;
+
+                //sprawdzenie poprawnośći wprowadzenia numeru pesel przy dodawaniu pracownika
+                if (NewWorkerPeselTextBox != null && NewWorkerPeselTextBox != "")
+                {
+                    if (!Int64.TryParse(NewWorkerPeselTextBox, out resultInt64) || NewWorkerPeselTextBox.Length != 11)
+                        ModifyWorkerFailedPeselVisibilityLabel = Visibility.Visible;
+                    else
+                    {
+                        ModifyWorkerFailedPeselVisibilityLabel = Visibility.Hidden;
+                        newWorker.WO_PESEL = NewWorkerPeselTextBox;
+                    }
+                }
+                else
+                    ModifyWorkerFailedPeselVisibilityLabel = Visibility.Hidden;
+
+                //sprawdzenie poprawnośći wprowadzenia daty zatrudnienia przy modyfikacji pracownika
+                if (NewWorkerYearOfEmploymentTextBox != null && NewWorkerYearOfEmploymentTextBox != ""
+                    || NewWorkerMonthOfEmploymentTextBox != null && NewWorkerMonthOfEmploymentTextBox != ""
+                    || NewWorkerDayOfEmploymentTextBox != null && NewWorkerDayOfEmploymentTextBox != "")
+                {
+
+                    if (!Int32.TryParse(NewWorkerYearOfEmploymentTextBox, out result) || NewWorkerYearOfEmploymentTextBox.Length != 4
+                        || !Int32.TryParse(NewWorkerMonthOfEmploymentTextBox, out result) || NewWorkerMonthOfEmploymentTextBox.Length != 2
+                        || !Int32.TryParse(NewWorkerDayOfEmploymentTextBox, out result) || NewWorkerDayOfEmploymentTextBox.Length != 2)
+
+                        ModifyWorkerFailedEmploymentDateVisibilityLabel = Visibility.Visible;
+                    else
+                    {
+                        ModifyWorkerFailedEmploymentDateVisibilityLabel = Visibility.Hidden;
+                        employmentDate = NewWorkerYearOfEmploymentTextBox + "/" + NewWorkerMonthOfEmploymentTextBox + "/" + NewWorkerDayOfEmploymentTextBox;
+                        dateOfEmployment = Convert.ToDateTime(employmentDate);
+                        newWorker.WO_WORKING_SINCE = dateOfEmployment;
+                    }
+                }
+                else
+                    ModifyWorkerFailedEmploymentDateVisibilityLabel = Visibility.Hidden;
+
+
+                if (NewWorkerNameTextBox != null && NewWorkerNameTextBox != "")
+                    newWorker.WO_NAME = NewWorkerNameTextBox;
+
+                if (NewWorkerSurnameTextBox != null && NewWorkerSurnameTextBox != "" && NewWorkerSurnameTextBox != " ")
+                    newWorker.WO_SURNAME = NewWorkerSurnameTextBox;
+
+                if (NewWorkerPhoneTextBox != null && NewWorkerPhoneTextBox != "")
+                    if (!Int32.TryParse(NewWorkerPhoneTextBox, out result))
+                        ModifyWorkerFailedPhoneVisibilityLabel = Visibility.Visible;
+                    else
+                    {
+                        ModifyWorkerFailedPhoneVisibilityLabel = Visibility.Hidden;
+                        newWorker.WO_PHONE = NewWorkerPhoneTextBox;
+                    }
+
+                if (ModifyWorkerFailedSelectedWorkerVisibilityLabel == Visibility.Hidden && ModifyWorkerFailedBirthDateVisibilityLabel == Visibility.Hidden
+                    && ModifyWorkerFailedPeselVisibilityLabel == Visibility.Hidden && ModifyWorkerFailedEmploymentDateVisibilityLabel == Visibility.Hidden)
+                {
+
+                    if (PositionSelectedToModifyWorker != null)
+                    {
+                        PositionsManager positionManager = new PositionsManager();
+                        PO_Position position = positionManager.GetByPositionName(PositionSelectedToModifyWorker);
+                        newWorker.WO_PO_ID = position.PO_ID;
+                    }
+
+                    newWorker.WO_LAST_MODIFIED = DateTime.Now;
+
+                    workerManager.Update();
+                    MessageBox.Show("Zmodyfikowano użytkownika");
+                    ListAllWorkersToModifyDataGrid = workerManager.GetAll();
+                }
+            }
+
         }
 
         #endregion //Methods
