@@ -11,6 +11,7 @@ namespace WarehouseElectric.Models
     {
         IList<SP_Spedition> GetAll();
         SP_Spedition Get(int id);
+        SP_Spedition GetByName(String name);
         void Add(SP_Spedition spedition);
         void Delete(SP_Spedition spedition);
         void Update();

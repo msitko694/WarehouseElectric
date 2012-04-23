@@ -143,14 +143,16 @@
             </TabItem>
             <TabItem Header="Typy wysyłki / Jednostki Produktów" Name="tabItem3">
                 <Grid>
-                    <TextBox Height="23" HorizontalAlignment="Left" Margin="36,65,0,0" Name="textBoxNewSpeditionType" VerticalAlignment="Top" Width="249" />
-                    <Button Content="Podaj nowy typ wysyłki" Height="21" HorizontalAlignment="Left" Margin="36,94,0,0" Name="buttAddNewSpeditionType" VerticalAlignment="Top" Width="131" />
-                    <DataGrid AutoGenerateColumns="True" Height="273" HorizontalAlignment="Left" Margin="36,153,0,0" Name="dataGridSpeditionTypeShow" VerticalAlignment="Top" Width="319" />
+                    <TextBox Text="{Binding Path=NewSpeditionTypeTextBox}" Height="23" HorizontalAlignment="Left" Margin="36,65,0,0" Name="textBoxNewSpeditionType" VerticalAlignment="Top" Width="249" OverridesDefaultStyle="False" />
+                    <Button Command="{Binding Path=AddNewSpeditionTypeButtonCommand}" Content="Podaj nowy typ wysyłki" Height="21" HorizontalAlignment="Left" Margin="36,94,0,0" Name="buttAddNewSpeditionType" VerticalAlignment="Top" Width="131" />
+                    <DataGrid ItemsSource="{Binding Path=ListSpeditionsTypeDataGrid}" AutoGenerateColumns="True" Height="273" HorizontalAlignment="Left" Margin="36,153,0,0" Name="dataGridSpeditionTypeShow" VerticalAlignment="Top" Width="319" />
                     <Label Content="Typy wysyłki" Height="28" HorizontalAlignment="Left" Margin="36,15,0,0" Name="label31" VerticalAlignment="Top" />
-                    <TextBox Height="23" HorizontalAlignment="Left" Margin="403,65,0,0" Name="textBoxNewQuantityType" VerticalAlignment="Top" Width="249" />
-                    <Button Content="Dodaj nową jednostkę" Height="21" HorizontalAlignment="Left" Margin="403,94,0,0" Name="button1" VerticalAlignment="Top" Width="131" />
-                    <DataGrid AutoGenerateColumns="True" Height="277" HorizontalAlignment="Left" Margin="403,153,0,0" Name="dataGrid2" VerticalAlignment="Top" Width="327" />
+                    <TextBox Text="{Binding Path=NewQuantityTypeTextBox}" Height="23" HorizontalAlignment="Left" Margin="403,65,0,0" Name="textBoxNewQuantityType" VerticalAlignment="Top" Width="249" />
+                    <Button Command="{Binding Path=AddNewQuantityTypeButtonCommand}" Content="Dodaj nową jednostkę" Height="21" HorizontalAlignment="Left" Margin="403,94,0,0" Name="button1" VerticalAlignment="Top" Width="131" />
+                    <DataGrid ItemsSource="{Binding Path=ListQuantityTypeDataGrid}" AutoGenerateColumns="True" Height="277" HorizontalAlignment="Left" Margin="403,153,0,0" Name="dataGrid2" VerticalAlignment="Top" Width="327" />
                     <Label Content="Jednostki produktów" Height="28" HorizontalAlignment="Left" Margin="403,15,0,0" Name="label32" VerticalAlignment="Top" />
+                    <Label Visibility="{Binding Path=AddNewSpeditionTypeFailedVisibilityLabel}" Content="Wprowadź nowy typ wysyłki" Height="28" HorizontalAlignment="Left" Margin="36,40,0,0" Name="labSetNewSpeditionType" Foreground="#FFD10505" VerticalAlignment="Top" />
+                    <Label Visibility="{Binding Path=AddNewQuantityTypeFailedVisibilityLabel}" Content="Wprowadź nową jednostkę" Height="28" HorizontalAlignment="Left" Margin="403,40,0,0" Name="labSetNewQuantityType" Foreground="#FFD10505" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
             <TabItem Header="Kategorie Produktów / Stanowiska pracowników" Name="tabItem5">

@@ -11,6 +11,7 @@ namespace WarehouseElectric.Models
     {
         IList<QT_QuantityType> GetAll();
         QT_QuantityType Get(int id);
+        QT_QuantityType GetByName(String name);
         void Add(QT_QuantityType quantitytype);
         void Delete(QT_QuantityType quantitytype);
         void Update();

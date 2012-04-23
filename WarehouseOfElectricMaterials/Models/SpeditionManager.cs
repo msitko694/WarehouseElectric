@@ -68,6 +68,28 @@ namespace WarehouseElectric.Models
         }
 
         /// <summary>
+        /// Gets the specified spedition.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>A spedition with specified name</returns>
+        public SP_Spedition GetByName(String name)
+        {
+            List<SP_Spedition> speditionList = (from spedition in DataContext.SP_Speditions
+                                                where spedition.SP_NAME == name
+                                                select spedition).ToList<SP_Spedition>();
+
+            if (speditionList.Count > 0)
+            {
+                return speditionList[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
         /// Adds the specified spedition.
         /// </summary>
         /// <param name="product">The spedition.</param>

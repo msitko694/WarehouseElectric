@@ -68,6 +68,28 @@ namespace WarehouseElectric.Models
         }
 
         /// <summary>
+        /// Gets the specified type.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>A quantity type with specified name</returns>
+        public QT_QuantityType GetByName(String name)
+        {
+            List<QT_QuantityType> QuantityList = (from quantityT in DataContext.QT_QuantityTypes
+                                                  where quantityT.QT_NAME == name
+                                                  select quantityT).ToList<QT_QuantityType>();
+
+            if (QuantityList.Count > 0)
+            {
+                return QuantityList[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
         /// Adds the specified type.
         /// </summary>
         /// <param name="product">The quantity type.</param>

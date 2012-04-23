@@ -58,6 +58,16 @@ namespace WarehouseElectric.ViewModels
             ModifyWorkerFailedBirthDateVisibilityLabel = Visibility.Hidden;
             ModifyWorkerFailedEmploymentDateVisibilityLabel = Visibility.Hidden;
             ModifyWorkerFailedPeselVisibilityLabel = Visibility.Hidden;
+
+            //zakładka typy wysyłki/ jednostki produktów
+            SpeditionManager speditionManager = new SpeditionManager();
+            ListSpeditionsTypeDataGrid = speditionManager.GetAll().ToList();
+
+            QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
+            ListQuantityTypeDataGrid = quantityTypesManager.GetAll().ToList();
+
+            AddNewSpeditionTypeFailedVisibilityLabel = Visibility.Hidden;
+            AddNewQuantityTypeFailedVisibilityLabel = Visibility.Hidden;
         }
 
         #endregion //Constructors
@@ -75,10 +85,14 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _addWorkerCommond; //dodawanie nowego pracownika
         private RelayCommand _findWorkerToModifyButtonCommand; //wyszukanie pracownika do modyfikacji (zakładka pracownicy/zarządzanie) 
         private RelayCommand _modifyWorkerButtonCommond; //modyfikacja pracownika (zakładka pracownicy/zarządzanie)
+        private RelayCommand _addNewSpeditionTypeButtonCommand; // dodanie nowego typu wysyłki (zakładka typy wysyłki);
+        private RelayCommand _addNewQuantityTypeButtonCommand; // dodanie nowej jednostki(zakładka jednostki produktów);
         private IList<WO_Worker> _listWorkersAll;
         private IList<WO_Worker> _listAllWorkersToModifyDataGrid; //wyświetlenie w datagrid listy pracowników (zakładka pracownicy/zarządzanie)
         private List<US_User> _listUserToModificationDataGrid; //wyświetlenie w datagrid listy userów do modyfikacji(zakładka użytkownicy/zarządzanie)
         private List<String> _listPositionsToAddWorkerComboBox; //dodanie do combobox listy pozycji pracowników (zakładka pracownicy/nowy)
+        private List<SP_Spedition> _listSpeditionsTypeDataGrid; // wyświetlenie listy typów wysyłki w zakładce (typy wysyłki/ jednostki produktów)
+        private List<QT_QuantityType> _listQuantityTypeDataGrid; // wyświetlenie listy jednostek produktów w zakładce (typy wysyłki/ jednostki produktów)
         private WO_Worker _workerSelectedToAddUser;
         private WO_Worker _workerSelectedToModifyInDataGrid; //wybrany pracownik do modyfikacji (zakładka pracownicy/zarządzanie)
         private String _positionSelectedToAddWorker; //wybrana pozycja z comboboxa zakładka pracownicy/nowy
@@ -112,6 +126,8 @@ namespace WarehouseElectric.ViewModels
         private String _newWorkerMonthOfEmploymentTextBox; //pobieranie miesiąca zatrudnienia pracownika(zakładka pracownicy/modyfikacja)
         private String _newWorkerDayOfEmploymentTextBox; //pobieranie miesiąca zatrudnienia pracownika(zakładka pracownicy/modyfikacja)
         private String _newWorkerPeselTextBox; //pobieranie nowego numeru pesel pracownika(zakładka pracownicy/modyfikacja)
+        private String _newSpeditionTypeTextBox; // pobieranie nowego typu wysyłki (zakładka typy wysyłki)
+        private String _newQuantityTypeTextBox; // pobieranie nowej jednostki (zakładka jednostki produktów)
         private bool _newUserIsAdmin;
         private bool _newUserIsCashier;
         private bool _newUserIsStorekeeper;
@@ -137,6 +153,9 @@ namespace WarehouseElectric.ViewModels
         private Visibility _modifyWorkerFailedBirthDateVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu daty urodzenia
         private Visibility _modifyWorkerFailedEmploymentDateVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu daty zatrudnienia(zakładka pracownicy/zarządzanie)
         private Visibility _modifyWorkerFailedPeselVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu numeru pesel(zakładka pracownicy/zarządzanie)
+        private Visibility _addNewSpeditionTypeFailedVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu nazwy nowego typu wysyłki(zakładka typy wysyłki)
+        private Visibility _addNewQuantityTypeFailedVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu nazwy nowej jednostki produktu(zakładka jednostki produktów)
+
 
 
         #endregion //Fields
@@ -303,6 +322,37 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public RelayCommand AddNewSpeditionTypeButtonCommand
+        {
+            get
+            {
+                _addNewSpeditionTypeButtonCommand = new RelayCommand(AddNewSpeditionTypeButton);
+                _addNewSpeditionTypeButtonCommand.CanUndo = (obj) => false;
+
+                return _addNewSpeditionTypeButtonCommand;
+            }
+            set
+            {
+                _addNewSpeditionTypeButtonCommand = value;
+            }
+        }
+
+        public RelayCommand AddNewQuantityTypeButtonCommand
+        {
+            get
+            {
+                _addNewQuantityTypeButtonCommand = new RelayCommand(AddNewQuantityTypeButton);
+                _addNewQuantityTypeButtonCommand.CanUndo = (obj) => false;
+
+                return _addNewQuantityTypeButtonCommand;
+            }
+            set
+            {
+                _addNewQuantityTypeButtonCommand = value;
+            }
+        }
+
+
         public IList<WO_Worker> ListWorkersAll
         {
             get
@@ -355,6 +405,31 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public List<SP_Spedition> ListSpeditionsTypeDataGrid
+        {
+            get
+            {
+                return _listSpeditionsTypeDataGrid;
+            }
+            set
+            {
+                _listSpeditionsTypeDataGrid = value;
+                OnPropertyChanged("ListSpeditionsTypeDataGrid");
+            }
+        }
+
+        public List<QT_QuantityType> ListQuantityTypeDataGrid
+        {
+            get
+            {
+                return _listQuantityTypeDataGrid;
+            }
+            set
+            {
+                _listQuantityTypeDataGrid = value;
+                OnPropertyChanged("ListQuantityTypeDataGrid");
+            }
+        }
 
         //zaznaczony pracownik w data gridzie
         public WO_Worker WorkerSelectedToAddUser
@@ -791,6 +866,33 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public String NewSpeditionTypeTextBox
+        {
+            get
+            {
+                return _newSpeditionTypeTextBox;
+            }
+            set
+            {
+                _newSpeditionTypeTextBox = value;
+                OnPropertyChanged("NewSpeditionTypeTextBox");
+            }
+        }
+
+        public String NewQuantityTypeTextBox
+        {
+            get
+            {
+                return _newQuantityTypeTextBox;
+            }
+            set
+            {
+                _newQuantityTypeTextBox = value;
+                OnPropertyChanged("NewQuantityTypeTextBox");
+            }
+        }
+
+
         public bool NewUserIsAdmin
         {
             get
@@ -907,6 +1009,7 @@ namespace WarehouseElectric.ViewModels
                 OnPropertyChanged("UnlockWorkerToModificationCheckBox");
             }
         }
+
 
         public Visibility AddUserFailedVisibility
         {
@@ -1116,6 +1219,31 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public Visibility AddNewSpeditionTypeFailedVisibilityLabel
+        {
+            get
+            {
+                return _addNewSpeditionTypeFailedVisibilityLabel;
+            }
+            set
+            {
+                _addNewSpeditionTypeFailedVisibilityLabel = value;
+                OnPropertyChanged("AddNewSpeditionTypeFailedVisibilityLabel");
+            }
+        }
+
+        public Visibility AddNewQuantityTypeFailedVisibilityLabel
+        {
+            get
+            {
+                return _addNewQuantityTypeFailedVisibilityLabel;
+            }
+            set
+            {
+                _addNewQuantityTypeFailedVisibilityLabel = value;
+                OnPropertyChanged("AddNewQuantityTypeFailedVisibilityLabel");
+            }
+        }
 
         #endregion //Properties
 
@@ -1470,6 +1598,54 @@ namespace WarehouseElectric.ViewModels
             }
 
         }
+
+        /////////////////////////
+        //zakładka typy wysyłki
+        public void AddNewSpeditionTypeButton(Object obj)
+        {
+            SpeditionManager speditionManager = new SpeditionManager();
+            SP_Spedition newSpedition = new SP_Spedition();
+
+            if (NewSpeditionTypeTextBox != null && NewSpeditionTypeTextBox != "")
+            {
+                AddNewSpeditionTypeFailedVisibilityLabel = Visibility.Hidden;
+                if (speditionManager.GetByName(NewSpeditionTypeTextBox) == null)
+                {
+                    newSpedition.SP_NAME = NewSpeditionTypeTextBox;
+                    speditionManager.Add(newSpedition);
+                    MessageBox.Show("Dodano nowy typ wysyłki");
+                    ListSpeditionsTypeDataGrid = speditionManager.GetAll().ToList();
+                }
+                else
+                    MessageBox.Show("Istnieje już taki typ wysyłki");
+            }
+            else
+                AddNewSpeditionTypeFailedVisibilityLabel = Visibility.Visible;
+        }
+
+        public void AddNewQuantityTypeButton(Object obj)
+        {
+            QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
+            QT_QuantityType quantityType = new QT_QuantityType();
+            if(NewQuantityTypeTextBox != null && NewQuantityTypeTextBox != "")
+            {
+                AddNewQuantityTypeFailedVisibilityLabel = Visibility.Hidden;
+                
+                if ((quantityTypesManager.GetByName(NewQuantityTypeTextBox)) == null)
+                {
+                    quantityType.QT_NAME = NewQuantityTypeTextBox;
+                    quantityTypesManager.Add(quantityType);
+                    MessageBox.Show("Dodano nową jednostkę");
+
+                    ListQuantityTypeDataGrid = quantityTypesManager.GetAll().ToList();
+                }
+                else
+                    MessageBox.Show("Istnieje już taka jednostka");
+            }
+            else
+                AddNewQuantityTypeFailedVisibilityLabel = Visibility.Visible;
+        }
+
 
         #endregion //Methods
     }
