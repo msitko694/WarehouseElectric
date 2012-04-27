@@ -29,9 +29,39 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _customerSearchCommand;
         private IList<CU_Customer> _listCustomersToShow;
         private String _customerNameToSearch;
+        private CU_Customer _selectedCustomer;
+        private RelayCommand _openCustomerFullViewCommand;
         #endregion //Fields
 
         #region "Properties"
+        public RelayCommand OpenCustomerFullViewCommand
+        {
+            get
+            {
+                if (_openCustomerFullViewCommand == null)
+                {
+                    _openCustomerFullViewCommand = new RelayCommand(OpenCustomerFullView);
+                    _openCustomerFullViewCommand.CanUndo = (obj) => false;
+                }
+                return _openCustomerFullViewCommand;
+            }
+            set
+            {
+                _openCustomerFullViewCommand = value;
+            }
+        }
+        public CU_Customer SelectedCustomer
+        {
+            get
+            {
+                return _selectedCustomer;
+            }
+            set
+            {
+                _selectedCustomer = value;
+                OnPropertyChanged("SelectedCustomer");
+            }
+        }
         public RelayCommand LogOutCommand
         {
             get
@@ -106,6 +136,12 @@ namespace WarehouseElectric.ViewModels
             ListCustomersToShow.Clear();
             ListCustomersToShow = customersManager.GetByName(CustomerNameToSearch);
           
+        }
+        public void OpenCustomerFullView(Object obj)
+        {
+            CustomerFullView customerFullView = new CustomerFullView(SelectedCustomer.CU_ID);
+            customerFullView.Show();
+
         }
         #endregion //Methods
     }

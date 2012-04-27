@@ -42,18 +42,9 @@ namespace WarehouseElectric.Models
         /// </summary>
         /// <param name="customerId">The customerId.</param>
         /// <returns>Invoice with specified customer</returns>
-        public IN_Invoice GetByCustomerId(int customerId)
+        public IList<IN_Invoice> GetByCustomerId(int customerId)
         {
-            List<IN_Invoice> invoiceList = (from invoice in DataContext.IN_Invoices where invoice.IN_CU_ID == customerId select invoice).ToList<IN_Invoice>();
-
-            if (invoiceList.Count > 0)
-            {
-                return invoiceList[0];
-            }
-            else
-            {
-                return null;
-            }
+            return (from invoice in DataContext.IN_Invoices where invoice.IN_CU_ID == customerId select invoice).ToList<IN_Invoice>();
         }
 
 
@@ -62,18 +53,9 @@ namespace WarehouseElectric.Models
         /// </summary>
         /// <param name="workerId">The workerId.</param>
         /// <returns>Invoice with specified worker</returns>
-        public IN_Invoice GetByWorkerId(int workerId)
+        public IList<IN_Invoice> GetByWorkerId(int workerId)
         {
-            List<IN_Invoice> invoiceList = (from invoice in DataContext.IN_Invoices where invoice.IN_WO_ID == workerId select invoice).ToList<IN_Invoice>();
-
-            if (invoiceList.Count > 0)
-            {
-                return invoiceList[0];
-            }
-            else
-            {
-                return null;
-            }
+            return (from invoice in DataContext.IN_Invoices where invoice.IN_WO_ID == workerId select invoice).ToList<IN_Invoice>();
         }
 
 

@@ -11,8 +11,8 @@ namespace WarehouseElectric.Models
     {
         IList<IN_Invoice> GetAll();
         IN_Invoice Get(int id);
-        IN_Invoice GetByCustomerId(int customerId);
-        IN_Invoice GetByWorkerId(int workerId);
+        IList<IN_Invoice> GetByCustomerId(int customerId);
+        IList<IN_Invoice> GetByWorkerId(int workerId);
         void Add(IN_Invoice invoice);
         void Delete(IN_Invoice invoice);
         void Update();
