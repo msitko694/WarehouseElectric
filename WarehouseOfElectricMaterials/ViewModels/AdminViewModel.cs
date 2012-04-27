@@ -16,32 +16,33 @@ namespace WarehouseElectric.ViewModels
         {
             _adminView = adminView;
 
-            FindWorkerByNameToAddUser = "Wprowadź nazwisko pracownika";
-            
             UsersManager usersManager = new UsersManager();
             US_User user = usersManager.Get(SessionHelper.userId);
             UsernameText = user.US_USERNAME; //Nazwa zalogowanego użytkownika
 
-
-            WorkersManager workerManager = new WorkersManager();
-            ListWorkersAll = workerManager.GetAll();
-
+            /////////////////////////////
+            //zakładka uzytkownicy/nowy//
+            FindWorkerByNameToAddUser = "Wprowadź nazwisko pracownika";
+            
+            //ukrycie labelek z informacjami o błędach przy dodawaniu użytkownika
             AddUserFailedVisibility = Visibility.Hidden;
             AddUserFailedUserNameVisibility = Visibility.Hidden;
             AddUserFailedUserPasswordVisibility = Visibility.Hidden;
 
-
-            //zakładka użytkownicy/zarządzanie
+            
+            ////////////////////////////////////
+            //zakładka użytkownicy/zarządzanie//
             FindUserToModificationTextBox = "Wprowadź nazwę użytkownika";
 
-            ListUserToModificationDataGrid = usersManager.GetAll().ToList();
-
+            //ukrycie labelki z informacją o nie wybraniu użytkownika przy modyfikacji
             SelectedUserToModifiedFailedVisibilityLabel = Visibility.Hidden;
 
-            //zakładka pracownicy/nowy
+            ////////////////////////////
+            //zakładka pracownicy/nowy/
             PositionsManager positionsManager = new PositionsManager();
             ListPositionsToAddWorkerComboBox = positionsManager.GetAllName();
 
+            //ukrycie labelek z informacjami o błędach przy dodawaniu pracownika
             AddWorkerFailedWorkerPhoneVisibilityLabel = Visibility.Hidden;
             AddWorkerFailedWorkerBirthDateVisibilityLabel = Visibility.Hidden;
             AddWorkerFailedWorkerPeselVisibilityLabel = Visibility.Hidden;
@@ -50,9 +51,10 @@ namespace WarehouseElectric.ViewModels
             AddWorkerFailedWorkerNameVisibilityLabel = Visibility.Hidden;
             AddWorkerFailedWorkerSurnameVisibilityLabel = Visibility.Hidden;
 
-            //zakładka pracownicy/zarządzanie
-            ListAllWorkersToModifyDataGrid = workerManager.GetAll();
-            //ListPositionsToModifyWorkerComboBox = positionsManager.GetAllName();
+            ///////////////////////////////////
+            //zakładka pracownicy/zarządzanie//
+            
+            //ukrycie labelek z informacjami o błędach przy modyfikacji pracowników
             ModifyWorkerFailedPhoneVisibilityLabel = Visibility.Hidden;
             ModifyWorkerFailedSelectedWorkerVisibilityLabel = Visibility.Hidden;
             ModifyWorkerFailedBirthDateVisibilityLabel = Visibility.Hidden;
@@ -60,12 +62,8 @@ namespace WarehouseElectric.ViewModels
             ModifyWorkerFailedPeselVisibilityLabel = Visibility.Hidden;
 
             //zakładka typy wysyłki/ jednostki produktów
-            SpeditionManager speditionManager = new SpeditionManager();
-            ListSpeditionsTypeDataGrid = speditionManager.GetAll().ToList();
-
-            QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
-            ListQuantityTypeDataGrid = quantityTypesManager.GetAll().ToList();
-
+            
+            //ukrycie labelek informujących i błędach przy dodawanou typu wysyłki oraz jednostki
             AddNewSpeditionTypeFailedVisibilityLabel = Visibility.Hidden;
             AddNewQuantityTypeFailedVisibilityLabel = Visibility.Hidden;
         }
@@ -87,6 +85,11 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _modifyWorkerButtonCommond; //modyfikacja pracownika (zakładka pracownicy/zarządzanie)
         private RelayCommand _addNewSpeditionTypeButtonCommand; // dodanie nowego typu wysyłki (zakładka typy wysyłki);
         private RelayCommand _addNewQuantityTypeButtonCommand; // dodanie nowej jednostki(zakładka jednostki produktów);
+        private RelayCommand _refreshListOfWorkerToAddUserButtonCommand; // odświeżanie listy pracowników (zkładka użytkownicy/nowy)
+        private RelayCommand _refreshListOfUserToModifyButtonCommand; //odświeżenie listy użytkowników do modyfikacji(zakładka użytkownicy/zarządzanie)
+        private RelayCommand _refreshListOfWorkerToModifyButtonCommand; //odświeżenie listy pracowników do modyfikacji(zakładka pracownicy/zarządzanie)
+        private RelayCommand _refreshListOfSpeditionTypesButtonCommand; //odświeżenie listy z typami wysyłki(zakładka typy wysyłki)
+        private RelayCommand _refreshListOfQuantityTypesButtonCommand; //odświeżenie listy z jednostkami produktów(zakładka jednostki produktów)
         private IList<WO_Worker> _listWorkersAll;
         private IList<WO_Worker> _listAllWorkersToModifyDataGrid; //wyświetlenie w datagrid listy pracowników (zakładka pracownicy/zarządzanie)
         private List<US_User> _listUserToModificationDataGrid; //wyświetlenie w datagrid listy userów do modyfikacji(zakładka użytkownicy/zarządzanie)
@@ -352,6 +355,80 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public RelayCommand RefreshListOfWorkerToAddUserButtonCommand
+        {
+            get
+            {
+                _refreshListOfWorkerToAddUserButtonCommand = new RelayCommand(RefreshListOfWorkerToAddUserButton);
+                _refreshListOfWorkerToAddUserButtonCommand.CanUndo = (obj) => false;
+
+                return _refreshListOfWorkerToAddUserButtonCommand;
+            }
+            set
+            {
+                _refreshListOfWorkerToAddUserButtonCommand = value;
+            }
+        }
+
+        public RelayCommand RefreshListOfUserToModifyButtonCommand
+        {
+            get
+            {
+                _refreshListOfUserToModifyButtonCommand = new RelayCommand(RefreshListOfUserToModifyButton);
+                _refreshListOfUserToModifyButtonCommand.CanUndo = (obj) => false;
+                
+                return _refreshListOfUserToModifyButtonCommand;
+            }
+            set
+            {
+                _refreshListOfUserToModifyButtonCommand = value;
+            }
+        }
+
+        public RelayCommand RefreshListOfWorkerToModifyButtonCommand
+        {
+            get
+            {
+                _refreshListOfWorkerToModifyButtonCommand = new RelayCommand(RefreshListOfWorkerToModifyButton);
+                _refreshListOfWorkerToModifyButtonCommand.CanUndo = (obj) => false;
+
+                return _refreshListOfWorkerToModifyButtonCommand;
+            }
+            set
+            {
+                _refreshListOfWorkerToModifyButtonCommand = value;
+            }
+        }
+
+        public RelayCommand RefreshListOfSpeditionTypesButtonCommand
+        {
+            get
+            {
+                _refreshListOfSpeditionTypesButtonCommand = new RelayCommand(RefreshListOfSpeditionTypesButton);
+                _refreshListOfSpeditionTypesButtonCommand.CanUndo = (obj) => false;
+
+                return _refreshListOfSpeditionTypesButtonCommand;
+            }
+            set
+            {
+                _refreshListOfSpeditionTypesButtonCommand = value;
+            }
+        }
+
+        public RelayCommand RefreshListOfQuantityTypesButtonCommand
+        {
+            get
+            {
+                _refreshListOfQuantityTypesButtonCommand = new RelayCommand(RefreshListOfQuantityTypesButton);
+                _refreshListOfQuantityTypesButtonCommand.CanUndo = (obj) => false;
+
+                return _refreshListOfQuantityTypesButtonCommand;
+            }
+            set
+            {
+                _refreshListOfQuantityTypesButtonCommand = value;
+            }
+        }
 
         public IList<WO_Worker> ListWorkersAll
         {
@@ -1298,36 +1375,50 @@ namespace WarehouseElectric.ViewModels
             else
                 AddUserFailedUserPasswordVisibility = Visibility.Hidden;
 
+
             if (AddUserFailedVisibility != Visibility.Visible && AddUserFailedUserNameVisibility != Visibility.Visible
                 && AddUserFailedUserPasswordVisibility != Visibility.Visible)
             {
                 UsersManager userManager = new UsersManager();
                 US_User newUser = new US_User();
 
-                newUser.US_USERNAME = UserNameToAddNewUser;
-                newUser.US_PASSWORD = UserPasswordToAddNewUser;
-                
-                if(NewUserIsWorkerCheckBox == true)
-                    newUser.US_WO_ID = WorkerSelectedToAddUser.WO_ID;
+                if (userManager.GetByUserName(UserNameToAddNewUser) == null)
+                {
 
-                newUser.US_IS_ADMIN = NewUserIsAdmin;
-                newUser.US_IS_CASHIER = NewUserIsCashier;
-                newUser.US_IS_STOREKEEPER = NewUserIsStorekeeper;
-                newUser.US_ADDED = DateTime.Now;
-                newUser.US_LAST_MODIFIED = DateTime.Now;
+                    newUser.US_USERNAME = UserNameToAddNewUser;
+                    newUser.US_PASSWORD = UserPasswordToAddNewUser;
 
-                userManager.Add(newUser);
+                    if (NewUserIsWorkerCheckBox == true)
+                        newUser.US_WO_ID = WorkerSelectedToAddUser.WO_ID;
 
-                MessageBox.Show("Dodano użytkownika");
+                    newUser.US_IS_ADMIN = NewUserIsAdmin;
+                    newUser.US_IS_CASHIER = NewUserIsCashier;
+                    newUser.US_IS_STOREKEEPER = NewUserIsStorekeeper;
+                    newUser.US_ADDED = DateTime.Now;
+                    newUser.US_LAST_MODIFIED = DateTime.Now;
 
-                //pobranie aktualnej listy uzytkowników do zakładki zarządzania użytkownikami
-                ListUserToModificationDataGrid = userManager.GetAll().ToList();
+                    userManager.Add(newUser);
 
+                    MessageBox.Show("Dodano użytkownika");
+
+                    //pobranie aktualnej listy uzytkowników do zakładki zarządzania użytkownikami
+                    //ListUserToModificationDataGrid = userManager.GetAll().ToList();
+                }
+                else
+                    MessageBox.Show("Użytkownik o podanej nazwie już istnieje");
             }
             
 
 
         }
+
+        public void RefreshListOfWorkerToAddUserButton(Object obj)
+        {
+            WorkersManager workerManager = new WorkersManager();
+            ListWorkersAll = workerManager.GetAll();
+        }
+
+
         /////////////////////////////////////
         //zakładka uzytkownicy/zarządzanie//
         public void FindUserToModification(Object obj)
@@ -1369,7 +1460,6 @@ namespace WarehouseElectric.ViewModels
                 userManager.Update();
                 MessageBox.Show("Użytkownik został zmodyfikowany");
 
-                ListUserToModificationDataGrid = userManager.GetAll().ToList();
             }
         }
 
@@ -1382,13 +1472,17 @@ namespace WarehouseElectric.ViewModels
                 US_User user = userManager.GetByUserName(UserSelectedToModificationInDataGrid.US_USERNAME);
                 userManager.Delete(user);
                 MessageBox.Show("Użytkownik został usunięty");
-                ListUserToModificationDataGrid = userManager.GetAll().ToList();
             }
             else
                 SelectedUserToModifiedFailedVisibilityLabel = Visibility.Visible;
 
         }
 
+        public void RefreshListOfUserToModifyButton(Object obj)
+        {
+            UsersManager userManager = new UsersManager();
+            ListUserToModificationDataGrid = userManager.GetAll().ToList();
+        }
 
         //zakładka pracwonicy/nowy
         public void AddWorker(Object obj)
@@ -1451,6 +1545,7 @@ namespace WarehouseElectric.ViewModels
                 && AddWorkerFailedWorkerPositionSelectedVisibilityLabel == Visibility.Hidden && AddWorkerFailedWorkerNameVisibilityLabel == Visibility.Hidden
                 && AddWorkerFailedWorkerSurnameVisibilityLabel == Visibility.Hidden)
             {
+                
                 birthDate = WorkerMonthOfBirthdayToAddTextBox + "/" + WorkerDayOfBirthdayToAddTextBox + "/" + WorkerYearOfBirthdayToAddTextBox;
                 employmentDate = WorkerMonthOfEmploymentToAddTextBox + "/" + WorkerDayOfEmploymentToAddTextBox + "/" + WorkerYearOfEmploymentToAddTextBox;
                 dateOfBirthday = Convert.ToDateTime(birthDate);
@@ -1474,7 +1569,6 @@ namespace WarehouseElectric.ViewModels
                 birthDate = null;
                 workerManager.Add(newWorker);
                 MessageBox.Show("Pracownik został dodany");
-                ListWorkersAll = workerManager.GetAll();
             }
             
 
@@ -1593,10 +1687,15 @@ namespace WarehouseElectric.ViewModels
 
                     workerManager.Update();
                     MessageBox.Show("Zmodyfikowano użytkownika");
-                    ListAllWorkersToModifyDataGrid = workerManager.GetAll();
                 }
             }
 
+        }
+
+        public void RefreshListOfWorkerToModifyButton(Object obj)
+        {
+            WorkersManager workerManager = new WorkersManager();
+            ListAllWorkersToModifyDataGrid = workerManager.GetAll();
         }
 
         /////////////////////////
@@ -1614,13 +1713,19 @@ namespace WarehouseElectric.ViewModels
                     newSpedition.SP_NAME = NewSpeditionTypeTextBox;
                     speditionManager.Add(newSpedition);
                     MessageBox.Show("Dodano nowy typ wysyłki");
-                    ListSpeditionsTypeDataGrid = speditionManager.GetAll().ToList();
+                    
                 }
                 else
                     MessageBox.Show("Istnieje już taki typ wysyłki");
             }
             else
                 AddNewSpeditionTypeFailedVisibilityLabel = Visibility.Visible;
+        }
+
+        public void RefreshListOfSpeditionTypesButton(Object obj)
+        {
+            SpeditionManager speditionManager = new SpeditionManager();
+            ListSpeditionsTypeDataGrid = speditionManager.GetAll().ToList();
         }
 
         public void AddNewQuantityTypeButton(Object obj)
@@ -1646,6 +1751,11 @@ namespace WarehouseElectric.ViewModels
                 AddNewQuantityTypeFailedVisibilityLabel = Visibility.Visible;
         }
 
+        public void RefreshListOfQuantityTypesButton(Object obj)
+        {
+            QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
+            ListQuantityTypeDataGrid = quantityTypesManager.GetAll().ToList();
+        }
 
         #endregion //Methods
     }

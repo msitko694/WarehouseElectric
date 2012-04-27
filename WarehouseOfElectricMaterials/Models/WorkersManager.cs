@@ -68,7 +68,7 @@ namespace WarehouseElectric.Models
         public IList<WO_Worker> GetByWorkerSurname(String workersurname)
         {
             return (from worker in DataContext.WO_Workers
-                    where worker.WO_SURNAME == workersurname
+                    where worker.WO_SURNAME.Contains(workersurname)
                     select worker).ToList<WO_Worker>();
             /*
             List<WO_Worker> workerList = (from worker in DataContext.WO_Workers
