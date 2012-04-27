@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WarehouseElectric.CashierView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="CashierView" Height="500" Width="670">
+        Title="CashierView" Height="500" Width="670" ResizeMode="CanMinimize">
     <Grid Height="450" Width="652">
         <Button Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
         <Button Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
@@ -32,19 +32,19 @@
             <TabItem Header="Klienci" Name="tabItemCustomers" Background="#FF3EE5CB">
                 
                 <Grid Background="#FFDEDEDE">
-                    <DataGrid SelectedItem="{Binding Path=SelectedCustomer}" ItemsSource="{Binding Path=ListCustomersToShow}" AutoGenerateColumns="False" Height="274" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGridCustomers" VerticalAlignment="Top" Width="607">
+                    <DataGrid SelectedItem="{Binding Path=SelectedCustomer}" ItemsSource="{Binding Path=ListCustomersToShow}" AutoGenerateColumns="False" Height="274" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGridCustomers" VerticalAlignment="Top" Width="607" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" SelectionMode="Single">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=CU_NAME}" Header="Nazwa" Width="160" />
-                            <DataGridTextColumn Binding="{Binding Path=CU_STREET}" Header="Ulica" Width="130" />
-                            <DataGridTextColumn Binding="{Binding Path=CU_POST_CODE}" Header="Kod pocztowy" />
-                            <DataGridTextColumn Binding="{Binding Path=CU_TOWN}" Header="Miasto" />
-                            <DataGridTextColumn Binding="{Binding Path=CU_PHONE}" Header="Telefon" CanUserResize="False" Width="50" />
+                            <DataGridTextColumn Binding="{Binding Path=CU_NAME}" Header="Nazwa" Width="190"/>
+                            <DataGridTextColumn Binding="{Binding Path=CU_STREET}" Header="Ulica" Width="125" />
+                            <DataGridTextColumn Binding="{Binding Path=CU_POST_CODE}" Header="Kod pocztowy" Width="85" />
+                            <DataGridTextColumn Binding="{Binding Path=CU_TOWN}" Header="Miasto" Width="110" />
+                            <DataGridTextColumn Binding="{Binding Path=CU_PHONE}" Header="Telefon" CanUserResize="False" Width="86" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <TextBox Text="{Binding Path=CustomerNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBoxSearchCustomer" VerticalAlignment="Top" Width="471" />
                     <Button Command="{Binding CustomerSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="buttonSearchCustomer" VerticalAlignment="Top" Width="27" />
                     <Button Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="516,18,0,0" Name="buttonAdvancedCustomerSearch" VerticalAlignment="Top" Width="97" />
-                    <Button Command="{Binding Path=OpenCustomerFullViewCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="6,331,0,0" Name="buttonOpenCustomer" VerticalAlignment="Top" Width="607" />
+                    <Button IsEnabled="{Binding Path=IsEnabledButtonOpenCustomerFullView}" Command="{Binding Path=OpenCustomerFullViewCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="6,331,0,0" Name="buttonOpenCustomer" VerticalAlignment="Top" Width="607" />
                 </Grid>
             </TabItem>
             <TabItem Name="tabItemReports" Header="Raporty" Background="#FFDB46DB">

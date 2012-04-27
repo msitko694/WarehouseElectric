@@ -14,26 +14,40 @@ namespace WarehouseElectric.ViewModels
         #region "Contructors"
         public CashierViewModel(CashierView cashierView)
         {
+            IsEnabledButtonOpenCustomerFullView = false;
             _cashierView = cashierView;
 
             CustomersManager customersManager = new CustomersManager();
             ListCustomersToShow = customersManager.GetAll().ToList();
-
+            
         }
 
         #endregion //Constructors
 
         #region "Fields"
         private CashierView _cashierView;
-        private RelayCommand _logOutCommand;
-        private RelayCommand _customerSearchCommand;
-        private IList<CU_Customer> _listCustomersToShow;
         private String _customerNameToSearch;
-        private CU_Customer _selectedCustomer;
+        private RelayCommand _customerSearchCommand;
+        private Boolean _isEnabledButtonOpenCustomerFullView;
+        private IList<CU_Customer> _listCustomersToShow;
+        private RelayCommand _logOutCommand;
         private RelayCommand _openCustomerFullViewCommand;
+        private CU_Customer _selectedCustomer;
         #endregion //Fields
 
         #region "Properties"
+        public Boolean IsEnabledButtonOpenCustomerFullView
+        {
+            get
+            {
+                return _isEnabledButtonOpenCustomerFullView;
+            }
+            set
+            {
+                _isEnabledButtonOpenCustomerFullView = value;
+                OnPropertyChanged("IsEnabledButtonOpenCustomerFullView");
+            }
+        }
         public RelayCommand OpenCustomerFullViewCommand
         {
             get
@@ -60,6 +74,10 @@ namespace WarehouseElectric.ViewModels
             {
                 _selectedCustomer = value;
                 OnPropertyChanged("SelectedCustomer");
+                if (value != null)
+                    IsEnabledButtonOpenCustomerFullView = true;
+                else
+                    IsEnabledButtonOpenCustomerFullView = false;
             }
         }
         public RelayCommand LogOutCommand
@@ -121,15 +139,6 @@ namespace WarehouseElectric.ViewModels
         #endregion //Properties
         
         #region "Methods"
-        public void LogOut(Object obj)
-        {
-            SessionHelper.LogOut();
-            Application.Current.MainWindow = new LoginView();
-            Application.Current.MainWindow.Show();
-
-            _cashierView.Close();
-
-        }
         public void CustomerSearch(Object obj)
         {
             CustomersManager customersManager = new CustomersManager();
@@ -141,6 +150,15 @@ namespace WarehouseElectric.ViewModels
         {
             CustomerFullView customerFullView = new CustomerFullView(SelectedCustomer.CU_ID);
             customerFullView.Show();
+
+        }
+        public void LogOut(Object obj)
+        {
+            SessionHelper.LogOut();
+            Application.Current.MainWindow = new LoginView();
+            Application.Current.MainWindow.Show();
+
+            _cashierView.Close();
 
         }
         #endregion //Methods
