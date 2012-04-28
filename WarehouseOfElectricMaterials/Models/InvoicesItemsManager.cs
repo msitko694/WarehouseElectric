@@ -46,6 +46,13 @@ namespace WarehouseElectric.Models
            return (from invoicesItem in DataContext.IE_InvoicesItems select invoicesItem).ToList<IE_InvoicesItem>();
         }
 
+        public IList<IE_InvoicesItem> GetByInvoiceId(int invoiceId)
+        {
+            return (from invoicesItem in DataContext.IE_InvoicesItems
+                    where invoicesItem.IE_IN_ID == invoiceId
+                    select invoicesItem).ToList<IE_InvoicesItem>();
+        }
+
         /// <summary>
         /// Gets the specified item.
         /// </summary>

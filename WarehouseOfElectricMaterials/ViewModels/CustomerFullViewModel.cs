@@ -38,6 +38,8 @@ namespace WarehouseElectric.ViewModels
         private String _customerTownToShow;
         private String _customerPostCodeToShow;
         private IList<IN_Invoice> _invoicesListToShow;
+        private RelayCommand _openInvoiceFullViewCommand;
+        private IN_Invoice _selectedInvoice;
         #endregion //Fields
         #region "Properties"
         public String CustomerNameToShow
@@ -113,8 +115,43 @@ namespace WarehouseElectric.ViewModels
                 OnPropertyChanged("InvoicesListToShow");
             }
         }
+        public RelayCommand OpenInvoiceFullViewCommand
+        {
+            get
+            {
+                if (_openInvoiceFullViewCommand == null)
+                {
+                    _openInvoiceFullViewCommand = new RelayCommand(OpenInvoiceFullView);
+                    _openInvoiceFullViewCommand.CanUndo = (obj) => false;
+                }
+                return _openInvoiceFullViewCommand;
+            }
+            set
+            {
+                _openInvoiceFullViewCommand = value;
+            }
+
+        }
+        public IN_Invoice SelectedInvoice
+        {
+            get
+            {
+                return _selectedInvoice;
+            }
+            set
+            {
+                _selectedInvoice = value;
+                OnPropertyChanged("SelectedInvoice");
+            }
+
+        }
         #endregion //Properties
         #region "Methods"
+        public void OpenInvoiceFullView(Object obj)
+        {
+            InvoiceFullView invoiceFullView = new InvoiceFullView(SelectedInvoice.IN_ID);
+            invoiceFullView.Show();
+        }
         #endregion //Methods
     }
 }

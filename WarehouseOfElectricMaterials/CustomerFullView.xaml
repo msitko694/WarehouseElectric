@@ -13,9 +13,9 @@
         <Label Content="Miasto:" Height="28" HorizontalAlignment="Left" Margin="0,114,0,0" Name="labelCustomerTown" VerticalAlignment="Top" Grid.Column="1" />
         <Label Content="Kod pocztowy:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,148,0,0" Name="labelCustomerPostCode" VerticalAlignment="Top" />
         <Label Content="Telefon:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,182,0,0" Name="labelCustomerPhone" VerticalAlignment="Top" />
-        <DataGrid ItemsSource ="{Binding Path=InvoicesListToShow}" AutoGenerateColumns="True" Grid.Column="1" Height="163" HorizontalAlignment="Left" Margin="1,246,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="548" />
+        <DataGrid SelectedItem="{Binding Path=SelectedInvoice}" ItemsSource ="{Binding Path=InvoicesListToShow}" AutoGenerateColumns="True" Grid.Column="1" Height="163" HorizontalAlignment="Left" Margin="1,246,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="548" />
         <Label Content="Historia faktur:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,225,0,0" Name="labelInvoices" VerticalAlignment="Top" />
-        <Button Content="Otwórz fakturę" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="0,415,0,0" Name="buttonOpenInvoice" VerticalAlignment="Top" Width="548" />
+        <Button Command="{Binding Path=OpenInvoiceFullViewCommand}" Content="Otwórz fakturę" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="0,415,0,0" Name="buttonOpenInvoice" VerticalAlignment="Top" Width="548" />
         <TextBlock Text="{Binding Path=CustomerNameToShow}" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="52,51,0,0" Name="textBlockCustomerName" VerticalAlignment="Top" Width="120" />
         <TextBlock Text="{Binding Path=CustomerStreetToShow}" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="37,85,0,0" Name="textBlockCustomerStreet" VerticalAlignment="Top" Width="135" />
         <TextBlock Text="{Binding Path=CustomerTownToShow}" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="52,119,0,0" Name="textBlockCustomerTown" VerticalAlignment="Top" Width="120" />

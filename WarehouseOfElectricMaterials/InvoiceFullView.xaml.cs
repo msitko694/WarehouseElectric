@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WarehouseElectric.ViewModels;
 
 namespace WarehouseElectric
 {
@@ -18,9 +19,10 @@ namespace WarehouseElectric
     /// </summary>
     public partial class InvoiceFullView : Window
     {
-        public InvoiceFullView()
+        public InvoiceFullView(int invoiceId)
         {
             InitializeComponent();
+            DataContext = new InvoiceFullViewModel(this, invoiceId);
         }
     }
 }
