@@ -14,6 +14,7 @@ namespace WarehouseElectric.ViewModels
         #region "Constructors"
         public CustomerFullViewModel(CustomerFullView customerFullView, int customerId)
         {
+            IsEnabledButtonOpenInvoiceFullView = false;
             _customerFullView = customerFullView;
             CustomersManager customersManager = new CustomersManager();
             _customer = customersManager.Get(customerId);
@@ -38,6 +39,7 @@ namespace WarehouseElectric.ViewModels
         private String _customerTownToShow;
         private String _customerPostCodeToShow;
         private IList<IN_Invoice> _invoicesListToShow;
+        private Boolean _isEnabledButtonOpenInvoiceFullView;
         private RelayCommand _openInvoiceFullViewCommand;
         private IN_Invoice _selectedInvoice;
         #endregion //Fields
@@ -115,6 +117,18 @@ namespace WarehouseElectric.ViewModels
                 OnPropertyChanged("InvoicesListToShow");
             }
         }
+        public Boolean IsEnabledButtonOpenInvoiceFullView
+        {
+            get
+            {
+                return _isEnabledButtonOpenInvoiceFullView;
+            }
+            set
+            {
+                _isEnabledButtonOpenInvoiceFullView = value;
+                OnPropertyChanged("IsEnabledButtonOpenInvoiceFullView");
+            }
+        }
         public RelayCommand OpenInvoiceFullViewCommand
         {
             get
@@ -140,6 +154,7 @@ namespace WarehouseElectric.ViewModels
             }
             set
             {
+                IsEnabledButtonOpenInvoiceFullView = true;
                 _selectedInvoice = value;
                 OnPropertyChanged("SelectedInvoice");
             }
