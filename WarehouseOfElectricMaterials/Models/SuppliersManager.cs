@@ -57,6 +57,12 @@ namespace WarehouseElectric.Models
             }
         }
 
+        public IList<SU_Supplier> GetByName(string name)
+        {
+            return (from supplier in DataContext.SU_Suppliers
+                    where supplier.SU_NAME.Contains(name)
+                    select supplier).ToList<SU_Supplier>();
+        }
 
 
         /// <summary>

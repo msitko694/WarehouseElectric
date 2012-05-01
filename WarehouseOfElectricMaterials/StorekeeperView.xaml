@@ -4,16 +4,16 @@
         Title="StorekeeperView" Height="500" Width="670">
     <Grid Height="450" Width="652">
         <Button Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
-        <Button Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
+        <Button Command="{Binding Path=ChoosePanelCommand}" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
         <Label Content="Użytkownik:" Height="25" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" Width="74" />
         <TabControl Height="394" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControl1" VerticalAlignment="Top" Width="629">
             <TabItem Background="#FFF5893F" Header="Magazyn" Name="tabItemStore">
                 <Grid Background="#FFDEDEDE">
                     <TreeView Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeView1" VerticalAlignment="Top" Width="120" />
                     <Button Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" />
-                    <DataGrid AutoGenerateColumns="False" Height="285" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" />
+                    <DataGrid SelectedItem="{Binding Path=SelectedCustomer}" ItemsSource="{Binding Path=ListCustomersToShow}" AutoGenerateColumns="False" Height="285" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" />
                     <TextBox Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBox1" VerticalAlignment="Top" Width="448" />
-                    <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button2" VerticalAlignment="Top" Width="27" />
+                    <Button Command="{Binding CustomerSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button2" VerticalAlignment="Top" Width="27" />
                     <Button Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="132,331,0,0" Name="buttonOpenProduct" VerticalAlignment="Top" Width="481" />
                 </Grid>
             </TabItem>
@@ -31,8 +31,8 @@
             <TabItem Background="#FF3EE5CB" Header="Dostawcy" Name="tabItemCustomers">
                 <Grid Background="#FFDEDEDE">
                     <DataGrid IsEnabled="True" ItemsSource="{Binding Path=ListSuppliersToShow}" AutoGenerateColumns="True" Height="304" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGrid2" VerticalAlignment="Top" Width="504" />
-                    <TextBox Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBox2" VerticalAlignment="Top" Width="471" />
-                    <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="button4" VerticalAlignment="Top" Width="27" />
+                    <TextBox Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBox2" Text="{Binding Path=SupplierNameToSearch}" VerticalAlignment="Top" Width="471" />
+                    <Button Command="{Binding SupplierSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="button4" VerticalAlignment="Top" Width="27" />
                     <Button Background="#FFD1BA3E" Content="Pokaż historię" Height="97" HorizontalAlignment="Left" Margin="516,51,0,0" Name="button3" VerticalAlignment="Top" Width="97" />
                     <Button Background="#FF59D879" Content="Dodaj notatkę" Height="97" HorizontalAlignment="Left" Margin="516,154,0,0" Name="button5" VerticalAlignment="Top" Width="97" />
                     <Button Background="#FF4949DB" Content="Zobacz notatki" Height="97" HorizontalAlignment="Left" Margin="516,258,0,0" Name="button6" VerticalAlignment="Top" Width="97" />
