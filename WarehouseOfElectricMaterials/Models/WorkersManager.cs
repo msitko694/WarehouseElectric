@@ -70,19 +70,7 @@ namespace WarehouseElectric.Models
             return (from worker in DataContext.WO_Workers
                     where worker.WO_SURNAME.Contains(workersurname)
                     select worker).ToList<WO_Worker>();
-            /*
-            List<WO_Worker> workerList = (from worker in DataContext.WO_Workers
-                                          where (worker.WO_SURNAME == workersurname)
-                                          select worker).ToList<WO_Worker>();
-
-            if (workerList.Count > 0)
-            {
-                return workerList[0];
-            }
-            else
-            {
-                return null;
-            }*/
+            
         }
 
         /// <summary>

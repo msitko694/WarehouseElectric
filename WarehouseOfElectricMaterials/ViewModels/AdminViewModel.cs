@@ -29,7 +29,6 @@ namespace WarehouseElectric.ViewModels
             AddUserFailedUserNameVisibility = Visibility.Hidden;
             AddUserFailedUserPasswordVisibility = Visibility.Hidden;
 
-            
             ////////////////////////////////////
             //zakładka użytkownicy/zarządzanie//
             FindUserToModificationTextBox = "Wprowadź nazwę użytkownika";
@@ -66,6 +65,10 @@ namespace WarehouseElectric.ViewModels
             //ukrycie labelek informujących i błędach przy dodawanou typu wysyłki oraz jednostki
             AddNewSpeditionTypeFailedVisibilityLabel = Visibility.Hidden;
             AddNewQuantityTypeFailedVisibilityLabel = Visibility.Hidden;
+
+            //zakładka stanowiska pracowników
+            //ukrycie labelki informującej o błędnym wprowadzeniu nazwy nowego stanowiskoa
+            AddNewPositionFailedVisibilityLabel = Visibility.Hidden;
         }
 
         #endregion //Constructors
@@ -90,12 +93,15 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _refreshListOfWorkerToModifyButtonCommand; //odświeżenie listy pracowników do modyfikacji(zakładka pracownicy/zarządzanie)
         private RelayCommand _refreshListOfSpeditionTypesButtonCommand; //odświeżenie listy z typami wysyłki(zakładka typy wysyłki)
         private RelayCommand _refreshListOfQuantityTypesButtonCommand; //odświeżenie listy z jednostkami produktów(zakładka jednostki produktów)
+        private RelayCommand _refreshListOfPositionButtonCommand; //odświeżenie listy z stanowiskami (zakładka stanowska pracowników)
+        private RelayCommand _addNewPositionButtonCommand; //dodane nowego stanowsika pracy (zakładka stanowska pracowników)
         private IList<WO_Worker> _listWorkersAll;
         private IList<WO_Worker> _listAllWorkersToModifyDataGrid; //wyświetlenie w datagrid listy pracowników (zakładka pracownicy/zarządzanie)
         private List<US_User> _listUserToModificationDataGrid; //wyświetlenie w datagrid listy userów do modyfikacji(zakładka użytkownicy/zarządzanie)
         private List<String> _listPositionsToAddWorkerComboBox; //dodanie do combobox listy pozycji pracowników (zakładka pracownicy/nowy)
         private List<SP_Spedition> _listSpeditionsTypeDataGrid; // wyświetlenie listy typów wysyłki w zakładce (typy wysyłki/ jednostki produktów)
         private List<QT_QuantityType> _listQuantityTypeDataGrid; // wyświetlenie listy jednostek produktów w zakładce (typy wysyłki/ jednostki produktów)
+        private IList<PO_Position> _listAllPositionsDataGrid; //wyświetlenie listy stanowisk(zakładka stanowiska pracy )
         private WO_Worker _workerSelectedToAddUser;
         private WO_Worker _workerSelectedToModifyInDataGrid; //wybrany pracownik do modyfikacji (zakładka pracownicy/zarządzanie)
         private String _positionSelectedToAddWorker; //wybrana pozycja z comboboxa zakładka pracownicy/nowy
@@ -131,15 +137,16 @@ namespace WarehouseElectric.ViewModels
         private String _newWorkerPeselTextBox; //pobieranie nowego numeru pesel pracownika(zakładka pracownicy/modyfikacja)
         private String _newSpeditionTypeTextBox; // pobieranie nowego typu wysyłki (zakładka typy wysyłki)
         private String _newQuantityTypeTextBox; // pobieranie nowej jednostki (zakładka jednostki produktów)
-        private bool _newUserIsAdmin;
-        private bool _newUserIsCashier;
-        private bool _newUserIsStorekeeper;
-        private bool _newUserIsWorkerCheckBox; //checkbox odblokowujący możliwość wyboru pracownik przy dodawaniu nowego użytkownika
-        private bool _unlockUserToModificationCheckBox; //checkbox odblokowywujacy możliwość modyfikowania użytkowników
-        private bool _modifiedUserIsAdminCheckBox; //modyfikowany użytkownik będzie administratorem
-        private bool _modifiedUserIsCashierCheckBox; //modyfikowany użytkownik będzie kasjerem
-        private bool _modifiedUserIsStorekeeperCheckBox; //modyfikowany użytkownik będzie magazynierem
-        private bool _unlockWorkerToModificationCheckBox; //checkbox odblokowywujący możliwość modyfikacji pracownika
+        private String _newPositionTextBox; //pobierane nazwy nowego stanowiska pracy(zakładaka stanowiska pracay)
+        private Boolean _newUserIsAdmin;
+        private Boolean _newUserIsCashier;
+        private Boolean _newUserIsStorekeeper;
+        private Boolean _newUserIsWorkerCheckBox; //checkbox odblokowujący możliwość wyboru pracownik przy dodawaniu nowego użytkownika
+        private Boolean _unlockUserToModificationCheckBox; //checkbox odblokowywujacy możliwość modyfikowania użytkowników
+        private Boolean _modifiedUserIsAdminCheckBox; //modyfikowany użytkownik będzie administratorem
+        private Boolean _modifiedUserIsCashierCheckBox; //modyfikowany użytkownik będzie kasjerem
+        private Boolean _modifiedUserIsStorekeeperCheckBox; //modyfikowany użytkownik będzie magazynierem
+        private Boolean _unlockWorkerToModificationCheckBox; //checkbox odblokowywujący możliwość modyfikacji pracownika
         private Visibility _addUserFailedVisibility;
         private Visibility _addUserFailedUserNameVisibility;
         private Visibility _addUserFailedUserPasswordVisibility;
@@ -158,6 +165,7 @@ namespace WarehouseElectric.ViewModels
         private Visibility _modifyWorkerFailedPeselVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu numeru pesel(zakładka pracownicy/zarządzanie)
         private Visibility _addNewSpeditionTypeFailedVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu nazwy nowego typu wysyłki(zakładka typy wysyłki)
         private Visibility _addNewQuantityTypeFailedVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu nazwy nowej jednostki produktu(zakładka jednostki produktów)
+        private Visibility _addNewPositionFailedVisibilityLabel; //wyświetlenia informacji o błędnym wprowadzeniu nazwy nowego stanowiska(zakładka stanowsika pracowników)
 
 
 
@@ -430,6 +438,37 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public RelayCommand RefreshListOfPositionButtonCommand
+        {
+            get
+            {
+                _refreshListOfPositionButtonCommand = new RelayCommand(RefreshListOfPositionButton);
+                _refreshListOfPositionButtonCommand.CanUndo = (obj) => false;
+
+                return _refreshListOfPositionButtonCommand;
+            }
+            set
+            {
+                _refreshListOfPositionButtonCommand = value;
+            }
+        }
+
+        public RelayCommand AddNewPositionButtonCommand
+        {
+            get
+            {
+                _addNewPositionButtonCommand = new RelayCommand(AddNewPositionButton);
+                _addNewPositionButtonCommand.CanUndo = (obj) => false;
+
+                return _addNewPositionButtonCommand;
+            }
+            set
+            {
+                _addNewPositionButtonCommand = value;
+            }
+        }
+
+
         public IList<WO_Worker> ListWorkersAll
         {
             get
@@ -505,6 +544,19 @@ namespace WarehouseElectric.ViewModels
             {
                 _listQuantityTypeDataGrid = value;
                 OnPropertyChanged("ListQuantityTypeDataGrid");
+            }
+        }
+
+        public IList<PO_Position> ListAllPositionsDataGrid
+        {
+            get
+            {
+                return _listAllPositionsDataGrid;
+            }
+            set
+            {
+                _listAllPositionsDataGrid = value;
+                OnPropertyChanged("ListAllPositionsDataGrid");
             }
         }
 
@@ -969,8 +1021,23 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public String NewPositionTextBox
+        {
+            get
+            {
+                return _newPositionTextBox;
+            }
+            set
+            {
+                _newPositionTextBox = value;
+                OnPropertyChanged("NewPositionTextBox");
+            }
+        
+        
+        }
 
-        public bool NewUserIsAdmin
+
+        public Boolean NewUserIsAdmin
         {
             get
             {
@@ -983,7 +1050,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public bool NewUserIsCashier
+        public Boolean NewUserIsCashier
         {
             get
             {
@@ -996,7 +1063,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public bool NewUserIsStorekeeper
+        public Boolean NewUserIsStorekeeper
         {
             get
             {
@@ -1009,7 +1076,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public bool NewUserIsWorkerCheckBox
+        public Boolean NewUserIsWorkerCheckBox
         {
             get
             {
@@ -1022,7 +1089,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public bool UnlockUserToModificationCheckBox
+        public Boolean UnlockUserToModificationCheckBox
         {
             get
             {
@@ -1035,7 +1102,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public bool ModifiedUserIsAdminCheckBox
+        public Boolean ModifiedUserIsAdminCheckBox
         {
             get
             {
@@ -1048,7 +1115,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public bool ModifiedUserIsCashierCheckBox
+        public Boolean ModifiedUserIsCashierCheckBox
         {
             get
             {
@@ -1061,7 +1128,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public bool ModifiedUserIsStorekeeperCheckBox
+        public Boolean ModifiedUserIsStorekeeperCheckBox
         {
             get
             {
@@ -1074,7 +1141,7 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public bool UnlockWorkerToModificationCheckBox
+        public Boolean UnlockWorkerToModificationCheckBox
         {
             get
             {
@@ -1322,6 +1389,20 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public Visibility AddNewPositionFailedVisibilityLabel
+        {
+            get
+            {
+                return _addNewPositionFailedVisibilityLabel;
+            }
+            set
+            {
+                _addNewPositionFailedVisibilityLabel = value;
+                OnPropertyChanged("AddNewPositionFailedVisibilityLabel");
+            }
+        }
+
+
         #endregion //Properties
 
         #region "Methods"
@@ -1552,7 +1633,7 @@ namespace WarehouseElectric.ViewModels
                 dateOfEmployment = Convert.ToDateTime(employmentDate);
                 PositionsManager positionManager = new PositionsManager();
                 PO_Position position = positionManager.GetByPositionName(PositionSelectedToAddWorker);
-
+              
                 WorkersManager workerManager = new WorkersManager();
                 WO_Worker newWorker = new WO_Worker();
 
@@ -1756,6 +1837,30 @@ namespace WarehouseElectric.ViewModels
             QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
             ListQuantityTypeDataGrid = quantityTypesManager.GetAll().ToList();
         }
+
+        //zakładka stanowiska pracowników
+        public void RefreshListOfPositionButton(Object obj)
+        {
+            PositionsManager positionsManager = new PositionsManager();
+            ListAllPositionsDataGrid = positionsManager.GetAll();
+        }
+
+        public void AddNewPositionButton(Object obj)
+        {
+            PositionsManager positionsManager = new PositionsManager();
+            PO_Position newPosition = new PO_Position();
+            if (NewPositionTextBox != null && NewPositionTextBox != "" && NewPositionTextBox != " ")
+            {
+                AddNewPositionFailedVisibilityLabel = Visibility.Hidden;
+                newPosition.PO_NAME = NewPositionTextBox;
+                positionsManager.Add(newPosition);
+                ListPositionsToAddWorkerComboBox = positionsManager.GetAllName();
+                MessageBox.Show("Dodano nowe stanowisko");
+            }
+            else
+                AddNewPositionFailedVisibilityLabel = Visibility.Visible;
+        }
+
 
         #endregion //Methods
     }
