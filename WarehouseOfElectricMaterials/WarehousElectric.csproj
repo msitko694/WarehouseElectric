@@ -113,6 +113,7 @@
     <Compile Include="Models\WorkersManager.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="SessionHelper.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="StorekeeperView.xaml.cs">
       <DependentUpon>StorekeeperView.xaml</DependentUpon>
     </Compile>
@@ -124,11 +125,6 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\StorekeeperViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="warehouseDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>warehouseDataSet.xsd</DependentUpon>
-    </Compile>
     <Page Include="AdminView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -187,6 +183,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="DataLayer\LinqDataLayer.dbml.layout">
       <DependentUpon>LinqDataLayer.dbml</DependentUpon>
     </None>
@@ -204,17 +201,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="warehouseDataSet.xsc">
-      <DependentUpon>warehouseDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="warehouseDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>warehouseDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="warehouseDataSet.xss">
-      <DependentUpon>warehouseDataSet.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ElectricWarehouse" Class="LinqDataLayerDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=MSITKO;Initial Catalog=ElectricWarehouse;Persist Security Info=True;User ID=test" SettingsObjectName="WarehouseElectric.Properties.Settings" SettingsPropertyName="ElectricWarehouseConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=MSITKO;Initial Catalog=ElectricWarehouse;Persist Security Info=True;User ID=test" SettingsObjectName="WarehouseElectric.Properties.Settings" SettingsPropertyName="ElectricWarehouseConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.CU_Customers" Member="CU_Customers">
     <Type Name="CU_Customer">
       <Column Name="CU_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -167,6 +167,18 @@
       <Column Name="US_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="US_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="WO_Worker_US_User" Member="WO_Worker" ThisKey="US_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CI_CompanyInfo" Member="CI_CompanyInfos">
+    <Type Name="CI_CompanyInfo">
+      <Column Name="CI_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CI_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CI_STREET" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CI_POST_CODE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CI_TOWN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CI_PHONE" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="CI_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CI_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

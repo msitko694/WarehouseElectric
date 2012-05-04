@@ -69,6 +69,9 @@ namespace WarehouseElectric.DataLayer
     partial void InsertUS_User(US_User instance);
     partial void UpdateUS_User(US_User instance);
     partial void DeleteUS_User(US_User instance);
+    partial void InsertCI_CompanyInfo(CI_CompanyInfo instance);
+    partial void UpdateCI_CompanyInfo(CI_CompanyInfo instance);
+    partial void DeleteCI_CompanyInfo(CI_CompanyInfo instance);
     #endregion
 		
 		public LinqDataLayerDataContext() : 
@@ -202,6 +205,14 @@ namespace WarehouseElectric.DataLayer
 			get
 			{
 				return this.GetTable<US_User>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CI_CompanyInfo> CI_CompanyInfos
+		{
+			get
+			{
+				return this.GetTable<CI_CompanyInfo>();
 			}
 		}
 	}
@@ -3777,6 +3788,236 @@ namespace WarehouseElectric.DataLayer
 						this._US_WO_ID = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("WO_Worker");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CI_CompanyInfo")]
+	public partial class CI_CompanyInfo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _CI_ID;
+		
+		private string _CI_NAME;
+		
+		private string _CI_STREET;
+		
+		private string _CI_POST_CODE;
+		
+		private string _CI_TOWN;
+		
+		private string _CI_PHONE;
+		
+		private System.DateTime _CI_ADDED;
+		
+		private System.DateTime _CI_LAST_MODIFIED;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCI_IDChanging(int value);
+    partial void OnCI_IDChanged();
+    partial void OnCI_NAMEChanging(string value);
+    partial void OnCI_NAMEChanged();
+    partial void OnCI_STREETChanging(string value);
+    partial void OnCI_STREETChanged();
+    partial void OnCI_POST_CODEChanging(string value);
+    partial void OnCI_POST_CODEChanged();
+    partial void OnCI_TOWNChanging(string value);
+    partial void OnCI_TOWNChanged();
+    partial void OnCI_PHONEChanging(string value);
+    partial void OnCI_PHONEChanged();
+    partial void OnCI_ADDEDChanging(System.DateTime value);
+    partial void OnCI_ADDEDChanged();
+    partial void OnCI_LAST_MODIFIEDChanging(System.DateTime value);
+    partial void OnCI_LAST_MODIFIEDChanged();
+    #endregion
+		
+		public CI_CompanyInfo()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CI_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int CI_ID
+		{
+			get
+			{
+				return this._CI_ID;
+			}
+			set
+			{
+				if ((this._CI_ID != value))
+				{
+					this.OnCI_IDChanging(value);
+					this.SendPropertyChanging();
+					this._CI_ID = value;
+					this.SendPropertyChanged("CI_ID");
+					this.OnCI_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CI_NAME", DbType="NVarChar(50)")]
+		public string CI_NAME
+		{
+			get
+			{
+				return this._CI_NAME;
+			}
+			set
+			{
+				if ((this._CI_NAME != value))
+				{
+					this.OnCI_NAMEChanging(value);
+					this.SendPropertyChanging();
+					this._CI_NAME = value;
+					this.SendPropertyChanged("CI_NAME");
+					this.OnCI_NAMEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CI_STREET", DbType="NVarChar(100)")]
+		public string CI_STREET
+		{
+			get
+			{
+				return this._CI_STREET;
+			}
+			set
+			{
+				if ((this._CI_STREET != value))
+				{
+					this.OnCI_STREETChanging(value);
+					this.SendPropertyChanging();
+					this._CI_STREET = value;
+					this.SendPropertyChanged("CI_STREET");
+					this.OnCI_STREETChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CI_POST_CODE", DbType="NVarChar(10)")]
+		public string CI_POST_CODE
+		{
+			get
+			{
+				return this._CI_POST_CODE;
+			}
+			set
+			{
+				if ((this._CI_POST_CODE != value))
+				{
+					this.OnCI_POST_CODEChanging(value);
+					this.SendPropertyChanging();
+					this._CI_POST_CODE = value;
+					this.SendPropertyChanged("CI_POST_CODE");
+					this.OnCI_POST_CODEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CI_TOWN", DbType="NVarChar(50)")]
+		public string CI_TOWN
+		{
+			get
+			{
+				return this._CI_TOWN;
+			}
+			set
+			{
+				if ((this._CI_TOWN != value))
+				{
+					this.OnCI_TOWNChanging(value);
+					this.SendPropertyChanging();
+					this._CI_TOWN = value;
+					this.SendPropertyChanged("CI_TOWN");
+					this.OnCI_TOWNChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CI_PHONE", DbType="NVarChar(15)")]
+		public string CI_PHONE
+		{
+			get
+			{
+				return this._CI_PHONE;
+			}
+			set
+			{
+				if ((this._CI_PHONE != value))
+				{
+					this.OnCI_PHONEChanging(value);
+					this.SendPropertyChanging();
+					this._CI_PHONE = value;
+					this.SendPropertyChanged("CI_PHONE");
+					this.OnCI_PHONEChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CI_ADDED", DbType="DateTime NOT NULL")]
+		public System.DateTime CI_ADDED
+		{
+			get
+			{
+				return this._CI_ADDED;
+			}
+			set
+			{
+				if ((this._CI_ADDED != value))
+				{
+					this.OnCI_ADDEDChanging(value);
+					this.SendPropertyChanging();
+					this._CI_ADDED = value;
+					this.SendPropertyChanged("CI_ADDED");
+					this.OnCI_ADDEDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CI_LAST_MODIFIED", DbType="DateTime NOT NULL")]
+		public System.DateTime CI_LAST_MODIFIED
+		{
+			get
+			{
+				return this._CI_LAST_MODIFIED;
+			}
+			set
+			{
+				if ((this._CI_LAST_MODIFIED != value))
+				{
+					this.OnCI_LAST_MODIFIEDChanging(value);
+					this.SendPropertyChanging();
+					this._CI_LAST_MODIFIED = value;
+					this.SendPropertyChanged("CI_LAST_MODIFIED");
+					this.OnCI_LAST_MODIFIEDChanged();
 				}
 			}
 		}
