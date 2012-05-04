@@ -13,7 +13,16 @@
         <Label Content="Miasto:" Height="28" HorizontalAlignment="Left" Margin="0,114,0,0" Name="labelCustomerTown" VerticalAlignment="Top" Grid.Column="1" />
         <Label Content="Kod pocztowy:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,148,0,0" Name="labelCustomerPostCode" VerticalAlignment="Top" />
         <Label Content="Telefon:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,182,0,0" Name="labelCustomerPhone" VerticalAlignment="Top" />
-        <DataGrid SelectedItem="{Binding Path=SelectedInvoice}" ItemsSource ="{Binding Path=InvoicesListToShow}" AutoGenerateColumns="True" Grid.Column="1" Height="163" HorizontalAlignment="Left" Margin="1,246,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="548" IsReadOnly="True" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" />
+
+        <DataGrid SelectedItem="{Binding Path=SelectedInvoice}" ItemsSource ="{Binding Path=InvoicesListToShow}" AutoGenerateColumns="False" Grid.Column="1" Height="163" HorizontalAlignment="Left" Margin="1,246,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="548" IsReadOnly="True" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=IN_ADDED}" Header="Data (do zmiany - ma być data wystawienia" />
+                <DataGridTextColumn Binding="{Binding Path=IN_TOTAL}" Header="Suma całkowita" />
+                <DataGridTextColumn Binding="{Binding Path=SP_Spedition.SP_NAME}" Header="Typ wysyłki" />
+                <DataGridTextColumn Binding="{Binding Path=IN_SPEDITION_COST}" Header="Koszt wysyłki" />
+            </DataGrid.Columns>
+        </DataGrid>
+
         <Label Content="Historia faktur:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="1,225,0,0" Name="labelInvoices" VerticalAlignment="Top" />
         <Button IsEnabled="{Binding Path=IsEnabledButtonOpenInvoiceFullView}" Command="{Binding Path=OpenInvoiceFullViewCommand}" Content="Otwórz fakturę" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="0,415,0,0" Name="buttonOpenInvoice" VerticalAlignment="Top" Width="548" />
         <TextBlock Text="{Binding Path=CustomerNameToShow}" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="52,51,0,0" Name="textBlockCustomerName" VerticalAlignment="Top" Width="120" />

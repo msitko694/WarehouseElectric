@@ -7,6 +7,7 @@ using WarehouseElectric.Models;
 using WarehouseElectric.DataLayer;
 using System.Windows.Controls;
 
+
 namespace WarehouseElectric.ViewModels
 {
     class InvoiceFullViewModel:ViewModelBase
@@ -24,7 +25,18 @@ namespace WarehouseElectric.ViewModels
             CustomerStreetToShow = _invoice.CU_Customer.CU_STREET;
             CustomerTownToShow = _invoice.CU_Customer.CU_TOWN;
             IssueDate = _invoice.IN_ADDED.GetDateTimeFormats('D')[1];
+
             InvoiceItemsToShow = _invoice.IE_InvoicesItems;
+
+            
+            /*
+            InvoicesItemsManager invoicesItemsManager = new InvoicesItemsManager();
+            _invoicesItem = invoicesItemsManager.GetByInvoiceId(_invoice.IN_ID);
+            InvoiceItemsToShow */
+            
+            //InvoiceItemsToShow = (from invoicesItems in DataContext.IE_InvoicesItems )
+
+
             IssuedByWorker = _invoice.WO_Worker.PO_Position.PO_NAME + " " + _invoice.WO_Worker.WO_NAME + " " + _invoice.WO_Worker.WO_SURNAME;
             TotalBrutto = _invoice.IN_TOTAL.ToString();
             SpeditionType = _invoice.SP_Spedition.SP_NAME;
@@ -33,6 +45,7 @@ namespace WarehouseElectric.ViewModels
         }
         #endregion  //Constructors
         #region "Fields"
+        
         private IN_Invoice _invoice;
         private InvoiceFullView _invoiceFullView;
         private String _customerNameToShow;
@@ -43,6 +56,7 @@ namespace WarehouseElectric.ViewModels
         private String _issueDate;
         private String _issuedByWorker;
         private IList<IE_InvoicesItem> _invoiceItemsToShow;
+        private String _productNameToShow;
         private String _speditionType;
         private String _totalBrutto;
         private String _totalNetto;
@@ -145,6 +159,18 @@ namespace WarehouseElectric.ViewModels
             {
                 _issuedByWorker = value;
                 OnPropertyChanged("IssuedByWorker");
+            }
+        }
+        public String ProductNameToShow
+        {
+            get
+            {
+                return _productNameToShow;
+            }
+            set
+            {
+                _productNameToShow = value;
+                OnPropertyChanged("ProductNameToShow");
             }
         }
         public String SpeditionType
