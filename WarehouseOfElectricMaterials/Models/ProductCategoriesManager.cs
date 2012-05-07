@@ -43,7 +43,15 @@ namespace WarehouseElectric.Models
         /// <returns>All product categories</returns>
         public IList<PC_ProductCategory> GetAll()
         {
-           return (from category in DataContext.PC_ProductCategories select category).ToList<PC_ProductCategory>();
+           return (from category in DataContext.PC_ProductCategories 
+                   select category).ToList<PC_ProductCategory>();
+        }
+
+        public IList<PC_ProductCategory> GetAllOnBaseLevel()
+        {
+            return (from category in DataContext.PC_ProductCategories
+                    where category.PC_PC_ID == null
+                    select category).ToList<PC_ProductCategory>();
         }
 
         /// <summary>
@@ -54,7 +62,7 @@ namespace WarehouseElectric.Models
         public PC_ProductCategory Get(int id)
         {
             List<PC_ProductCategory> categoriesList = (from category in DataContext.PC_ProductCategories
-                                                       where category.PC_PC_ID == id
+                                                       where category.PC_ID == id
                                                        select category).ToList <PC_ProductCategory>();
 
             if(categoriesList.Count > 0)
