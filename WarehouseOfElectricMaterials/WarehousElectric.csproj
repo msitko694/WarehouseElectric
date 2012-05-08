@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddNewSupplierView.xaml.cs">
+      <DependentUpon>AddNewSupplierView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminView.xaml.cs">
       <DependentUpon>AdminView.xaml</DependentUpon>
     </Compile>
@@ -117,6 +120,7 @@
     <Compile Include="StorekeeperView.xaml.cs">
       <DependentUpon>StorekeeperView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddNewSupplierViewModel.cs" />
     <Compile Include="ViewModels\CashierViewModel.cs" />
     <Compile Include="ViewModels\ChoosePanelViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
@@ -125,6 +129,10 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\StorekeeperViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Page Include="AddNewSupplierView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
