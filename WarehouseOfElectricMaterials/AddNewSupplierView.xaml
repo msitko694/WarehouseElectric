@@ -1,8 +1,25 @@
 ﻿<Window x:Class="WarehouseElectric.AddNewSupplierView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AddNewSupplierView" Height="300" Width="300">
-    <Grid>
-        
+        Title="Dodaj nowego dostawcę" Height="358" Width="595">
+    <Grid Height="317" Width="555">
+        <Button Command="{Binding Path=AddSupplierCommand}" Content="Dodaj" Height="83" HorizontalAlignment="Left" Margin="426,222,0,0" Name="button1" VerticalAlignment="Top" Width="117" />
+        <Label Content="Nazwa" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="label7" VerticalAlignment="Top" />
+        <TextBox Text="{Binding Path=SupplierNameToAddTextBox}" Name="textBoxNameToAdd" Height="23" HorizontalAlignment="Left" Margin="105,12,0,0"  VerticalAlignment="Top" Width="203" />
+        <Label Content="Ulica" Height="28" HorizontalAlignment="Left" Margin="10,47,0,0" Name="label8" VerticalAlignment="Top" />
+        <TextBox Text="{Binding Path=SupplierStreetToAddTextBox}" Name="textBoxStreetToAdd" Height="23" HorizontalAlignment="Left" Margin="105,49,0,0"  VerticalAlignment="Top" Width="203" />
+        <Label Content="Kod pocztowy" Height="28" HorizontalAlignment="Left" Margin="10,87,0,0" Name="label9" VerticalAlignment="Top" />
+        <TextBox Text="{Binding Path=SupplierCode1ToAddTextBox}" Name="textBoxCode1ToAdd" Height="23" HorizontalAlignment="Left" Margin="105,89,0,0" VerticalAlignment="Top" Width="35" />
+        <Label Content="Wprowadź poprawny kod pocztowy" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="347,87,0,0" Name="labSetPhoneNumber" VerticalAlignment="Top" Visibility="{Binding Path=AddSupplierFailedCodeVisibilityLabel}" />
+        <Label Content="Wprowadź ulicę dostawcy" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="347,47,0,0" Name="labSetWorkerSurname" VerticalAlignment="Top" Visibility="{Binding Path=AddSupplierFailedStreetVisibilityLabel}" />
+        <Label Visibility="{Binding Path=AddSupplierFailedNameVisibilityLabel}" Content="Wprowadź nazwę dostawcy" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="348,9,0,0" Name="labSetWorkerName" VerticalAlignment="Top" />
+        <Label Content="Miejscowość" Height="28" HorizontalAlignment="Left" Margin="10,129,0,0" Name="label1" VerticalAlignment="Top" />
+        <TextBox Text="{Binding Path=SupplierTownToAddTextBox}" Name="textBoxTownToAdd" Height="23" HorizontalAlignment="Left" Margin="105,131,0,0" VerticalAlignment="Top" Width="203" />
+        <Label Content="Wprowadź miejscowość dostawcy" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="347,129,0,0" Name="label2" VerticalAlignment="Top" Visibility="{Binding Path=AddSupplierFailedTownVisibilityLabel}" />
+        <Label Content="Telefon" Height="28" HorizontalAlignment="Left" Margin="10,168,0,0" Name="label3" VerticalAlignment="Top" />
+        <TextBox Text="{Binding Path=SupplierPhoneToAddTextBox}" Name="textBoxPhoneToAdd" Height="23" HorizontalAlignment="Left" Margin="105,170,0,0"  VerticalAlignment="Top" Width="203" />
+        <Label Content="Wprowadź poprawny numer telefonu" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="347,168,0,0" Name="label4" VerticalAlignment="Top" Visibility="{Binding Path=AddSupplierFailedPhoneVisibilityLabel}" />
+        <TextBox Text="{Binding Path=SupplierCode2ToAddTextBox}" Name="textBoxCode2ToAdd" Height="23" HorizontalAlignment="Left" Margin="162,89,0,0"  VerticalAlignment="Top" Width="47" />
+        <Label Content="-" Height="28" HorizontalAlignment="Left" Margin="144,87,0,0" Name="label5" VerticalAlignment="Top" Width="20" />
     </Grid>
 </Window>
