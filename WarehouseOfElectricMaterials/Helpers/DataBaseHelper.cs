@@ -24,6 +24,18 @@ namespace WarehouseElectric.Helpers
                 PC_PC_ID = null
             };
             productCategoriesManager.Add(productCategory);
+            PC_ProductCategory productCategory2 = new PC_ProductCategory
+            {
+                PC_NAME = "Miedziane",
+                PC_PC_ID = productCategory.PC_ID
+            };
+            PC_ProductCategory productCategory3 = new PC_ProductCategory
+            {
+                PC_NAME = "Światłowody",
+                PC_PC_ID = productCategory.PC_ID
+            };
+            productCategoriesManager.Add(productCategory2);
+            productCategoriesManager.Add(productCategory3);
 
             QuantityTypesManager quantityManager = new QuantityTypesManager();
             QT_QuantityType quantityType = new QT_QuantityType
@@ -145,6 +157,19 @@ namespace WarehouseElectric.Helpers
                 IE_TOTAL_BRUTTO = (10m * product.PR_UNIT_PRICE) + (10m * product.PR_UNIT_PRICE) * 0.22m
             };
             invoiceItemsManager.Add(invoiceItem2);
+
+            ICompanyManager companyManager = new CompanyManager();
+            CI_CompanyInfo companyInfo = new CI_CompanyInfo 
+            { 
+                CI_ADDED = DateTime.Now, 
+                CI_LAST_MODIFIED = DateTime.Now,
+                CI_NAME = "Hurtownia materiałów elektrycznych",
+                CI_PHONE = "666 666 666",
+                CI_POST_CODE = "44-444",
+                CI_TOWN = "Rybnik",
+                CI_STREET = "Plac Wonlości"
+            };
+            companyManager.SetCompanyData(companyInfo);
         }
     }
 }

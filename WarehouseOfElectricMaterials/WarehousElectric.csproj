@@ -85,7 +85,9 @@
     <Compile Include="LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompanyManager.cs" />
     <Compile Include="Models\CustomersManager.cs" />
+    <Compile Include="Models\ICompanyManager.cs" />
     <Compile Include="Models\ICustomersManager.cs" />
     <Compile Include="Models\IInvoicesItemsManager.cs" />
     <Compile Include="Models\IInvoicesManager.cs" />
@@ -118,6 +120,7 @@
       <DependentUpon>StorekeeperView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CashierViewModel.cs" />
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\ChoosePanelViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\CustomerFullViewModel.cs" />

@@ -6,6 +6,7 @@ using System.Windows;
 using WarehouseElectric.Models;
 using WarehouseElectric.DataLayer;
 using System.Windows.Controls;
+using System.Data.SqlClient;
 
 namespace WarehouseElectric.ViewModels
 {
@@ -69,13 +70,21 @@ namespace WarehouseElectric.ViewModels
             //zakładka stanowiska pracowników
             //ukrycie labelki informującej o błędnym wprowadzeniu nazwy nowego stanowiskoa
             AddNewPositionFailedVisibilityLabel = Visibility.Hidden;
+
+            ReadCategoriesFromDbIntoList();
         }
 
         #endregion //Constructors
 
         #region "Fields"
 
+        private String _newCategoryName;
+        private IList<CategoryViewModel> _rootCategories;
         private AdminView _adminView;
+        private bool _isRootCategory;
+        private ProductCategoriesManager _productCategoriesManager;
+        private RelayCommand _deleteCategoryCommand;
+        private RelayCommand _addNewCategoryCommand;
         private RelayCommand _logOutCommand;
         private RelayCommand _choosePanelCommand;
         private RelayCommand _addUserCommand;
@@ -173,7 +182,95 @@ namespace WarehouseElectric.ViewModels
 
         #region "Properties"
 
+        public String NewCategoryName
+        {
+            get
+            {
+                return _newCategoryName;
+            }
+            set
+            {
+                _newCategoryName = value;
+                OnPropertyChanged("NewCategoryName");
+            }
+        }
 
+        public ProductCategoriesManager ProductCategoriesManager
+        {
+            get
+            {
+                if(_productCategoriesManager == null)
+                {
+                    _productCategoriesManager = new ProductCategoriesManager();
+                }
+                return _productCategoriesManager;
+            }
+            set
+            {
+                _productCategoriesManager = value;
+            }
+        }
+
+        public bool IsRootCategory
+        {
+            get
+            {
+                return _isRootCategory;
+            }
+            set
+            {
+                _isRootCategory = value;
+                OnPropertyChanged("IsRootCategory");
+            }
+        }
+
+        public IList<CategoryViewModel> RootCategories
+        {
+            get
+            {
+                return _rootCategories;
+            }
+            set
+            {
+                _rootCategories = value;
+                OnPropertyChanged("RootCategories");
+            }
+        }
+
+        public RelayCommand DeleteCategoryCommand
+        {
+            get
+            {
+                if(_deleteCategoryCommand == null)
+                {
+                    _deleteCategoryCommand = new RelayCommand(DeleteCategory);
+                    _deleteCategoryCommand.CanUndo = (obj) => false;
+                }
+                return _deleteCategoryCommand;
+            }
+            set
+            {
+                _deleteCategoryCommand = value;
+            }
+        }
+
+        public RelayCommand AddNewCategoryCommand
+        {
+            get
+            {
+                if(_addNewCategoryCommand == null)
+                {
+                    _addNewCategoryCommand = new RelayCommand(AddNewCategory);
+                    _addNewCategoryCommand.CanUndo = (obj) => false;
+                }
+                return _addNewCategoryCommand;
+            }
+            set
+            {
+                _addNewCategoryCommand = value;
+            }
+        }
+        
         public RelayCommand LogOutCommand
         {
             get
@@ -190,7 +287,6 @@ namespace WarehouseElectric.ViewModels
                 _logOutCommand = value;
             }
         }
-
 
         public RelayCommand ChoosePanelCommand
         {
@@ -1407,6 +1503,107 @@ namespace WarehouseElectric.ViewModels
 
         #region "Methods"
 
+        public void DeleteCategory(object obj)
+        {
+            CategoryViewModel selectedCategory = GetSelectedCategory();
+            if(selectedCategory.ProductCategory != null)
+            {
+                try
+                {
+                    RecursiveDeleteCategories(selectedCategory);
+                    ProductCategoriesManager.Delete(selectedCategory.ProductCategory);
+                    ReadCategoriesFromDbIntoList();
+                }
+                catch(SqlException)
+                {
+                    MessageBox.Show("Nie można usunąć kategorii ponieważ istnieją przypisane do niej (lub do kategorii potomnych) produkty");
+                }
+            }
+        }
+
+        public void RecursiveDeleteCategories(CategoryViewModel category)
+        {
+            foreach(var child in category.Children)
+            {
+                RecursiveDeleteCategories(child);
+                ProductCategoriesManager.Delete(child.ProductCategory);
+            }
+        }
+
+        public void AddNewCategory(object obj)
+        {
+            int? parentCategoryId = null;
+            if(!IsRootCategory)
+            {
+                parentCategoryId = GetSelectedCategory().ProductCategory.PC_ID;
+            }
+
+            PC_ProductCategory productCategory = new PC_ProductCategory
+            {
+                PC_NAME = NewCategoryName,
+                PC_PC_ID = parentCategoryId
+            };
+            ProductCategoriesManager.Add(productCategory);
+
+            ReadCategoriesFromDbIntoList();
+        }
+
+        public CategoryViewModel GetSelectedCategory()
+        {
+            CategoryViewModel selectedCategory = new CategoryViewModel();
+            foreach(var cat in RootCategories)
+            {
+                if(!cat.IsSelected)
+                {
+                    var list = GetAllChildrenCategories(cat).Where(x => x.IsSelected).Select(x => x).ToList();
+                    if(list.Count > 0)
+                    {
+                        selectedCategory = list[0];
+                    }
+                }
+                else
+                {
+                    selectedCategory = cat;
+                    break;
+                }
+            }
+
+            return selectedCategory;
+        }
+
+        public IEnumerable<CategoryViewModel> GetAllChildrenCategories(CategoryViewModel category)
+        {
+            foreach(var child in category.Children)
+            {
+                GetAllChildrenCategories(category);
+                yield return child;
+            }
+        }
+
+        public void ReadCategoriesFromDbIntoList()
+        {
+            IList<PC_ProductCategory> unorderedList;
+            unorderedList = ProductCategoriesManager.GetAll();
+
+            RootCategories = unorderedList.Where((x) => x.PC_PC_ID == null).Select((x) => new CategoryViewModel() { ProductCategory = x }).ToList();
+
+            //get root categories
+            foreach (var category in RootCategories)
+            {
+                //build categories tree
+                BuildCategoriesTree(category, unorderedList);
+            }
+        }
+
+        private void BuildCategoriesTree(CategoryViewModel categoryViewmodel, IList<PC_ProductCategory> unorderedList)
+        {
+            categoryViewmodel.Children = (from category in unorderedList where category.PC_PC_ID == categoryViewmodel.ProductCategory.PC_ID select new CategoryViewModel() { ProductCategory = category }).ToList();
+
+            foreach (var category in categoryViewmodel.Children)
+	        {
+		        BuildCategoriesTree(category, unorderedList);
+	        }
+        }
 
         public void LogOut(Object obj)
         {
@@ -1863,5 +2060,18 @@ namespace WarehouseElectric.ViewModels
 
 
         #endregion //Methods
+
+        #region //Disposable mehods
+
+        protected override void OnDispose()
+        {
+            if(_productCategoriesManager != null)
+            {
+                _productCategoriesManager.Dispose();
+            }
+            base.OnDispose();
+        }
+
+        #endregion
     }
 }
