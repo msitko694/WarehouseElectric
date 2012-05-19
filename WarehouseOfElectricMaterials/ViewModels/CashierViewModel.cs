@@ -7,6 +7,8 @@ using WarehouseElectric.Models;
 using WarehouseElectric.DataLayer;
 using System.Windows.Controls;
 
+using System.Collections.ObjectModel;
+
 namespace WarehouseElectric.ViewModels
 {
     class CashierViewModel:ViewModelBase
@@ -14,12 +16,15 @@ namespace WarehouseElectric.ViewModels
         #region "Contructors"
         public CashierViewModel(CashierView cashierView)
         {
+            // część "Klienci" - docelowo do przeniesienia w dogodniejsze miejsce   
             IsEnabledButtonOpenCustomerFullView = false;
             _cashierView = cashierView;
 
             CustomersManager customersManager = new CustomersManager();
             ListCustomersToShow = customersManager.GetAll().ToList();
-            
+            // część "Magazyn"
+            ProductCategoriesManager productCategoriesManager = new ProductCategoriesManager();
+            ProductCategoriesToShow = productCategoriesManager.GetAllOnBaseLevel();
         }
 
         #endregion //Constructors
@@ -33,6 +38,7 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _logOutCommand;
         private RelayCommand _openCustomerFullViewCommand;
         private CU_Customer _selectedCustomer;
+        private IList<PC_ProductCategory> _productCategoriesToShow;
         #endregion //Fields
 
         #region "Properties"
@@ -134,6 +140,18 @@ namespace WarehouseElectric.ViewModels
             {
                 _customerNameToSearch = value;
                 OnPropertyChanged("CustomerNameToSearch");
+            }
+        }
+        public IList<PC_ProductCategory> ProductCategoriesToShow
+        {
+            get
+            {
+                return _productCategoriesToShow;
+            }
+            set
+            {
+                _productCategoriesToShow = value;
+                OnPropertyChanged("ProductCategoriesToShow");
             }
         }
         #endregion //Properties

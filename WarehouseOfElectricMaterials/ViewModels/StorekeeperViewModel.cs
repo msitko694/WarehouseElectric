@@ -7,6 +7,7 @@ using WarehouseElectric.Models;
 using WarehouseElectric.DataLayer;
 using System.Windows.Controls;
 
+
 namespace WarehouseElectric.ViewModels
 {
     class StorekeeperViewModel:ViewModelBase
@@ -29,6 +30,7 @@ namespace WarehouseElectric.ViewModels
             private RelayCommand _supplierSearchCommand;
             private IList<SU_Supplier> _listSuppliersToShow;
             private String _supplierNameToSearch;
+            private RelayCommand _goAddNewSupplierCommand;
         #endregion //Fields
         #region "Properties"
             public RelayCommand LogOutCommand
@@ -102,36 +104,24 @@ namespace WarehouseElectric.ViewModels
                     OnPropertyChanged("SupplierNameToSearch");
                 }
             }
-     
-        /*    public List<SU_Supplier> supplierDatagrid
+            public RelayCommand GoAddNewSupplierCommand
             {
                 get
                 {
-                    return _listUserToModificationDataGrid;
-                }
-                set
-                {
-                    _listUserToModificationDataGrid = value;
-                    OnPropertyChanged("ListUserToModificationDataGrid");
-                }
-            }*/
-           /* public RelayCommand SupplierSearchCommand
-            {
-                get
-                {
-                    if (_supplierSearchCommand == null)
+                    if (_goAddNewSupplierCommand == null)
                     {
-                        _supplierSearchCommand = new RelayCommand(SupplierSearch);
-                        _supplierSearchCommand.CanUndo = (obj) => false;
+                        _goAddNewSupplierCommand = new RelayCommand(GoAddNewSupplier);
+                        _goAddNewSupplierCommand.CanUndo = (obj) => false;
                     }
-                    return _supplierSearchCommand;
+                    return _goAddNewSupplierCommand;
                 }
                 set
                 {
-                    _supplierSearchCommand = value;
+                    _goAddNewSupplierCommand = value;
                 }
-            }*/
-        #endregion //Properties
+            }
+    
+          #endregion //Properties
         #region "Methods"
             public void LogOut(Object obj)
             {
@@ -156,6 +146,14 @@ namespace WarehouseElectric.ViewModels
                                        where supplier.SU_NAME == SupplierNameToSearch
                                        select supplier).ToList<SU_Supplier>();
             }
+            public void GoAddNewSupplier(Object obj)
+            {
+                 Application.Current.MainWindow  = new AddNewSupplierView();
+                 Application.Current.MainWindow.Show();
+
+                 SuppliersManager supplierManager = new SuppliersManager();
+                 ListSuppliersToShow = supplierManager.GetAll();
+            }     
         #endregion //Methods
     }
 }

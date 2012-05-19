@@ -21,8 +21,16 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Magazyn" Name="tabItemStore" Background="#FFF5893F">
+        
                 <Grid Background="#FFDEDEDE">
-                    <TreeView Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120" />
+                    <TreeView ItemsSource="{Binding Path=ProductCategoriesToShow}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Path=PC_ProductCategories}">
+                                <TextBlock Text="{Binding Path=PC_NAME}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
                     <Button Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="buttonClearChoosedCategory" VerticalAlignment="Top" Width="120" Background="Red" />
                     <DataGrid AutoGenerateColumns="True" Height="314" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGridProducts" VerticalAlignment="Top" Width="481" />
                     <TextBox Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBoxSearchProduct" VerticalAlignment="Top" Width="448" />
