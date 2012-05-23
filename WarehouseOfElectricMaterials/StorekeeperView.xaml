@@ -10,6 +10,13 @@
             <TabItem Background="#FFF5893F" Header="Magazyn" Name="tabItemStore">
                 <Grid Background="#FFDEDEDE">
                     <TreeView Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeView1" VerticalAlignment="Top" Width="120" />
+                    <TreeView ItemsSource="{Binding Path=ProductCategoriesToShow}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120">
+                        <TreeView.ItemTemplate >
+                            <HierarchicalDataTemplate ItemsSource="{Binding Path=PC_ProductCategories}" >
+                                <TextBlock Text="{Binding Path=PC_NAME}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
                     <Button Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" />
                     <DataGrid SelectedItem="{Binding Path=SelectedCustomer}" ItemsSource="{Binding Path=ListCustomersToShow}" AutoGenerateColumns="False" Height="285" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" />
                     <TextBox Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBox1" VerticalAlignment="Top" Width="448" />
