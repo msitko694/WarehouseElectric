@@ -93,10 +93,15 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _modifyUserCommond; //modyfikacja użytkownika
         private RelayCommand _deleteUserCommond; //usuwanie użytkownika
         private RelayCommand _addWorkerCommond; //dodawanie nowego pracownika
+        private RelayCommand _generateUserNameButtonCommand; //wygenerowanie nazwy użytkownika na podstawie danych pracownika(zakładka użytkownicy/nowy)
+        private RelayCommand _generateUserPasswordCommand; //wygenerowanei hasła użytkownika(zakładka użytkownicy/nowy)
         private RelayCommand _findWorkerToModifyButtonCommand; //wyszukanie pracownika do modyfikacji (zakładka pracownicy/zarządzanie) 
         private RelayCommand _modifyWorkerButtonCommond; //modyfikacja pracownika (zakładka pracownicy/zarządzanie)
+        private RelayCommand _deleteWorkerCommand; //usunięcie pracownika(zakładka pracownicy/zarządzanie)
         private RelayCommand _addNewSpeditionTypeButtonCommand; // dodanie nowego typu wysyłki (zakładka typy wysyłki);
+        private RelayCommand _deleteSpeditionTypeCommand; // usuwanie typu wysyłki
         private RelayCommand _addNewQuantityTypeButtonCommand; // dodanie nowej jednostki(zakładka jednostki produktów);
+        private RelayCommand _deleteQuantityTypeCommand; // usunięcie jednosti produktów
         private RelayCommand _refreshListOfWorkerToAddUserButtonCommand; // odświeżanie listy pracowników (zkładka użytkownicy/nowy)
         private RelayCommand _refreshListOfUserToModifyButtonCommand; //odświeżenie listy użytkowników do modyfikacji(zakładka użytkownicy/zarządzanie)
         private RelayCommand _refreshListOfWorkerToModifyButtonCommand; //odświeżenie listy pracowników do modyfikacji(zakładka pracownicy/zarządzanie)
@@ -104,6 +109,8 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _refreshListOfQuantityTypesButtonCommand; //odświeżenie listy z jednostkami produktów(zakładka jednostki produktów)
         private RelayCommand _refreshListOfPositionButtonCommand; //odświeżenie listy z stanowiskami (zakładka stanowska pracowników)
         private RelayCommand _addNewPositionButtonCommand; //dodane nowego stanowsika pracy (zakładka stanowska pracowników)
+        private RelayCommand _deletePositionCommand; //usunięcie stanowiska pracy
+        private RelayCommand _refreshInformationOfCompanyCommand; //wczytanie danych firmy(zakładka dane firmy)
         private IList<WO_Worker> _listWorkersAll;
         private IList<WO_Worker> _listAllWorkersToModifyDataGrid; //wyświetlenie w datagrid listy pracowników (zakładka pracownicy/zarządzanie)
         private List<US_User> _listUserToModificationDataGrid; //wyświetlenie w datagrid listy userów do modyfikacji(zakładka użytkownicy/zarządzanie)
@@ -113,6 +120,9 @@ namespace WarehouseElectric.ViewModels
         private IList<PO_Position> _listAllPositionsDataGrid; //wyświetlenie listy stanowisk(zakładka stanowiska pracy )
         private WO_Worker _workerSelectedToAddUser;
         private WO_Worker _workerSelectedToModifyInDataGrid; //wybrany pracownik do modyfikacji (zakładka pracownicy/zarządzanie)
+        private SP_Spedition _speditionSelectedToDeleteDataGrid; //wybrany typ wysyłki w data grid(zakładka typy wysyłki)
+        private QT_QuantityType _quantityTypesSelectedToDeleteDataGrid; //wybrana jednostak w data grid(zakładka jednostki produktów)
+        private PO_Position _positionSelectedToDeleteInDataGrid; //wybrane stanowisko w data grid(zakładka stanowiska pracy)
         private String _positionSelectedToAddWorker; //wybrana pozycja z comboboxa zakładka pracownicy/nowy
         private String _positionSelectedToModifyWorker; //wybrana pozycja z comboboxa zakładka pracownicy/zarządzanie 
         private US_User _userSelectedToModificationInDataGrid;
@@ -147,6 +157,11 @@ namespace WarehouseElectric.ViewModels
         private String _newSpeditionTypeTextBox; // pobieranie nowego typu wysyłki (zakładka typy wysyłki)
         private String _newQuantityTypeTextBox; // pobieranie nowej jednostki (zakładka jednostki produktów)
         private String _newPositionTextBox; //pobierane nazwy nowego stanowiska pracy(zakładaka stanowiska pracay)
+        private String _nameOfCompanyTextBox; //nazwa firmy (zakładka dane firmy)
+        private String _streetCompanyTextBox; //nazwa ulicy (zakładka dane firmy)
+        private String _postCodeOfCompanyTextBox; // kod pocztowy firmy(zakładka dane firmy)
+        private String _townOfCompanyTextBox; // nazwa miasta (zakładka dane firmy)
+        private String _phoneOfCompanyTextBox; // numer telefonu firmy(zakładka dane firmy)
         private Boolean _newUserIsAdmin;
         private Boolean _newUserIsCashier;
         private Boolean _newUserIsStorekeeper;
@@ -564,6 +579,110 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public RelayCommand GenerateUserNameButtonCommand
+        {
+            get
+            {
+                _generateUserNameButtonCommand = new RelayCommand(GenerateUserNameButton);
+                _generateUserNameButtonCommand.CanUndo = (obj) => false;
+
+                return _generateUserNameButtonCommand;
+            }
+            set
+            {
+                _generateUserNameButtonCommand = value;
+            }
+        }
+
+        public RelayCommand GenerateUserPasswordCommand
+        {
+            get
+            {
+                _generateUserPasswordCommand = new RelayCommand(GenerateUserPassword);
+                _generateUserPasswordCommand.CanUndo = (obj) => false;
+
+                return _generateUserPasswordCommand;
+            }
+            set
+            {
+                _generateUserPasswordCommand = value;
+            }
+        }
+
+        public RelayCommand DeleteSpeditionTypeCommand
+        {
+            get
+            {
+                _deleteSpeditionTypeCommand = new RelayCommand(DeleteSpeditionType);
+                _deleteSpeditionTypeCommand.CanUndo = (obj) => false;
+
+                return _deleteSpeditionTypeCommand;
+            }
+            set
+            {
+                _deleteSpeditionTypeCommand = value;
+            }
+        }
+
+        public RelayCommand DeleteQuantityTypeCommand
+        {
+            get
+            {
+                _deleteQuantityTypeCommand = new RelayCommand(DeleteQuantityType);
+                _deleteQuantityTypeCommand.CanUndo = (obj) => false;
+
+                return _deleteQuantityTypeCommand;
+            }
+            set
+            {
+                _deleteQuantityTypeCommand = value;
+            }
+        }
+
+        public RelayCommand DeletePositionCommand
+        {
+            get
+            {
+                _deletePositionCommand = new RelayCommand(DeletePosition);
+                _deletePositionCommand.CanUndo = (obj) => false;
+
+                return _deletePositionCommand;
+            }
+            set
+            {
+                _deletePositionCommand = value;
+            }
+        }
+
+        public RelayCommand DeleteWorkerCommand
+        {
+            get
+            {
+                _deleteWorkerCommand = new RelayCommand(DeleteWorker);
+                _deleteWorkerCommand.CanUndo = (obj) => false;
+
+                return _deleteWorkerCommand;
+            }
+            set
+            {
+                _deleteWorkerCommand = value;
+            }
+        }
+
+        public RelayCommand RefreshInformationOfCompanyCommand
+        {
+            get
+            {
+                _refreshInformationOfCompanyCommand = new RelayCommand(RefreshInformationOfCompany);
+                _refreshInformationOfCompanyCommand.CanUndo = (obj) => false;
+
+                return _refreshInformationOfCompanyCommand;
+            }
+            set
+            {
+                _refreshInformationOfCompanyCommand = value;
+            }
+        }
 
         public IList<WO_Worker> ListWorkersAll
         {
@@ -680,6 +799,45 @@ namespace WarehouseElectric.ViewModels
             {
                 _workerSelectedToModifyInDataGrid = value;
                 OnPropertyChanged("WorkerSelectedToModifyInDataGrid");
+            }
+        }
+
+        public SP_Spedition SpeditionSelectedToDeleteDataGrid
+        {
+            get
+            {
+                return _speditionSelectedToDeleteDataGrid;
+            }
+            set
+            {
+                _speditionSelectedToDeleteDataGrid = value;
+                OnPropertyChanged("SpeditionSelectedToDeleteDataGrid");
+            }
+        }
+
+        public QT_QuantityType QuantityTypesSelectedToDeleteDataGrid
+        {
+            get
+            {
+                return _quantityTypesSelectedToDeleteDataGrid; 
+            }
+            set
+            {
+                _quantityTypesSelectedToDeleteDataGrid = value;
+                OnPropertyChanged("QuantityTypesSelectedToDeleteDataGrid");
+            }
+        }
+
+        public PO_Position PositionSelectedToDeleteInDataGrid
+        {
+            get
+            {
+                return _positionSelectedToDeleteInDataGrid;
+            }
+            set
+            {
+                _positionSelectedToDeleteInDataGrid = value;
+                OnPropertyChanged("PositionSelectedToDeleteInDataGrid");
             }
         }
 
@@ -1132,6 +1290,70 @@ namespace WarehouseElectric.ViewModels
         
         }
 
+        public String NameOfCompanyTextBox
+        {
+            get
+            {
+                return _nameOfCompanyTextBox;
+            }
+            set
+            {
+                _nameOfCompanyTextBox = value;
+                OnPropertyChanged("NameOfCompanyTextBox");
+            }
+        }
+
+        public String StreetCompanyTextBox
+        {
+            get 
+            {
+                return _streetCompanyTextBox;
+            }
+            set
+            {
+                _streetCompanyTextBox = value;
+                OnPropertyChanged("StreetCompanyTextBox");
+            }
+        }
+
+        public String PostCodeOfCompanyTextBox
+        {
+            get
+            {
+                return _postCodeOfCompanyTextBox;
+            }
+            set
+            {
+                _postCodeOfCompanyTextBox = value;
+                OnPropertyChanged("PostCodeOfCompanyTextBox");
+            }
+        }
+
+        public String TownOfCompanyTextBox
+        {
+            get
+            {
+                return _townOfCompanyTextBox;
+            }
+            set 
+            {
+                _townOfCompanyTextBox = value;
+                OnPropertyChanged("TownOfCompanyTextBox");
+            }
+        }
+
+        public String PhoneOfCompanyTextBox
+        {
+            get
+            {
+                return _phoneOfCompanyTextBox;
+            }
+            set
+            {
+                _phoneOfCompanyTextBox = value;
+                OnPropertyChanged("PhoneOfCompanyTextBox");
+            }
+        }
 
         public Boolean NewUserIsAdmin
         {
@@ -1696,18 +1918,61 @@ namespace WarehouseElectric.ViewModels
             ListWorkersAll = workerManager.GetAll();
         }
 
+        public void GenerateUserNameButton(Object obj)
+        {
+            UsersManager userManager = new UsersManager();
 
+            UserNameToAddNewUser = "";
+            int i = 1;
+            if (WorkerSelectedToAddUser != null)
+            {
+                if (WorkerSelectedToAddUser.WO_NAME.Length < 4)
+                    UserNameToAddNewUser += WorkerSelectedToAddUser.WO_NAME.Substring(0, WorkerSelectedToAddUser.WO_NAME.Length);
+                else
+                    UserNameToAddNewUser += WorkerSelectedToAddUser.WO_NAME.Substring(0, 4);
+                if (WorkerSelectedToAddUser.WO_SURNAME.Length < 4)
+                    UserNameToAddNewUser += WorkerSelectedToAddUser.WO_SURNAME.Substring(0, WorkerSelectedToAddUser.WO_SURNAME.Length);
+                else
+                    UserNameToAddNewUser += WorkerSelectedToAddUser.WO_SURNAME.Substring(0, 4);
+                while (userManager.GetByUserName(UserNameToAddNewUser) != null)
+                {
+                    UserNameToAddNewUser = UserNameToAddNewUser.Substring(0, (UserNameToAddNewUser.Length - 1)) + i.ToString();
+                    i++;
+                }
+
+
+            }
+        }
+
+        public void GenerateUserPassword(Object obj)
+        {
+            Random r = new Random();
+            UserPasswordToAddNewUser = "";
+            for (int i = 0; i < 4; i++)
+            {
+                UserPasswordToAddNewUser += r.Next(10).ToString();
+                UserPasswordToAddNewUser += (char)r.Next(97, 122);
+            }
+        }
         /////////////////////////////////////
         //zakładka uzytkownicy/zarządzanie//
         public void FindUserToModification(Object obj)
         {
-            //powinno być tak ale jest problem z rzutowniem typów muszę jeszcze otym poczytać
-            //ListUserToModificationDataGrid = userManager.GetByUserName(FindUserToModificationTextBox);
             UsersManager userManager = new UsersManager();
-            ListUserToModificationDataGrid = (from user in userManager.GetAll()
-                                              where user.US_USERNAME == FindUserToModificationTextBox 
-                                              select user).ToList<US_User>();
+            US_User foundUser = new US_User();
+            List<US_User> listOfFoundUser = new List<US_User>();
+
+            if (ListUserToModificationDataGrid != null)
+                ListUserToModificationDataGrid = null;
             
+            foundUser = userManager.GetByUserName(FindUserToModificationTextBox);
+            
+            if (foundUser != null)
+            {
+                listOfFoundUser.Add(foundUser);
+                
+                ListUserToModificationDataGrid = listOfFoundUser;
+            }
         }
 
         public void ModifyUser(Object obj)
@@ -1964,7 +2229,7 @@ namespace WarehouseElectric.ViewModels
                     newWorker.WO_LAST_MODIFIED = DateTime.Now;
 
                     workerManager.Update();
-                    MessageBox.Show("Zmodyfikowano użytkownika");
+                    MessageBox.Show("Zmodyfikowano Pracownika");
                 }
             }
 
@@ -1974,6 +2239,20 @@ namespace WarehouseElectric.ViewModels
         {
             WorkersManager workerManager = new WorkersManager();
             ListAllWorkersToModifyDataGrid = workerManager.GetAll();
+        }
+
+        public void DeleteWorker(Object obj)
+        {
+            WorkersManager workersManager = new WorkersManager();
+            WO_Worker worker = new WO_Worker();
+            if (WorkerSelectedToModifyInDataGrid != null)
+            {
+                worker = workersManager.Get(WorkerSelectedToModifyInDataGrid.WO_ID);
+                workersManager.Delete(worker);
+                MessageBox.Show("Usunięto Pracownika");
+            }
+            else
+                MessageBox.Show("Wybierz pracownika z tabeli");
         }
 
         /////////////////////////
@@ -2006,6 +2285,21 @@ namespace WarehouseElectric.ViewModels
             ListSpeditionsTypeDataGrid = speditionManager.GetAll().ToList();
         }
 
+        public void DeleteSpeditionType(Object obj)
+        {
+            SpeditionManager speditionManager = new SpeditionManager();
+            SP_Spedition speditionType = new SP_Spedition();
+            if (SpeditionSelectedToDeleteDataGrid != null)
+            {
+                speditionType = speditionManager.Get(SpeditionSelectedToDeleteDataGrid.SP_ID);
+                speditionManager.Delete(speditionType);
+                MessageBox.Show("Typ Wysyłki został usunięty");
+            }
+            else
+                MessageBox.Show("Wybierz typ wysyłki z tabeli");
+        }
+
+
         public void AddNewQuantityTypeButton(Object obj)
         {
             QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
@@ -2035,6 +2329,20 @@ namespace WarehouseElectric.ViewModels
             ListQuantityTypeDataGrid = quantityTypesManager.GetAll().ToList();
         }
 
+        public void DeleteQuantityType(Object obj)
+        {
+            QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
+            QT_QuantityType quantityTypes = new QT_QuantityType();
+            if (QuantityTypesSelectedToDeleteDataGrid != null)
+            {
+                quantityTypes = quantityTypesManager.Get(QuantityTypesSelectedToDeleteDataGrid.QT_ID);
+                quantityTypesManager.Delete(quantityTypes);
+                MessageBox.Show("Jednostak produktów została usunięta");
+            }
+            else
+                MessageBox.Show("Wybierz jednostkę z tabeli");
+        }
+
         //zakładka stanowiska pracowników
         public void RefreshListOfPositionButton(Object obj)
         {
@@ -2048,16 +2356,50 @@ namespace WarehouseElectric.ViewModels
             PO_Position newPosition = new PO_Position();
             if (NewPositionTextBox != null && NewPositionTextBox != "" && NewPositionTextBox != " ")
             {
-                AddNewPositionFailedVisibilityLabel = Visibility.Hidden;
-                newPosition.PO_NAME = NewPositionTextBox;
-                positionsManager.Add(newPosition);
-                ListPositionsToAddWorkerComboBox = positionsManager.GetAllName();
-                MessageBox.Show("Dodano nowe stanowisko");
+                if (positionsManager.GetByPositionName(NewPositionTextBox) == null)
+                {
+
+                    AddNewPositionFailedVisibilityLabel = Visibility.Hidden;
+                    newPosition.PO_NAME = NewPositionTextBox;
+                    positionsManager.Add(newPosition);
+                    ListPositionsToAddWorkerComboBox = positionsManager.GetAllName();
+                    MessageBox.Show("Dodano nowe stanowisko");
+                }
+                else
+                    MessageBox.Show("Istnieje już takie stanowsiko");
             }
             else
                 AddNewPositionFailedVisibilityLabel = Visibility.Visible;
         }
 
+        public void DeletePosition(Object obj)
+        {
+            PositionsManager positionManager = new PositionsManager();
+            PO_Position position = new PO_Position();
+            if (PositionSelectedToDeleteInDataGrid != null)
+            {
+                position = positionManager.Get(PositionSelectedToDeleteInDataGrid.PO_ID);
+                positionManager.Delete(position);
+                ListPositionsToAddWorkerComboBox = positionManager.GetAllName();
+                MessageBox.Show("Stanowisko zostało usunięte");
+            }
+            else
+                MessageBox.Show("Wybierz stanowisko z tablei");
+        }
+
+        //zakładka dane firmy
+        public void RefreshInformationOfCompany(Object obj)
+        {
+            CompanyManager companyManager = new CompanyManager();
+            CI_CompanyInfo companyInfo = new CI_CompanyInfo();
+            companyInfo = companyManager.GetCompanyData();
+            NameOfCompanyTextBox = companyInfo.CI_NAME;
+            StreetCompanyTextBox = companyInfo.CI_STREET;
+            PostCodeOfCompanyTextBox = companyInfo.CI_POST_CODE;
+            TownOfCompanyTextBox = companyInfo.CI_TOWN;
+            PhoneOfCompanyTextBox = companyInfo.CI_PHONE;
+            
+        }
 
         #endregion //Methods
 
