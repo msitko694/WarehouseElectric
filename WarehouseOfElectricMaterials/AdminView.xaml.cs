@@ -24,8 +24,5 @@ namespace WarehouseElectric
             InitializeComponent();
             DataContext = new AdminViewModel(this);
         }
-
-     
-
     }
 }

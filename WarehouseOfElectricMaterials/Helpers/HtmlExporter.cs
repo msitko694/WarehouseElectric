@@ -7,6 +7,8 @@ using System.Xml.Xsl;
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
+using WarehouseElectric.DataLayer;
+using WarehouseElectric.Models;
 
 namespace WarehouseElectric.Helpers
 {
@@ -14,8 +16,10 @@ namespace WarehouseElectric.Helpers
     {
         #region IExporter Members
 
-        public void ExportInvoice(DataLayer.IN_Invoice invoice)
+        public void ExportInvoice(DataLayer.IN_Invoice invoice, String filePath)
         {
+            ICompanyManager companyManager = new CompanyManager();
+            CI_CompanyInfo companyInfo =  companyManager.GetCompanyData();
             XDocument xmlTree= new XDocument(
                                     new XElement("invoice",
                                         new XElement("customer",
@@ -24,6 +28,13 @@ namespace WarehouseElectric.Helpers
                                             new XElement("town", invoice.CU_Customer.CU_TOWN),
                                             new XElement("street", invoice.CU_Customer.CU_STREET),
                                             new XElement("postcode", invoice.CU_Customer.CU_POST_CODE)
+                                        ),
+                                        new XElement("company",
+                                            new XElement("name", companyInfo.CI_NAME),
+                                            new XElement("phone", companyInfo.CI_PHONE),
+                                            new XElement("postcode", companyInfo.CI_POST_CODE),
+                                            new XElement("town", companyInfo.CI_TOWN),
+                                            new XElement("street", companyInfo.CI_STREET)
                                         ),
                                         new XElement("date",  invoice.IN_ADDED.ToShortDateString()),
                                         new XElement("speditionCost", invoice.IN_SPEDITION_COST),
@@ -66,7 +77,7 @@ namespace WarehouseElectric.Helpers
                 Debug.Write(e);
             }
                 
-            xmlTree.Save("export.xml");
+            xmlTree.Save(filePath);
         }
 
         #endregion

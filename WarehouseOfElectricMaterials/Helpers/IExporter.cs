@@ -8,6 +8,6 @@ namespace WarehouseElectric.Helpers
 {
     interface IExporter
     {
-       void ExportInvoice(IN_Invoice invoice);
+       void ExportInvoice(IN_Invoice invoice, String filePath);
     }
 }

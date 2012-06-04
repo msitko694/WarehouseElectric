@@ -19,9 +19,20 @@
 					{
 					background: #F0F0F0;
 					}
+					.companyDiv
+					{
+					float:left;
+					}
+					.companyParagraph
+					{
+					border: 1px solid black;
+					border-collapse: collapse;
+					text-align: left;
+					padding:10px;
+					}
 					.customerDiv
 					{
-						float:right;
+					float:right;
 					}
 					.customerParagraph
 					{
@@ -32,23 +43,35 @@
 					}
 					body
 					{
-						width: 1024;
+					width: 1024;
 					}
 				</style>
 			</head>
 			<body>
+				<div class="companyDiv">
+					<p class="companyParagraph">
+						<b>Sprzedawca: </b><xsl:value-of select="invoice/company/name"/>
+						<br/>
+						<b>Adres: </b>
+						<xsl:value-of select="invoice/company/postcode"/>&#160;
+						<xsl:value-of select="invoice/company/town"/>,&#160;
+						ul. <xsl:value-of select="invoice/company/street"/>
+						<br/>
+						<b>Telefon: </b>
+						<xsl:value-of select="invoice/company/phone"/> &#160;
+					</p>
+				</div>
 				<div class="customerDiv">
 					<p class="customerParagraph">
 						<b>Nabywca: </b><xsl:value-of select="invoice/customer/name"/>
 						<br/>
-						<b>Adres: </b>	
-						<xsl:value-of select="invoice/customer/postcode"/>, &#160;
-						<xsl:value-of select="invoice/customer/town"/> &#160;
+						<b>Adres: </b>
+						<xsl:value-of select="invoice/customer/postcode"/>&#160;
+						<xsl:value-of select="invoice/customer/town"/>,&#160;
 						ul. <xsl:value-of select="invoice/customer/street"/>
 						<br/>
 						<b>Telefon: </b>
 						<xsl:value-of select="invoice/customer/phone"/> &#160;
-						<xsl:value-of select="invoice/date"/>
 					</p>
 				</div>
 				<br/>
@@ -96,6 +119,12 @@
 						</tr>
 					</xsl:for-each>
 				</table>
+				<br/>
+				<b>Data wystawienia faktury: </b><xsl:value-of select="invoice/date"/>
+				<br/>
+				<b>Koszt wysyłki: </b><xsl:value-of select="invoice/speditionCost"/>
+				<br/>
+				<b>Do zapłaty: </b><xsl:value-of select="invoice/totalCost"/>
 			</body>
 		</html>
 	</xsl:template>
