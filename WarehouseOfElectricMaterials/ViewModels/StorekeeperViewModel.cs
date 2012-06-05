@@ -20,6 +20,8 @@ namespace WarehouseElectric.ViewModels
             //podpinanie listy dostawców do dataGrida z dostawcami
             SuppliersManager suppliersManager = new SuppliersManager();
             ListSuppliersToShow = suppliersManager.GetAll().ToList();
+            ProductCategoriesManager productCategoriesManager = new ProductCategoriesManager();
+            ProductCategoriesToShow = productCategoriesManager.GetAllOnBaseLevel();
 
         }
         #endregion //Constructors
@@ -31,6 +33,8 @@ namespace WarehouseElectric.ViewModels
             private IList<SU_Supplier> _listSuppliersToShow;
             private String _supplierNameToSearch;
             private RelayCommand _goAddNewSupplierCommand;
+            private IList<PC_ProductCategory> _productCategoriesToShow;
+            private PC_ProductCategory _selectedProductCategory;
         #endregion //Fields
         #region "Properties"
             public RelayCommand LogOutCommand
@@ -120,7 +124,30 @@ namespace WarehouseElectric.ViewModels
                     _goAddNewSupplierCommand = value;
                 }
             }
-    
+            public IList<PC_ProductCategory> ProductCategoriesToShow
+            {
+                get
+                {
+                    return _productCategoriesToShow;
+                }
+                set
+                {
+                    _productCategoriesToShow = value;
+                    OnPropertyChanged("ProductCategoriesToShow");
+                }
+            }
+            public PC_ProductCategory SelectedProductCategory 
+            {
+                get
+                {
+                    return _selectedProductCategory;
+                }
+                set
+                {
+                    _selectedProductCategory = value;
+                    OnPropertyChanged("SelectedProductCategory");
+                }
+            }
           #endregion //Properties
         #region "Methods"
             public void LogOut(Object obj)
