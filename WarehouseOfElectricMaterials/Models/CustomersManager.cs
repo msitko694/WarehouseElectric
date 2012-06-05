@@ -70,9 +70,13 @@ namespace WarehouseElectric.Models
 
         public IList<CU_Customer> GetByName(string name)
         {
-            return (from customer in DataContext.CU_Customers
-                    where customer.CU_NAME.Contains(name)
-                    select customer).ToList<CU_Customer>();
+            if(!String.IsNullOrWhiteSpace(name))
+            {
+                return (from customer in DataContext.CU_Customers
+                        where customer.CU_NAME.Contains(name)
+                        select customer).ToList<CU_Customer>();
+            }
+            return GetAll();
         }
 
         /// <summary>

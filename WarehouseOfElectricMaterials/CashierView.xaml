@@ -1,29 +1,31 @@
 ﻿<Window x:Class="WarehouseElectric.CashierView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="CashierView" Height="500" Width="670" ResizeMode="CanMinimize">
+        Title="CashierView" Height="500" Width="670" ResizeMode="CanMinimize"
+        xmlns:h="clr-namespace:WarehouseElectric.Helpers"
+        h:HelpProvider.HelpString="Widok kasjera. Umożliwia przeglądanie, wystawianie i modyfikację faktur. Umożliwia zarządzanie klientami oraz tworzenie raportów.">
     <Grid Height="450" Width="652">
-        <Button Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
-        <Button Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
+        <Button h:HelpProvider.HelpString="Przycisk wylogowuje bieżącego użytkownika" Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
+        <Button h:HelpProvider.HelpString="Przycisk umożliwiający zmienie panelu bez wylogowywania bieżącego użytkownika" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
         <Label Content="Użytkownik:" Height="25" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelUserName" VerticalAlignment="Top" Width="74" />
         <TabControl Height="394" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControlCashierView" VerticalAlignment="Top" Width="629">
-            <TabItem Header="Faktury" Name="tabItemInvoices" Background="#FF4BE255">
+            <TabItem h:HelpProvider.HelpString="Zakładka faktury umożliwia zarządzanie fakturami" Header="Faktury" Name="tabItemInvoices" Background="#FF4BE255">
                 <Grid Background="#FFDEDEDE" Height="360" Width="622">
-                    <Button Content="NOWA FAKTURA" Height="113" Margin="6,12,0,0" Name="buttonNewInvoice" VerticalAlignment="Top" Background="#FF4599CE" HorizontalAlignment="Left" Width="196" />
-                    <DataGrid AutoGenerateColumns="True" Height="281" HorizontalAlignment="Left" Margin="208,45,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="408" />
-                    <TextBox Height="27" HorizontalAlignment="Left" Margin="208,12,0,0" Name="textBoxSearchInvoice" VerticalAlignment="Top" Width="282" />
+                    <Button h:HelpProvider.HelpString="Przycisk tworzy nową fakturę" Content="NOWA FAKTURA" Height="113" Margin="6,12,0,0" Name="buttonNewInvoice" VerticalAlignment="Top" Background="#FF4599CE" HorizontalAlignment="Left" Width="196" />
+                    <DataGrid h:HelpProvider.HelpString="Tablea wyświetla wystawione faktury" AutoGenerateColumns="True" Height="281" HorizontalAlignment="Left" Margin="208,45,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="408" />
+                    <TextBox h:HelpProvider.HelpString="Pole służące do wszyukiwania faktur" Height="27" HorizontalAlignment="Left" Margin="208,12,0,0" Name="textBoxSearchInvoice" VerticalAlignment="Top" Width="282" />
                     <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,12,99,0" VerticalAlignment="Top" Width="27" Name="buttonFindInvoice" />
-                    <Button Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="207,332,0,0" Name="buttonOpenInvoice" VerticalAlignment="Top" Width="409" />
+                    <Button h:HelpProvider.HelpString="Przycisk otwórz wyświetla szczegóły wybranej faktury" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="207,332,0,0" Name="buttonOpenInvoice" VerticalAlignment="Top" Width="409" />
                     <Label Height="28" HorizontalAlignment="Left" Margin="20,156,0,0" Name="label2" VerticalAlignment="Top" Width="174" Content="Dzisiejsze statystyki faktur:" FontSize="13" />
                     <Label Content="ilość:" HorizontalAlignment="Left" Margin="20,182,0,0" Name="label3" Width="49" Height="28" VerticalAlignment="Top" />
                     <Label Content="wartość:" Height="28" HorizontalAlignment="Left" Margin="20,208,0,0" Name="label4" VerticalAlignment="Top" />
-                    <Button Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="529,12,0,0" Name="buttonAdvancedInvoiceSearch" VerticalAlignment="Top" Width="87" />
+                    <Button h:HelpProvider.HelpString="Przycisk Zaawansowane wyświetla zaawansowane opcje wyszukiwania faktur" Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="529,12,0,0" Name="buttonAdvancedInvoiceSearch" VerticalAlignment="Top" Width="87" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Magazyn" Name="tabItemStore" Background="#FFF5893F">
+            <TabItem h:HelpProvider.HelpString="Zakładka umożliwia przeglądanie stanu magazynu" Header="Magazyn" Name="tabItemStore" Background="#FFF5893F">
         
                 <Grid Background="#FFDEDEDE">
-                    <TreeView ItemsSource="{Binding Path=ProductCategoriesToShow}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120">
+                    <TreeView h:HelpProvider.HelpString="Wyświetla drzewko kategorii" ItemsSource="{Binding Path=ProductCategoriesToShow}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Path=PC_ProductCategories}">
                                 <TextBlock Text="{Binding Path=PC_NAME}" />
@@ -31,16 +33,16 @@
                         </TreeView.ItemTemplate>
                     </TreeView>
 
-                    <Button Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="buttonClearChoosedCategory" VerticalAlignment="Top" Width="120" Background="Red" />
-                    <DataGrid AutoGenerateColumns="True" Height="314" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGridProducts" VerticalAlignment="Top" Width="481" />
-                    <TextBox Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBoxSearchProduct" VerticalAlignment="Top" Width="448" />
-                    <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="buttonOpenProduct" VerticalAlignment="Top" Width="27" />
+                    <Button h:HelpProvider.HelpString="Wyczyść pole wyszukania produktu" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="buttonClearChoosedCategory" VerticalAlignment="Top" Width="120" Background="Red" />
+                    <DataGrid h:HelpProvider.HelpString="Wyświetla tabelę z produktami przechowywanymi w magazynie" AutoGenerateColumns="True" Height="314" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGridProducts" VerticalAlignment="Top" Width="481" />
+                    <TextBox h:HelpProvider.HelpString="Wpisz w pole nazwę produktu do wyszukania" Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBoxSearchProduct" VerticalAlignment="Top" Width="448" />
+                    <Button h:HelpProvider.HelpString="Naciśnij przycisk aby wyszukać produkt" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="buttonOpenProduct" VerticalAlignment="Top" Width="27" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Klienci" Name="tabItemCustomers" Background="#FF3EE5CB">
+            <TabItem h:HelpProvider.HelpString="Zakładka umożliwia zarządzanie przeglądanie i zarządzanie klientami" Header="Klienci" Name="tabItemCustomers" Background="#FF3EE5CB">
                 
                 <Grid Background="#FFDEDEDE">
-                    <DataGrid SelectedItem="{Binding Path=SelectedCustomer}" ItemsSource="{Binding Path=ListCustomersToShow}" AutoGenerateColumns="False" Height="274" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGridCustomers" VerticalAlignment="Top" Width="607" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" SelectionMode="Single">
+                    <DataGrid h:HelpProvider.HelpString="Tabela wyświetlająca dane na temat klientów" SelectedItem="{Binding Path=SelectedCustomer}" ItemsSource="{Binding Path=ListCustomersToShow}" AutoGenerateColumns="False" Height="274" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGridCustomers" VerticalAlignment="Top" Width="607" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" SelectionMode="Single">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=CU_NAME}" Header="Nazwa" Width="190"/>
                             <DataGridTextColumn Binding="{Binding Path=CU_STREET}" Header="Ulica" Width="125" />
@@ -49,13 +51,13 @@
                             <DataGridTextColumn Binding="{Binding Path=CU_PHONE}" Header="Telefon" CanUserResize="False" Width="86" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBox Text="{Binding Path=CustomerNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBoxSearchCustomer" VerticalAlignment="Top" Width="471" />
-                    <Button Command="{Binding CustomerSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="buttonSearchCustomer" VerticalAlignment="Top" Width="27" />
-                    <Button Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="516,18,0,0" Name="buttonAdvancedCustomerSearch" VerticalAlignment="Top" Width="97" />
-                    <Button IsEnabled="{Binding Path=IsEnabledButtonOpenCustomerFullView}" Command="{Binding Path=OpenCustomerFullViewCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="6,331,0,0" Name="buttonOpenCustomer" VerticalAlignment="Top" Width="607" />
+                    <TextBox h:HelpProvider.HelpString="Wpisz w pole nazwę klienta do wyszukania" Text="{Binding Path=CustomerNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBoxSearchCustomer" VerticalAlignment="Top" Width="471" />
+                    <Button h:HelpProvider.HelpString="Naciśnij przycisk aby wyszukać klienta" Command="{Binding CustomerSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="buttonSearchCustomer" VerticalAlignment="Top" Width="27" />
+                    <Button h:HelpProvider.HelpString="Wyświetl zaawansowane opcje wyszukiwania klienta" Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="516,18,0,0" Name="buttonAdvancedCustomerSearch" VerticalAlignment="Top" Width="97" />
+                    <Button h:HelpProvider.HelpString="Otwórz szczegółowe informację na temat wybranego klienta" IsEnabled="{Binding Path=IsEnabledButtonOpenCustomerFullView}" Command="{Binding Path=OpenCustomerFullViewCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="6,331,0,0" Name="buttonOpenCustomer" VerticalAlignment="Top" Width="607" />
                 </Grid>
             </TabItem>
-            <TabItem Name="tabItemReports" Header="Raporty" Background="#FFDB46DB">
+            <TabItem h:HelpProvider.HelpString="Umożliwia tworzenie nowych raportów" Name="tabItemReports" Header="Raporty" Background="#FFDB46DB">
                 <Grid Background="#FFDEDEDE" />
             </TabItem>
         </TabControl>

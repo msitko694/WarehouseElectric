@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Entities\ProductCategory.cs" />
     <Compile Include="Helpers\DataBaseHelper.cs" />
+    <Compile Include="Helpers\HelpProvider.cs" />
     <Compile Include="Helpers\HtmlExporter.cs" />
     <Compile Include="Helpers\IExporter.cs" />
     <Compile Include="InvoiceFullView.xaml.cs">
@@ -194,7 +195,6 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="DataLayer\LinqDataLayer.dbml.layout">
       <DependentUpon>LinqDataLayer.dbml</DependentUpon>
     </None>

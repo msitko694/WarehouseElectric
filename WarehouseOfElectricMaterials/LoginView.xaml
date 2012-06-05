@@ -1,7 +1,10 @@
 ﻿<Window x:Class="WarehouseElectric.LoginView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Logowanie" Height="198" Width="270" ResizeMode="CanMinimize">
+        Title="Logowanie" Height="198" Width="270" ResizeMode="CanMinimize"
+        xmlns:h="clr-namespace:WarehouseElectric.Helpers"
+        h:HelpProvider.HelpString="Ekran logowania - wprowadź swój login i hasło żeby się zalogować poprawnie"
+        >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"></ColumnDefinition>
@@ -13,11 +16,11 @@
             <RowDefinition Height="218*"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Content="Login:" Height="30" HorizontalAlignment="Left" Margin="1,14,0,0" Name="labLogin" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2" />
-        <TextBox Text="{Binding Path=UserName}" Height="21" HorizontalAlignment="Stretch" Margin="42,14,0,0" Name="txtLogin" VerticalAlignment="Top" Grid.Column="1" />
+        <TextBox h:HelpProvider.HelpString="Wprowadź w pole swój login" Text="{Binding Path=UserName}" Height="21" HorizontalAlignment="Stretch" Margin="42,14,0,0" Name="txtLogin" VerticalAlignment="Top" Grid.Column="1" />
         <Label Content="Hasło:" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,15,0,0" Name="labPassword" VerticalAlignment="Top" Grid.Column="1" />
-        <PasswordBox Grid.Row="1" Height="23" HorizontalAlignment="Stretch" Margin="42,15,0,0" Name="pasPassword" VerticalAlignment="Top" Grid.Column="1" />
-        <Button Command="{Binding Path=LogInCommand}" Content="Zaloguj" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,77,0,0" Name="butLogOn" VerticalAlignment="Top" Width="80" DataContext="{Binding}" Grid.Column="1" />
-        <Button Content="Wyjdź" Command="{Binding Path=ExitCommand}" Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Right" Margin="0,77,0,0" Name="butExit" VerticalAlignment="Top" Width="80" />
+        <PasswordBox h:HelpProvider.HelpString="Wprowadź w pole swoje hasło" Grid.Row="1" Height="23" HorizontalAlignment="Stretch" Margin="42,15,0,0" Name="pasPassword" VerticalAlignment="Top" Grid.Column="1" />
+        <Button h:HelpProvider.HelpString="Naciśnij aby się zalogować"  Command="{Binding Path=LogInCommand}" Content="Zaloguj" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,77,0,0" Name="butLogOn" VerticalAlignment="Top" Width="80" DataContext="{Binding}" Grid.Column="1" />
+        <Button h:HelpProvider.HelpString="Naciśnij aby wyjść" Content="Wyjdź" Command="{Binding Path=ExitCommand}" Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Right" Margin="0,77,0,0" Name="butExit" VerticalAlignment="Top" Width="80" />
         <Label Visibility="{Binding Path=LoginFailedVisibility}" Content="Podany login lub hasło są nieprawidłowe" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="22,44,0,0" Name="labWrongLogin" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="227" Foreground="#FFD10505" />
     </Grid>
 </Window>
