@@ -70,6 +70,16 @@ namespace WarehouseElectric.Models
         }
 
         /// <summary>
+        /// Gets all product from category.
+        /// </summary>
+        /// <returns>All product from category</returns>
+        public IList<PR_Product> GetAllFromCategory(int id)
+        {
+            return (from product in DataContext.PR_Products 
+                    where product.PR_PC_ID==id select product).ToList<PR_Product>();
+        }
+
+        /// <summary>
         /// Gets the specified product.
         /// </summary>
         /// <param name="id">The id.</param>
