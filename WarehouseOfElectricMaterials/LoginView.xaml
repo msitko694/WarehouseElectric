@@ -5,6 +5,9 @@
         xmlns:h="clr-namespace:WarehouseElectric.Helpers"
         h:HelpProvider.HelpString="Ekran logowania - wprowadź swój login i hasło żeby się zalogować poprawnie"
         >
+    <Window.InputBindings>
+        <KeyBinding Key="Return" Command="{Binding Path=LogInCommand}"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"></ColumnDefinition>
