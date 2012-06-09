@@ -17,20 +17,19 @@ namespace WarehouseElectric.ViewModels
         {
             _storekeeperView = storekeeperView;
 
-            //podpinanie listy dostawców do dataGrida z dostawcami
+            //ZAKŁADKA DOSTAWCY
+            //lista dostawców do DataGrida
             SuppliersManager suppliersManager = new SuppliersManager();
             ListSuppliersToShow = suppliersManager.GetAll().ToList();
-            //lista kategorii produktów do TreeView
-            ProductCategoriesManager productCategoriesManager = new ProductCategoriesManager();
-            ProductCategoriesToShow = productCategoriesManager.GetAllOnBaseLevel();
-            //lista produktów do DataGrid
+  
+            //ZAKŁADKA MAGAZYN
+            //lista kategorii produktów do TreeViewa
             ReadCategoriesFromDbIntoList();
-    
+            //lista produktów do DataGrida
             ProductsManager productsManager = new ProductsManager();
-            int selectedCategoryId = 7;
-           // selectedCategoryId = GetSelectedCategory().ProductCategory.PC_ID;
+            _rootCategories[0].IsSelected = true;
+            int selectedCategoryId = GetSelectedCategory().ProductCategory.PC_ID;
             ListProductsToShow = productsManager.GetAllFromCategory(selectedCategoryId).ToList();
-
         }
         #endregion //Constructors
         #region "Fields"
@@ -41,12 +40,10 @@ namespace WarehouseElectric.ViewModels
             private IList<SU_Supplier> _listSuppliersToShow;
             private String _supplierNameToSearch;
             private RelayCommand _goAddNewSupplierCommand;
-            private IList<PC_ProductCategory> _productCategoriesToShow;
-            private PC_ProductCategory _selectedProductCategory;
-            private IList<PR_Product> _listProductsToShow;
-            private IList<CategoryViewModel> _rootCategories;
+            private IList<CategoryViewModel> _rootCategories; 
             private ProductCategoriesManager _productCategoriesManager;
-            private RelayCommand _getSelectedProductCategoryCommand;
+            private IList<PR_Product> _listProductsToShow;
+            private RelayCommand _showProductsCommand;
         #endregion //Fields
         #region "Properties"
             public RelayCommand LogOutCommand
@@ -136,42 +133,18 @@ namespace WarehouseElectric.ViewModels
                     _goAddNewSupplierCommand = value;
                 }
             }
-            public IList<PC_ProductCategory> ProductCategoriesToShow
+            public IList<CategoryViewModel> RootCategories
             {
                 get
                 {
-                    return _productCategoriesToShow;
+                    return _rootCategories;
                 }
                 set
                 {
-                    _productCategoriesToShow = value;
-                    OnPropertyChanged("ProductCategoriesToShow");
+                    _rootCategories = value;
+                    OnPropertyChanged("RootCategories");
                 }
-            }
-            public PC_ProductCategory SelectedProductCategory 
-            {
-                get
-                {
-                    return _selectedProductCategory;
-                }
-                set
-                {
-                    _selectedProductCategory = value;
-                    OnPropertyChanged("SelectedProductCategory");
-                }
-            }
-            public IList<PR_Product> ListProductsToShow
-            {
-                get
-                {
-                    return _listProductsToShow;
-                }
-                set
-                {
-                    _listProductsToShow = value;
-                    OnPropertyChanged("ListProductsToShow");
-                }
-            }
+            }   
             public ProductCategoriesManager ProductCategoriesManager
             {
                 get
@@ -187,33 +160,33 @@ namespace WarehouseElectric.ViewModels
                     _productCategoriesManager = value;
                 }
             }
-            public RelayCommand GetSelectedProductCategoryCommand
+            public IList<PR_Product> ListProductsToShow
             {
                 get
                 {
-                    _getSelectedProductCategoryCommand = new RelayCommand(GetSelectedProductCategory);
-                    _getSelectedProductCategoryCommand.CanUndo = (obj) => false;
+                    return _listProductsToShow;
+                }
+                set
+                {
+                    _listProductsToShow = value;
+                    OnPropertyChanged("ListProductsToShow");
+                }
+            }
+            public RelayCommand ShowProductsCommand
+            {
+                get
+                {
+                    _showProductsCommand = new RelayCommand(ShowProducts);
+                    _showProductsCommand.CanUndo = (obj) => false;
 
-                    return _getSelectedProductCategoryCommand;
+                    return _showProductsCommand;
                 }
                 set
                 {
-                    _getSelectedProductCategoryCommand = value;
+                    _showProductsCommand = value;
                 }
             }
-            public IList<CategoryViewModel> RootCategories
-            {
-                get
-                {
-                    return _rootCategories;
-                }
-                set
-                {
-                    _rootCategories = value;
-                    OnPropertyChanged("RootCategories");
-                }
-            }
-          #endregion //Properties
+        #endregion //Properties
         #region "Methods"
             public void LogOut(Object obj)
             {
@@ -238,13 +211,6 @@ namespace WarehouseElectric.ViewModels
                                        where supplier.SU_NAME == SupplierNameToSearch
                                        select supplier).ToList<SU_Supplier>();
             }
-            public void GetSelectedProductCategory(Object obj)
-            {
-                ProductsManager productsManager = new ProductsManager();
-                   int selectedCategoryId = GetSelectedCategory().ProductCategory.PC_ID;
-                ListProductsToShow = productsManager.GetAllFromCategory(selectedCategoryId).ToList();
-           }
- 
             public void GoAddNewSupplier(Object obj)
             {
                  Application.Current.MainWindow  = new AddNewSupplierView();
@@ -253,6 +219,31 @@ namespace WarehouseElectric.ViewModels
                  SuppliersManager supplierManager = new SuppliersManager();
                  ListSuppliersToShow = supplierManager.GetAll();
             }
+                    
+            public void ReadCategoriesFromDbIntoList()
+            {
+                IList<PC_ProductCategory> unorderedList;
+                unorderedList = ProductCategoriesManager.GetAll();
+
+                RootCategories = unorderedList.Where((x) => x.PC_PC_ID == null).Select((x) => new CategoryViewModel() { ProductCategory = x }).ToList();
+
+                //get root categories
+                foreach (var category in RootCategories)
+                {
+                    //build categories tree
+                    BuildCategoriesTree(category, unorderedList);
+                }
+            }
+            private void BuildCategoriesTree(CategoryViewModel categoryViewmodel, IList<PC_ProductCategory> unorderedList)
+            {
+                categoryViewmodel.Children = (from category in unorderedList where category.PC_PC_ID == categoryViewmodel.ProductCategory.PC_ID select new CategoryViewModel() { ProductCategory = category }).ToList();
+
+                foreach (var category in categoryViewmodel.Children)
+                {
+                    BuildCategoriesTree(category, unorderedList);
+                }
+            }
+            
             public CategoryViewModel GetSelectedCategory()
             {
                 CategoryViewModel selectedCategory = new CategoryViewModel();
@@ -283,30 +274,12 @@ namespace WarehouseElectric.ViewModels
                     yield return child;
                 }
             }
-                   public void ReadCategoriesFromDbIntoList()
+            public void ShowProducts(Object obj)
             {
-                IList<PC_ProductCategory> unorderedList;
-                unorderedList = ProductCategoriesManager.GetAll();
-
-                RootCategories = unorderedList.Where((x) => x.PC_PC_ID == null).Select((x) => new CategoryViewModel() { ProductCategory = x }).ToList();
-
-                //get root categories
-                foreach (var category in RootCategories)
-                {
-                    //build categories tree
-                    BuildCategoriesTree(category, unorderedList);
-                }
+                ProductsManager productsManager = new ProductsManager();
+                int selectedCategoryId = GetSelectedCategory().ProductCategory.PC_ID;
+                ListProductsToShow = productsManager.GetAllFromCategory(selectedCategoryId).ToList();
             }
-            private void BuildCategoriesTree(CategoryViewModel categoryViewmodel, IList<PC_ProductCategory> unorderedList)
-            {
-                categoryViewmodel.Children = (from category in unorderedList where category.PC_PC_ID == categoryViewmodel.ProductCategory.PC_ID select new CategoryViewModel() { ProductCategory = category }).ToList();
-
-                foreach (var category in categoryViewmodel.Children)
-                {
-                    BuildCategoriesTree(category, unorderedList);
-                }
-            }
-
         #endregion //Methods
     }
 }
