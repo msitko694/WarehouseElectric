@@ -23,6 +23,11 @@ namespace WarehouseElectric
         {
             InitializeComponent();
             DataContext = new AdminViewModel(this);
+            treeViewShowProductCategory.DataContext = new CategoryViewModel(true);
+            butDeleteCategory.DataContext = treeViewShowProductCategory.DataContext;
+            buttAddNewCategory.DataContext = treeViewShowProductCategory.DataContext;
+            checkBoxIsMainCategory.DataContext = treeViewShowProductCategory.DataContext;
+            textBoxNewCategory.DataContext = treeViewShowProductCategory.DataContext;
         }
     }
 }

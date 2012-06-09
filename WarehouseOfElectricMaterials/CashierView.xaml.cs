@@ -23,6 +23,7 @@ namespace WarehouseElectric
         {
             InitializeComponent();
             DataContext = new CashierViewModel(this);
+            treeViewChooseProductCategory.DataContext = new CategoryViewModel(true);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using WarehouseElectric.DataLayer;
 using WarehouseElectric.Entities;
+using System.Data.SqlClient;
 
 namespace WarehouseElectric.Models
 {
@@ -91,8 +92,17 @@ namespace WarehouseElectric.Models
         /// <param name="product">The product category.</param>
         public void Delete(DataLayer.PC_ProductCategory productCategory)
         {
-            DataContext.PC_ProductCategories.DeleteOnSubmit(productCategory);
-            DataContext.SubmitChanges();
+            try
+            {
+                DataContext.PC_ProductCategories.DeleteOnSubmit(productCategory);
+                DataContext.SubmitChanges();
+            }
+            catch(SqlException ex)
+            {
+                DataContext.Dispose();
+                DataContext = new LinqDataLayerDataContext();
+                throw ex;
+            }
         }
 
         /// <summary>
