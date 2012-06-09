@@ -44,6 +44,8 @@ namespace WarehouseElectric.ViewModels
             private ProductCategoriesManager _productCategoriesManager;
             private IList<PR_Product> _listProductsToShow;
             private RelayCommand _showProductsCommand;
+            private RelayCommand _productSearchCommand;
+            private String _productNameToSearch;
         #endregion //Fields
         #region "Properties"
             public RelayCommand LogOutCommand
@@ -186,6 +188,32 @@ namespace WarehouseElectric.ViewModels
                     _showProductsCommand = value;
                 }
             }
+            public RelayCommand ProductSearchCommand
+            {
+                get
+                {
+                    _productSearchCommand = new RelayCommand(ProductSearch);
+                    _productSearchCommand.CanUndo = (obj) => false;
+
+                    return _productSearchCommand;
+                }
+                set
+                {
+                    _productSearchCommand = value;
+                }
+            }
+            public String ProductNameToSearch
+            {
+                get
+                {
+                    return _productNameToSearch;
+                }
+                set
+                {
+                    _productNameToSearch = value;
+                    OnPropertyChanged("ProductNameToSearch");
+                }
+            }
         #endregion //Properties
         #region "Methods"
             public void LogOut(Object obj)
@@ -280,6 +308,14 @@ namespace WarehouseElectric.ViewModels
                 int selectedCategoryId = GetSelectedCategory().ProductCategory.PC_ID;
                 ListProductsToShow = productsManager.GetAllFromCategory(selectedCategoryId).ToList();
             }
+            public void ProductSearch(Object obj)
+            {
+                ProductsManager productsManager = new ProductsManager();
+                ListProductsToShow = (from product in productsManager.GetAll()
+                                      where product.PR_NAME == ProductNameToSearch
+                                      select product).ToList<PR_Product>();
+            }
+
         #endregion //Methods
     }
 }
