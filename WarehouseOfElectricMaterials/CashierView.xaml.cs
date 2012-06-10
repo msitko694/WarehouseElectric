@@ -24,6 +24,22 @@ namespace WarehouseElectric
             InitializeComponent();
             DataContext = new CashierViewModel(this);
             treeViewChooseProductCategory.DataContext = new CategoryViewModel(true);
+            ApplyScrollForCustomerGrid();
+        }
+
+        private void ApplyScrollForCustomerGrid()
+        {
+            object item = null;
+            DataGridColumn column = null;
+            if(dataGridCustomers.Items.Count > 0)
+            {
+                item = dataGridCustomers.Items[0];
+            }
+            if(dataGridCustomers.Columns.Count > 0)
+            {
+                column = dataGridCustomers.Columns[0];
+            }
+            dataGridCustomers.ScrollIntoView(item, column);
         }
     }
 }

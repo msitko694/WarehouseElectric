@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ElectricWarehouse" Class="LinqDataLayerDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=MSITKO;Initial Catalog=ElectricWarehouse;Persist Security Info=True;User ID=test" SettingsObjectName="WarehouseElectric.Properties.Settings" SettingsPropertyName="ElectricWarehouseConnectionString2" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.CU_Customers" Member="CU_Customers">
-    <Type Name="CU_Customer">
-      <Column Name="CU_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CU_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CU_STREET" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="CU_POST_CODE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="CU_TOWN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CU_PHONE" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Column Name="CU_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="CU_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="CU_Customer_IN_Invoice" Member="IN_Invoices" ThisKey="CU_ID" OtherKey="IN_CU_ID" Type="IN_Invoice" />
+  <Table Name="dbo.CI_CompanyInfo" Member="CI_CompanyInfos">
+    <Type Name="CI_CompanyInfo">
+      <Column Name="CI_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CI_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CI_STREET" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CI_POST_CODE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CI_TOWN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CI_PHONE" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="CI_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CI_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.WO_Workers" Member="WO_Workers">
@@ -29,6 +28,19 @@
       <Association Name="WO_Worker_OR_Order" Member="OR_Orders" ThisKey="WO_ID" OtherKey="OR_WO_ID" Type="OR_Order" />
       <Association Name="WO_Worker_US_User" Member="US_Users" ThisKey="WO_ID" OtherKey="US_WO_ID" Type="US_User" />
       <Association Name="PO_Position_WO_Worker" Member="PO_Position" ThisKey="WO_PO_ID" OtherKey="PO_ID" Type="PO_Position" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CU_Customers" Member="CU_Customers">
+    <Type Name="CU_Customer">
+      <Column Name="CU_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CU_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CU_STREET" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CU_POST_CODE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CU_TOWN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CU_PHONE" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="CU_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CU_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="CU_Customer_IN_Invoice" Member="IN_Invoices" ThisKey="CU_ID" OtherKey="IN_CU_ID" Type="IN_Invoice" />
     </Type>
   </Table>
   <Table Name="dbo.IE_InvoicesItems" Member="IE_InvoicesItems">
@@ -55,9 +67,13 @@
       <Column Name="IN_WO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IN_SP_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IN_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IN_SELL_DATE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IN_TOTAL_VAT" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="IN_TOTAL_NETTO" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="IN_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="IN_TOTAL" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="IN_SPEDITION_COST" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IN_INVOICE_NUMBER" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
       <Association Name="IN_Invoice_IE_InvoicesItem" Member="IE_InvoicesItems" ThisKey="IN_ID" OtherKey="IE_IN_ID" Type="IE_InvoicesItem" />
       <Association Name="CU_Customer_IN_Invoice" Member="CU_Customer" ThisKey="IN_CU_ID" OtherKey="CU_ID" Type="CU_Customer" IsForeignKey="true" />
       <Association Name="WO_Worker_IN_Invoice" Member="WO_Worker" ThisKey="IN_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
@@ -167,18 +183,6 @@
       <Column Name="US_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="US_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="WO_Worker_US_User" Member="WO_Worker" ThisKey="US_WO_ID" OtherKey="WO_ID" Type="WO_Worker" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.CI_CompanyInfo" Member="CI_CompanyInfos">
-    <Type Name="CI_CompanyInfo">
-      <Column Name="CI_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CI_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CI_STREET" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="CI_POST_CODE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="CI_TOWN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CI_PHONE" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Column Name="CI_ADDED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="CI_LAST_MODIFIED" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

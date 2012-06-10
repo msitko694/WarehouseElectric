@@ -14,11 +14,6 @@
                         <ColumnDefinition Width="449*" />
                     </Grid.ColumnDefinitions>
                     <TreeView ItemsSource="{Binding RootCategories}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120">
-                        <TreeView.ItemTemplate >
-                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                                <TextBlock Text="{Binding Path=ProductCategory.PC_NAME}" />
-                            </HierarchicalDataTemplate>
-                        </TreeView.ItemTemplate>
                         <TreeView.ItemContainerStyle>
                             <Style TargetType="{x:Type TreeViewItem}">
                                 <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
@@ -31,6 +26,12 @@
                                 </Style.Triggers>
                             </Style>
                         </TreeView.ItemContainerStyle>
+
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <TextBlock Text="{Binding ProductCategory.PC_NAME}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
                     </TreeView>
                     <Button Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" />
                     <DataGrid IsEnabled="True" ItemsSource="{Binding Path=ListProductsToShow}" AutoGenerateColumns="False" Height="276" HorizontalAlignment="Left" Margin="132,49,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" Grid.ColumnSpan="2" >

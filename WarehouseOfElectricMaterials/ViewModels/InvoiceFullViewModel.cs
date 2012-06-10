@@ -64,6 +64,20 @@ namespace WarehouseElectric.ViewModels
         
         #endregion  //Fields
         #region "Properties"
+
+        public IN_Invoice Invoice
+        {
+            get
+            {
+                return _invoice;
+            }
+            set
+            {
+                _invoice = value;
+                OnPropertyChanged("Invoice");
+            }
+        }
+
         public String CustomerNameToShow
         {
             get

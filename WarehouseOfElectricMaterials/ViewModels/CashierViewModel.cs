@@ -11,17 +11,17 @@ using System.Collections.ObjectModel;
 
 namespace WarehouseElectric.ViewModels
 {
-    class CashierViewModel:ViewModelBase
+    public class CashierViewModel:ViewModelBase
     {
         #region "Contructors"
         public CashierViewModel(CashierView cashierView)
         {
+            _customersManager = new CustomersManager();
             // część "Klienci" - docelowo do przeniesienia w dogodniejsze miejsce   
             IsEnabledButtonOpenCustomerFullView = false;
             _cashierView = cashierView;
+            LoadCustomersList();
 
-            CustomersManager customersManager = new CustomersManager();
-            ListCustomersToShow = customersManager.GetAll().ToList();
             // część "Magazyn"
             ProductCategoriesManager productCategoriesManager = new ProductCategoriesManager();
             ProductCategoriesToShow = productCategoriesManager.GetAllOnBaseLevel();
@@ -32,12 +32,17 @@ namespace WarehouseElectric.ViewModels
         #region "Fields"
         private CashierView _cashierView;
         private String _customerNameToSearch;
+        private RelayCommand _userDeleteCommand;
         private RelayCommand _customerSearchCommand;
+        private RelayCommand _addNewCustomerCommand;
+        private RelayCommand _editCustomerCommand;
         private Boolean _isEnabledButtonOpenCustomerFullView;
         private IList<CU_Customer> _listCustomersToShow;
         private RelayCommand _logOutCommand;
         private RelayCommand _openCustomerFullViewCommand;
+        private RelayCommand _choosePanelCommand;
         private CU_Customer _selectedCustomer;
+        private CustomersManager _customersManager;
         private IList<PC_ProductCategory> _productCategoriesToShow;
         #endregion //Fields
 
@@ -52,6 +57,96 @@ namespace WarehouseElectric.ViewModels
             {
                 _isEnabledButtonOpenCustomerFullView = value;
                 OnPropertyChanged("IsEnabledButtonOpenCustomerFullView");
+            }
+        }
+        public RelayCommand EditCustomerCommand
+        {
+            get
+            {
+                if (_editCustomerCommand == null)
+                {
+                    _editCustomerCommand = new RelayCommand((x) =>
+                    {
+                        if(SelectedCustomer != null)
+                        {
+                            Window newCustomerView = new NewCustomerView(this, SelectedCustomer.CU_ID);
+                            newCustomerView.Show();
+                        }
+                    });
+                    _editCustomerCommand.CanUndo = (obj) => false;
+                }
+                return _editCustomerCommand;
+            }
+            set
+            {
+                _choosePanelCommand = value;
+            }
+            
+        }
+        public RelayCommand ChoosePanelCommand
+        {
+            get
+            {
+                if (_choosePanelCommand == null)
+                {
+                    _choosePanelCommand = new RelayCommand((x) =>
+                    {
+                        Application.Current.MainWindow = new ChoosePanelView();
+                        Application.Current.MainWindow.Show();
+                        _cashierView.Close();
+                    });
+                    _choosePanelCommand.CanUndo = (obj) => false;
+                }
+                return _choosePanelCommand;
+            }
+            set
+            {
+                _choosePanelCommand = value;
+            }
+
+        }
+        public RelayCommand AddNewCustomerCommand
+        {
+            get
+            {
+                if(_addNewCustomerCommand == null)
+                {
+                    _addNewCustomerCommand = new RelayCommand((x) =>
+                    {
+                        Window newCustomerView = new NewCustomerView(this);
+                        newCustomerView.Show();
+                    });
+                    _addNewCustomerCommand.CanUndo = (obj) => false;
+                }
+                return _addNewCustomerCommand;
+            }
+            set
+            {
+                _addNewCustomerCommand = value;
+            }
+
+        }
+        public RelayCommand UserDeleteCommand
+        {
+            get
+            {
+                if (_userDeleteCommand == null)
+                {
+                    _userDeleteCommand = new RelayCommand((x) =>
+                    {
+                        if(SelectedCustomer != null)
+                        {
+                            _customersManager.Delete(SelectedCustomer);
+                            LoadCustomersList();
+                        }
+                    });
+                    _userDeleteCommand.CanUndo = (obj) => false;
+                }
+                return _userDeleteCommand;
+            }
+            set
+            {
+                _userDeleteCommand = value;
             }
         }
         public RelayCommand OpenCustomerFullViewCommand
@@ -159,10 +254,8 @@ namespace WarehouseElectric.ViewModels
         #region "Methods"
         public void CustomerSearch(Object obj)
         {
-            CustomersManager customersManager = new CustomersManager();
             ListCustomersToShow.Clear();
-            ListCustomersToShow = customersManager.GetByName(CustomerNameToSearch);
-          
+            ListCustomersToShow = _customersManager.GetByName(CustomerNameToSearch);          
         }
         public void OpenCustomerFullView(Object obj)
         {
@@ -178,6 +271,11 @@ namespace WarehouseElectric.ViewModels
 
             _cashierView.Close();
 
+        }
+        public void LoadCustomersList()
+        {
+                ListCustomersToShow = _customersManager.GetAll();
+                ListCustomersToShow = _customersManager.GetAll().ToList();
         }
         #endregion //Methods
     }

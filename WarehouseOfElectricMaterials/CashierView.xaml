@@ -6,7 +6,7 @@
         h:HelpProvider.HelpString="Widok kasjera. Umożliwia przeglądanie, wystawianie i modyfikację faktur. Umożliwia zarządzanie klientami oraz tworzenie raportów.">
     <Grid Height="450" Width="652">
         <Button h:HelpProvider.HelpString="Przycisk wylogowuje bieżącego użytkownika" Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
-        <Button h:HelpProvider.HelpString="Przycisk umożliwiający zmienie panelu bez wylogowywania bieżącego użytkownika" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
+        <Button h:HelpProvider.HelpString="Przycisk umożliwiający zmienie panelu bez wylogowywania bieżącego użytkownika" Command="{Binding ChoosePanelCommand}" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
         <Label Content="Użytkownik:" Height="25" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelUserName" VerticalAlignment="Top" Width="74" />
         <TabControl Height="394" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControlCashierView" VerticalAlignment="Top" Width="629">
             <TabItem h:HelpProvider.HelpString="Zakładka faktury umożliwia zarządzanie fakturami" Header="Faktury" Name="tabItemInvoices" Background="#FF4BE255">
@@ -55,19 +55,26 @@
             <TabItem h:HelpProvider.HelpString="Zakładka umożliwia zarządzanie przeglądanie i zarządzanie klientami" Header="Klienci" Name="tabItemCustomers" Background="#FF3EE5CB">
                 
                 <Grid Background="#FFDEDEDE">
-                    <DataGrid h:HelpProvider.HelpString="Tabela wyświetlająca dane na temat klientów" SelectedItem="{Binding Path=SelectedCustomer}" ItemsSource="{Binding Path=ListCustomersToShow}" AutoGenerateColumns="False" Height="274" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGridCustomers" VerticalAlignment="Top" Width="607" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" SelectionMode="Single">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="136*" />
+                        <ColumnDefinition Width="483*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid h:HelpProvider.HelpString="Tabela wyświetlająca dane na temat klientów" SelectedItem="{Binding Path=SelectedCustomer}" ItemsSource="{Binding Path=ListCustomersToShow}" AutoGenerateColumns="False" Height="274" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGridCustomers" VerticalAlignment="Top" Width="607" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" SelectionMode="Single" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=CU_NAME}" Header="Nazwa" Width="190"/>
-                            <DataGridTextColumn Binding="{Binding Path=CU_STREET}" Header="Ulica" Width="125" />
-                            <DataGridTextColumn Binding="{Binding Path=CU_POST_CODE}" Header="Kod pocztowy" Width="85" />
-                            <DataGridTextColumn Binding="{Binding Path=CU_TOWN}" Header="Miasto" Width="110" />
-                            <DataGridTextColumn Binding="{Binding Path=CU_PHONE}" Header="Telefon" CanUserResize="False" Width="86" />
+                            <DataGridTextColumn Binding="{Binding Path=CU_NAME}" Header="Nazwa" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding Path=CU_STREET}" Header="Ulica" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding Path=CU_POST_CODE}" Header="Kod pocztowy" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding Path=CU_TOWN}" Header="Miasto" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding Path=CU_PHONE}" Header="Telefon" CanUserResize="False" Width="Auto" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBox h:HelpProvider.HelpString="Wpisz w pole nazwę klienta do wyszukania" Text="{Binding Path=CustomerNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBoxSearchCustomer" VerticalAlignment="Top" Width="471" />
-                    <Button h:HelpProvider.HelpString="Naciśnij przycisk aby wyszukać klienta" Command="{Binding CustomerSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="buttonSearchCustomer" VerticalAlignment="Top" Width="27" />
-                    <Button h:HelpProvider.HelpString="Wyświetl zaawansowane opcje wyszukiwania klienta" Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="516,18,0,0" Name="buttonAdvancedCustomerSearch" VerticalAlignment="Top" Width="97" />
-                    <Button h:HelpProvider.HelpString="Otwórz szczegółowe informację na temat wybranego klienta" IsEnabled="{Binding Path=IsEnabledButtonOpenCustomerFullView}" Command="{Binding Path=OpenCustomerFullViewCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="6,331,0,0" Name="buttonOpenCustomer" VerticalAlignment="Top" Width="607" />
+                    <TextBox h:HelpProvider.HelpString="Wpisz w pole nazwę klienta do wyszukania" Text="{Binding Path=CustomerNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBoxSearchCustomer" VerticalAlignment="Top" Width="471" Grid.ColumnSpan="2" />
+                    <Button h:HelpProvider.HelpString="Naciśnij przycisk aby wyszukać klienta" Command="{Binding CustomerSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="buttonSearchCustomer" VerticalAlignment="Top" Width="27" Grid.Column="1" />
+                    <Button h:HelpProvider.HelpString="Wyświetl zaawansowane opcje wyszukiwania klienta" Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="380,18,0,0" Name="buttonAdvancedCustomerSearch" VerticalAlignment="Top" Width="97" Grid.Column="1" />
+                    <Button h:HelpProvider.HelpString="Otwórz szczegółowe informację na temat wybranego klienta" IsEnabled="{Binding Path=IsEnabledButtonOpenCustomerFullView}" Command="{Binding Path=OpenCustomerFullViewCommand}" Content="Otwórz" Height="24" Margin="6,330,0,0" Name="buttonOpenCustomer" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="140" />
+                    <Button Content="Nowy" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="32,331,0,0" Command="{Binding AddNewCustomerCommand}" Name="butNew" VerticalAlignment="Top" Width="126" />
+                    <Button Content="Edytuj" Command="{Binding EditUserCommand}" Grid.Column="1" Height="23" HorizontalAlignment="Right" Margin="0,331,170,0" Name="butEditUser" VerticalAlignment="Top" Width="130" />
+                    <Button Content="Usuń" Command="{Binding UserDeleteCommand}" Grid.Column="1" Height="23" HorizontalAlignment="Right" Margin="0,331,6,0" Name="butUserDelete" VerticalAlignment="Top" Width="140" />
                 </Grid>
             </TabItem>
             <TabItem h:HelpProvider.HelpString="Umożliwia tworzenie nowych raportów" Name="tabItemReports" Header="Raporty" Background="#FFDB46DB">

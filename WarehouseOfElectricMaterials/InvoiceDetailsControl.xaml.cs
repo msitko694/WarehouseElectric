@@ -9,21 +9,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WarehouseElectric.ViewModels;
 
 namespace WarehouseElectric
 {
     /// <summary>
-    /// Interaction logic for InvoiceFullView.xaml
+    /// Interaction logic for InvoiceDetailsControl.xaml
     /// </summary>
-    public partial class InvoiceFullView : Window
+    public partial class InvoiceDetailsControl : UserControl
     {
-        public InvoiceFullView(int invoiceId)
+        public InvoiceDetailsControl()
         {
             InitializeComponent();
-            DataContext = new InvoiceFullViewModel(this, invoiceId);
-           // InvoiceDetails.DataContext = DataContext;
         }
     }
 }
