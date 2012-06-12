@@ -2,6 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="StorekeeperView" Height="500" Width="670" >
+    <Window.InputBindings>
+        <KeyBinding Key="Return" Command="{Binding Path=ProductSearchCommand}" />
+    </Window.InputBindings>
     <Grid Height="450" Width="652">
         <Button Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
         <Button Command="{Binding Path=ChoosePanelCommand}" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
@@ -10,7 +13,7 @@
             <TabItem Background="#FFF5893F" Header="Magazyn" Name="tabItemStore">
                 <Grid Background="#FFDEDEDE">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="169*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="449*" />
                     </Grid.ColumnDefinitions>
                     <TreeView ItemsSource="{Binding RootCategories}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120">
@@ -33,7 +36,7 @@
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
-                    <Button Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" />
+                    <Button Command="{Binding ClearChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" />
                     <DataGrid IsEnabled="True" ItemsSource="{Binding Path=ListProductsToShow}" AutoGenerateColumns="False" Height="276" HorizontalAlignment="Left" Margin="132,49,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" Grid.ColumnSpan="2" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=PR_NAME}" Header="Nazwa" Width="100" /> 
@@ -48,12 +51,39 @@
             </TabItem>
             <TabItem Header="Braki" Name="tabItem1">
                 <Grid Background="#FFDEDEDE">
-                    <TreeView Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeView2" VerticalAlignment="Top" Width="120" />
-                    <Button Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button15" VerticalAlignment="Top" Width="120" />
-                    <DataGrid AutoGenerateColumns="False" Height="285" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid5" VerticalAlignment="Top" Width="481" />
-                    <TextBox Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBox5" VerticalAlignment="Top" Width="448" />
-                    <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button25" VerticalAlignment="Top" Width="27" />
-                    <Button Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="132,331,0,0" Name="buttonOpenProduct2" VerticalAlignment="Top" Width="481" />
+                    <TreeView ItemsSource="{Binding RootCategories}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseLackProductCategory" VerticalAlignment="Top" Width="120" >
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <TextBlock Text="{Binding ProductCategory.PC_NAME}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
+                    <Button Command="{Binding ClearChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button15" VerticalAlignment="Top" Width="120" />
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=ListLackProductsToShow}" Height="285" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid5" VerticalAlignment="Top" Width="481" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=PR_NAME}" Header="Nazwa" Width="100" />
+                        <DataGridTextColumn Binding="{Binding Path=PR_DEPOT_QUANTITY}" Header="Ilość" Width="100" />
+                        <DataGridTextColumn Binding="{Binding Path=PR_UNIT_PRICE}" Header="Jednostka" Width="100" />
+                    </DataGrid.Columns>
+                    </DataGrid>
+
+                    <TextBox Text="{Binding Path=LackProductsNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBox5" VerticalAlignment="Top" Width="448" />
+                    <Button Command="{Binding LackProductSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button25" VerticalAlignment="Top" Width="27" />
+                    <Button Command="{Binding ShowLackProductsCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="132,331,0,0" Name="buttonOpenProduct2" VerticalAlignment="Top" Width="481" />
                 </Grid>
             </TabItem>
 

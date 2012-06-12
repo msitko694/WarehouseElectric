@@ -13,16 +13,16 @@ namespace WarehouseElectric.ViewModels
     class StorekeeperViewModel:ViewModelBase
     {
         #region "Constructors"
-        public StorekeeperViewModel(StorekeeperView storekeeperView, CategoryViewModel categoryViewModel)
+        public StorekeeperViewModel(StorekeeperView storekeeperView, CategoryViewModel categoryViewModel,CategoryViewModel lackCategoryViewModel)
         {
             _storekeeperView = storekeeperView;
             CategoryViewModel = categoryViewModel;
+            LackCategoryViewModel = lackCategoryViewModel;
 
             //ZAKŁADKA DOSTAWCY
             //lista dostawców do DataGrida
             SuppliersManager suppliersManager = new SuppliersManager();
-            ListSuppliersToShow = suppliersManager.GetAll().ToList();
-  
+            ListSuppliersToShow = suppliersManager.GetAll().ToList();  
         }
         #endregion //Constructors
         #region "Fields"
@@ -31,16 +31,25 @@ namespace WarehouseElectric.ViewModels
             private RelayCommand _choosePanelCommand;
             private RelayCommand _supplierSearchCommand;
             private IList<SU_Supplier> _listSuppliersToShow;
-            private IList<PR_Product> _listProductsToShow;
             private String _supplierNameToSearch;
             private RelayCommand _goAddNewSupplierCommand; 
             private ProductCategoriesManager _productCategoriesManager;
+            
+            private IList<PR_Product> _listProductsToShow;
             private RelayCommand _showProductsCommand;
             private RelayCommand _productSearchCommand;
             private String _productNameToSearch;
+
+            private IList<PR_Product> _listLackProductsToShow;
+            private RelayCommand _showLackProductsCommand;
+            private RelayCommand _lackProductSearchCommand;
+            private String _lackProductNameToSearch;
+
+            private RelayCommand _clearChoiceCommand;
         #endregion //Fields
         #region "Properties"
             public CategoryViewModel CategoryViewModel { get; set; }
+            public CategoryViewModel LackCategoryViewModel { get; set; }
             public RelayCommand LogOutCommand
             {
                 get
@@ -74,20 +83,7 @@ namespace WarehouseElectric.ViewModels
                 }
 
             }
-            public RelayCommand SupplierSearchCommand
-            {
-                get
-                {
-                    _supplierSearchCommand = new RelayCommand(SupplierSearch);
-                    _supplierSearchCommand.CanUndo = (obj) => false;
 
-                    return _supplierSearchCommand;
-                }
-                set
-                {
-                    _supplierSearchCommand = value;
-                }
-            }
             public IList<SU_Supplier> ListSuppliersToShow
             {
                 get
@@ -100,16 +96,18 @@ namespace WarehouseElectric.ViewModels
                     OnPropertyChanged("ListSuppliersToShow");
                 }
             }
-            public IList<PR_Product> ListProductsToShow
+            public RelayCommand SupplierSearchCommand
             {
                 get
                 {
-                    return _listProductsToShow;
+                    _supplierSearchCommand = new RelayCommand(SupplierSearch);
+                    _supplierSearchCommand.CanUndo = (obj) => false;
+
+                    return _supplierSearchCommand;
                 }
                 set
                 {
-                    _listProductsToShow = value;
-                    OnPropertyChanged("ListProductsToShow");
+                    _supplierSearchCommand = value;
                 }
             }
             public String SupplierNameToSearch
@@ -157,6 +155,18 @@ namespace WarehouseElectric.ViewModels
                 }
             }
 
+            public IList<PR_Product> ListProductsToShow
+            {
+                get
+                {
+                    return _listProductsToShow;
+                }
+                set
+                {
+                    _listProductsToShow = value;
+                    OnPropertyChanged("ListProductsToShow");
+                }
+            }
             public RelayCommand ShowProductsCommand
             {
                 get
@@ -197,6 +207,74 @@ namespace WarehouseElectric.ViewModels
                     OnPropertyChanged("ProductNameToSearch");
                 }
             }
+
+            public IList<PR_Product> ListLackProductsToShow
+            {
+                get
+                {
+                    return _listLackProductsToShow;
+                }
+                set
+                {
+                    _listLackProductsToShow = value;
+                    OnPropertyChanged("ListLackProductsToShow");
+                }
+            }
+            public RelayCommand ShowLackProductsCommand
+            {
+                get
+                {
+                    _showLackProductsCommand = new RelayCommand(ShowLackProducts);
+                    _showLackProductsCommand.CanUndo = (obj) => false;
+
+                    return _showLackProductsCommand;
+                }
+                set
+                {
+                    _showLackProductsCommand = value;
+                }
+            }
+            public RelayCommand LackProductSearchCommand
+            {
+                get
+                {
+                    _lackProductSearchCommand = new RelayCommand(LackProductSearch);
+                    _lackProductSearchCommand.CanUndo = (obj) => false;
+
+                    return _lackProductSearchCommand;
+                }
+                set
+                {
+                    _lackProductSearchCommand = value;
+                }
+            }
+            public String LackProductNameToSearch
+            {
+                get
+                {
+                    return _lackProductNameToSearch;
+                }
+                set
+                {
+                    _lackProductNameToSearch = value;
+                    OnPropertyChanged("LackProductNameToSearch");
+                }
+            }
+
+            public RelayCommand ClearChoiceCommand
+            {
+                get
+                {
+                    _clearChoiceCommand = new RelayCommand(ClearChoice);
+                    _clearChoiceCommand.CanUndo = (obj) => (false);
+
+                    return _clearChoiceCommand;
+                }
+                set
+                {
+                    _clearChoiceCommand=value;
+                }
+            }
         #endregion //Properties
         #region "Methods"
             public void LogOut(Object obj)
@@ -214,6 +292,7 @@ namespace WarehouseElectric.ViewModels
                 _storekeeperView.Close();
 
             }
+
             public void SupplierSearch(Object obj)
             {
                 SuppliersManager suppliersManager = new SuppliersManager();
@@ -241,7 +320,6 @@ namespace WarehouseElectric.ViewModels
                     }
                 }
             }
-
             public void ProductSearch(Object obj)
             {
                 using(ProductsManager productsManager = new ProductsManager())
@@ -252,6 +330,37 @@ namespace WarehouseElectric.ViewModels
                 }
             }
 
+            public void ShowLackProducts(Object obj)
+            {
+                using (ProductsManager productsManager = new ProductsManager())
+                {
+                    if (LackCategoryViewModel.GetSelectedCategory().ProductCategory != null)
+                    {
+                        int selectedCategoryId = CategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
+                        ListLackProductsToShow = (from product in productsManager.GetAllFromCategory(selectedCategoryId)
+                                              where product.PR_DEPOT_QUANTITY < 20
+                                              select product).ToList<PR_Product>();
+                    }
+                }
+            }
+            public void LackProductSearch(Object obj)
+            {
+                using (ProductsManager productsManager = new ProductsManager())
+                {
+                    int selectedCategoryId = LackCategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
+                    IList<PR_Product> tmp = (from product in productsManager.GetAllFromCategory(selectedCategoryId)
+                                              where product.PR_DEPOT_QUANTITY < 20
+                                              select product).ToList<PR_Product>();
+                    ListLackProductsToShow = (from product in tmp
+                                          where product.PR_NAME == LackProductNameToSearch
+                                          select product).ToList<PR_Product>();
+                }
+            }
+   
+            public void ClearChoice(Object obj)
+            {
+                ListProductsToShow = null;
+            }
         #endregion //Methods
     }
 }
