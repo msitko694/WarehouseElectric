@@ -7,7 +7,7 @@ using WarehouseElectric.Entities;
 
 namespace WarehouseElectric.Models
 {
-    class CustomersManager : ICustumersManager
+    class CustomersManager : ICustomersManager
     {
         #region "Fields"
 
