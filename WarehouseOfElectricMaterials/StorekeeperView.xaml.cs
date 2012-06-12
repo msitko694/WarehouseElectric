@@ -23,10 +23,13 @@ namespace WarehouseElectric
         {
             InitializeComponent();
             CategoryViewModel categoryViewModel = new CategoryViewModel(true);
-            CategoryViewModel lackCategoryViewModel = new CategoryViewModel(true);
-            DataContext = new StorekeeperViewModel(this, categoryViewModel,lackCategoryViewModel);
+            StorekeeperViewModel storekeeperViewModel = new StorekeeperViewModel(this, categoryViewModel);
+            DataContext = storekeeperViewModel;
             treeViewChooseProductCategory.DataContext = categoryViewModel;
-            treeViewChooseLackProductCategory.DataContext = lackCategoryViewModel;
+            treeViewChooseProductCategory.SelectedItemChanged += (sender, e) =>
+            {
+                storekeeperViewModel.ShowProducts();
+            };
         }
 
     }
