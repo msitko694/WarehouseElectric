@@ -7,7 +7,7 @@ using WarehouseElectric.Entities;
 
 namespace WarehouseElectric.Models
 {
-    interface ICustumersManager : IDisposable
+    interface ICustomersManager : IDisposable
     {
         IList<CU_Customer> GetAll();
         CU_Customer Get(int id);
