@@ -103,6 +103,7 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _addNewPositionButtonCommand; //dodane nowego stanowsika pracy (zakładka stanowska pracowników)
         private RelayCommand _deletePositionCommand; //usunięcie stanowiska pracy
         private RelayCommand _refreshInformationOfCompanyCommand; //wczytanie danych firmy(zakładka dane firmy)
+        private RelayCommand _editCompanyInformationCommand; // edycja danych firmy(zakładka dane firmy)
         private IList<WO_Worker> _listWorkersAll;
         private IList<WO_Worker> _listAllWorkersToModifyDataGrid; //wyświetlenie w datagrid listy pracowników (zakładka pracownicy/zarządzanie)
         private List<US_User> _listUserToModificationDataGrid; //wyświetlenie w datagrid listy userów do modyfikacji(zakładka użytkownicy/zarządzanie)
@@ -154,6 +155,11 @@ namespace WarehouseElectric.ViewModels
         private String _postCodeOfCompanyTextBox; // kod pocztowy firmy(zakładka dane firmy)
         private String _townOfCompanyTextBox; // nazwa miasta (zakładka dane firmy)
         private String _phoneOfCompanyTextBox; // numer telefonu firmy(zakładka dane firmy)
+        private String _newNameOfCompanyTextBox; //nowa nazwa firmy
+        private String _newStreetCompanyTextBox; //nowa nazwa ulicy do adresu firmy
+        private String _newPostCodeOfCompanyTextBox; //nowu kod pocztowy firmy
+        private String _newTownOfCompanyTextBox; //nowa nazwa miasta do adresu firmy
+        private String _newPhoneOfCompanyTextBox; //nowy numer tel. firmy
         private Boolean _newUserIsAdmin;
         private Boolean _newUserIsCashier;
         private Boolean _newUserIsStorekeeper;
@@ -163,6 +169,7 @@ namespace WarehouseElectric.ViewModels
         private Boolean _modifiedUserIsCashierCheckBox; //modyfikowany użytkownik będzie kasjerem
         private Boolean _modifiedUserIsStorekeeperCheckBox; //modyfikowany użytkownik będzie magazynierem
         private Boolean _unlockWorkerToModificationCheckBox; //checkbox odblokowywujący możliwość modyfikacji pracownika
+        private Boolean _unlockEditingCompanyInformationCheckBox; // checkbox odblokowywujący możliwość modyfikacji o formie
         private Visibility _addUserFailedVisibility;
         private Visibility _addUserFailedUserNameVisibility;
         private Visibility _addUserFailedUserPasswordVisibility;
@@ -584,6 +591,21 @@ namespace WarehouseElectric.ViewModels
             set
             {
                 _refreshInformationOfCompanyCommand = value;
+            }
+        }
+
+        public RelayCommand EditCompanyInformationCommand
+        {
+            get
+            {
+                _editCompanyInformationCommand = new RelayCommand(EditCompanyInformation);
+                _editCompanyInformationCommand.CanUndo = (obj) => false;
+
+                return _editCompanyInformationCommand;
+            }
+            set
+            {
+                _editCompanyInformationCommand = value;
             }
         }
 
@@ -1258,6 +1280,71 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public String NewNameOfCompanyTextBox
+        {
+            get
+            {
+                return _newNameOfCompanyTextBox;
+            }
+            set
+            {
+                _newNameOfCompanyTextBox = value;
+                OnPropertyChanged("NewNameOfCompanyTextBox");
+            }
+        }
+
+        public String NewStreetCompanyTextBox
+        {
+            get
+            {
+                return _newStreetCompanyTextBox;
+            }
+            set
+            {
+                _newStreetCompanyTextBox = value;
+                OnPropertyChanged("NewStreetCompanyTextBox");
+            }
+        }
+
+        public String NewPostCodeOfCompanyTextBox
+        {
+            get
+            {
+                return _newPostCodeOfCompanyTextBox;
+            }
+            set
+            {
+                _newPostCodeOfCompanyTextBox = value;
+                OnPropertyChanged("NewPostCodeOfCompanyTextBox");
+            }
+        }
+
+        public String NewTownOfCompanyTextBox
+        {
+            get
+            {
+                return _newTownOfCompanyTextBox;
+            }
+            set
+            {
+                _newTownOfCompanyTextBox = value;
+                OnPropertyChanged("NewTownOfCompanyTextBox");
+            }
+        }
+
+        public string NewPhoneOfCompanyTextBox
+        {
+            get
+            {
+                return _newPhoneOfCompanyTextBox;
+            }
+            set
+            {
+                _newPhoneOfCompanyTextBox = value;
+                OnPropertyChanged("NewPhoneOfCompanyTextBox");
+            }
+        }
+
         public Boolean NewUserIsAdmin
         {
             get
@@ -1375,6 +1462,18 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public Boolean UnlockEditingCompanyInformationCheckBox
+        {
+            get
+            {
+                return _unlockEditingCompanyInformationCheckBox;
+            }
+            set
+            {
+                _unlockEditingCompanyInformationCheckBox = value;
+                OnPropertyChanged("UnlockEditingCompanyInformationCheckBox");
+            }
+        }
 
         public Visibility AddUserFailedVisibility
         {
@@ -1814,8 +1913,15 @@ namespace WarehouseElectric.ViewModels
                 SelectedUserToModifiedFailedVisibilityLabel = Visibility.Hidden;
                 UsersManager userManager = new UsersManager();
                 US_User user = userManager.GetByUserName(UserSelectedToModificationInDataGrid.US_USERNAME);
-                userManager.Delete(user);
-                MessageBox.Show("Użytkownik został usunięty");
+                try
+                {
+                    userManager.Delete(user);
+                    MessageBox.Show("Użytkownik został usunięty");
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("Nie można usunąć użytkownika, ponieważ jest używany w bazie danych");
+                }
             }
             else
                 SelectedUserToModifiedFailedVisibilityLabel = Visibility.Visible;
@@ -2049,8 +2155,17 @@ namespace WarehouseElectric.ViewModels
             if (WorkerSelectedToModifyInDataGrid != null)
             {
                 worker = workersManager.Get(WorkerSelectedToModifyInDataGrid.WO_ID);
-                workersManager.Delete(worker);
-                MessageBox.Show("Usunięto Pracownika");
+                try
+                {
+
+                    workersManager.Delete(worker);
+                    MessageBox.Show("Usunięto Pracownika");
+                }
+                catch(SqlException)
+                {
+                    MessageBox.Show("Nie można usunąć pracownika ponieważ jest używany w bazie danych");
+                }
+                
             }
             else
                 MessageBox.Show("Wybierz pracownika z tabeli");
@@ -2092,9 +2207,16 @@ namespace WarehouseElectric.ViewModels
             SP_Spedition speditionType = new SP_Spedition();
             if (SpeditionSelectedToDeleteDataGrid != null)
             {
-                speditionType = speditionManager.Get(SpeditionSelectedToDeleteDataGrid.SP_ID);
-                speditionManager.Delete(speditionType);
-                MessageBox.Show("Typ Wysyłki został usunięty");
+                try
+                {
+                    speditionType = speditionManager.Get(SpeditionSelectedToDeleteDataGrid.SP_ID);
+                    speditionManager.Delete(speditionType);
+                    MessageBox.Show("Typ Wysyłki został usunięty");
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("Niemożna usunąc typu wysyłki ponieważ jest wykorzystywany w bazie danych");
+                }
             }
             else
                 MessageBox.Show("Wybierz typ wysyłki z tabeli");
@@ -2136,9 +2258,16 @@ namespace WarehouseElectric.ViewModels
             QT_QuantityType quantityTypes = new QT_QuantityType();
             if (QuantityTypesSelectedToDeleteDataGrid != null)
             {
-                quantityTypes = quantityTypesManager.Get(QuantityTypesSelectedToDeleteDataGrid.QT_ID);
-                quantityTypesManager.Delete(quantityTypes);
-                MessageBox.Show("Jednostak produktów została usunięta");
+                try
+                {
+                    quantityTypes = quantityTypesManager.Get(QuantityTypesSelectedToDeleteDataGrid.QT_ID);
+                    quantityTypesManager.Delete(quantityTypes);
+                    MessageBox.Show("Jednostak produktów została usunięta");
+                }
+                catch(SqlException)
+                {
+                    MessageBox.Show("Niemożna usunąć jednostki, ponieważ jest używana w bazie danych");
+                }
             }
             else
                 MessageBox.Show("Wybierz jednostkę z tabeli");
@@ -2179,10 +2308,17 @@ namespace WarehouseElectric.ViewModels
             PO_Position position = new PO_Position();
             if (PositionSelectedToDeleteInDataGrid != null)
             {
-                position = positionManager.Get(PositionSelectedToDeleteInDataGrid.PO_ID);
-                positionManager.Delete(position);
-                ListPositionsToAddWorkerComboBox = positionManager.GetAllName();
-                MessageBox.Show("Stanowisko zostało usunięte");
+                try
+                {
+                    position = positionManager.Get(PositionSelectedToDeleteInDataGrid.PO_ID);
+                    positionManager.Delete(position);
+                    ListPositionsToAddWorkerComboBox = positionManager.GetAllName();
+                    MessageBox.Show("Stanowisko zostało usunięte");
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("Niemożna usunąć stanowiska ponieważ jest wykorzystywane w bazie danych");
+                }
             }
             else
                 MessageBox.Show("Wybierz stanowisko z tablei");
@@ -2191,15 +2327,81 @@ namespace WarehouseElectric.ViewModels
         //zakładka dane firmy
         public void RefreshInformationOfCompany(Object obj)
         {
+
             CompanyManager companyManager = new CompanyManager();
             CI_CompanyInfo companyInfo = new CI_CompanyInfo();
             companyInfo = companyManager.GetCompanyData();
-            NameOfCompanyTextBox = companyInfo.CI_NAME;
-            StreetCompanyTextBox = companyInfo.CI_STREET;
-            PostCodeOfCompanyTextBox = companyInfo.CI_POST_CODE;
-            TownOfCompanyTextBox = companyInfo.CI_TOWN;
-            PhoneOfCompanyTextBox = companyInfo.CI_PHONE;
-            
+            if (companyInfo != null)
+            {
+                NameOfCompanyTextBox = companyInfo.CI_NAME;
+                StreetCompanyTextBox = companyInfo.CI_STREET;
+                PostCodeOfCompanyTextBox = companyInfo.CI_POST_CODE;
+                TownOfCompanyTextBox = companyInfo.CI_TOWN;
+                PhoneOfCompanyTextBox = companyInfo.CI_PHONE;
+            }
+            else
+                MessageBox.Show("Najpierw należy wprowadzić dane");
+        }
+
+        public void EditCompanyInformation(Object obj)
+        {
+            CompanyManager companyManager = new CompanyManager();
+            CI_CompanyInfo companyInfo = new CI_CompanyInfo();
+            if (companyManager.GetCompanyData() != null)
+            {
+                if (NewNameOfCompanyTextBox != null && NewNameOfCompanyTextBox != "" && NewNameOfCompanyTextBox != " ")
+                    companyInfo.CI_NAME = NewNameOfCompanyTextBox;
+                else
+                    companyInfo.CI_NAME = companyManager.GetCompanyData().CI_NAME;
+
+                if (NewStreetCompanyTextBox != null && NewStreetCompanyTextBox != "" && NewStreetCompanyTextBox != " ")
+                    companyInfo.CI_STREET = NewStreetCompanyTextBox;
+                else
+                    companyInfo.CI_STREET = companyManager.GetCompanyData().CI_STREET;
+
+                if (NewPostCodeOfCompanyTextBox != null && NewPostCodeOfCompanyTextBox != "" && NewPostCodeOfCompanyTextBox != " ")
+                    companyInfo.CI_POST_CODE = NewPostCodeOfCompanyTextBox;
+                else
+                    companyInfo.CI_POST_CODE = companyManager.GetCompanyData().CI_POST_CODE;
+
+                if (NewTownOfCompanyTextBox != null && NewTownOfCompanyTextBox != "" && NewTownOfCompanyTextBox != " ")
+                    companyInfo.CI_TOWN = NewTownOfCompanyTextBox;
+                else
+                    companyInfo.CI_TOWN = companyManager.GetCompanyData().CI_TOWN;
+
+                if (NewPhoneOfCompanyTextBox != null && NewPhoneOfCompanyTextBox != "" && NewPhoneOfCompanyTextBox != " ")
+                    companyInfo.CI_PHONE = NewPhoneOfCompanyTextBox;
+                else
+                    companyInfo.CI_PHONE = companyManager.GetCompanyData().CI_PHONE;
+
+                companyInfo.CI_ID = companyManager.GetCompanyData().CI_ID;
+                companyInfo.CI_LAST_MODIFIED = DateTime.Now;
+                companyInfo.CI_ADDED = companyManager.GetCompanyData().CI_ADDED;
+                companyManager.SetCompanyData(companyInfo);
+                MessageBox.Show("Zmieniono dane dotyczące firmy");
+            }
+            else
+            {
+                if (NewNameOfCompanyTextBox != null && NewNameOfCompanyTextBox != "" && NewNameOfCompanyTextBox != " ")
+                    companyInfo.CI_NAME = NewNameOfCompanyTextBox;
+                
+                if (NewStreetCompanyTextBox != null && NewStreetCompanyTextBox != "" && NewStreetCompanyTextBox != " ")
+                    companyInfo.CI_STREET = NewStreetCompanyTextBox;
+
+                if (NewPostCodeOfCompanyTextBox != null && NewPostCodeOfCompanyTextBox != "" && NewPostCodeOfCompanyTextBox != " ")
+                    companyInfo.CI_POST_CODE = NewPostCodeOfCompanyTextBox;
+
+                if (NewTownOfCompanyTextBox != null && NewTownOfCompanyTextBox != "" && NewTownOfCompanyTextBox != " ")
+                    companyInfo.CI_TOWN = NewTownOfCompanyTextBox;
+
+                if (NewPhoneOfCompanyTextBox != null && NewPhoneOfCompanyTextBox != "" && NewPhoneOfCompanyTextBox != " ")
+                    companyInfo.CI_PHONE = NewPhoneOfCompanyTextBox;
+
+                companyInfo.CI_LAST_MODIFIED = DateTime.Now;
+                companyInfo.CI_ADDED = DateTime.Now;
+                companyManager.SetCompanyData(companyInfo);
+                MessageBox.Show("Dodano dane firmy");
+            }
         }
 
         #endregion //Methods

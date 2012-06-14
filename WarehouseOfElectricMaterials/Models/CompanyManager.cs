@@ -66,7 +66,13 @@ namespace WarehouseElectric.Models
         /// </summary>
         public CI_CompanyInfo GetCompanyData()
         {
-            return (from info in DataContext.CI_CompanyInfos select info).ToList<CI_CompanyInfo>()[0];
+            List<CI_CompanyInfo> compInfoList = (from info in DataContext.CI_CompanyInfos select info).ToList<CI_CompanyInfo>();
+
+            if (compInfoList.Count > 0)
+                return compInfoList[0];
+            else
+                return null;
+            //return (from info in DataContext.CI_CompanyInfos select info).ToList<CI_CompanyInfo>()[0];
         }
 
         #endregion

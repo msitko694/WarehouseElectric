@@ -218,6 +218,10 @@
             </TabItem>
             <TabItem h:HelpProvider.HelpString="Zakładka umożliwiająca zarządzanie kategorami produktów oraz stanowiskami w firmie" Header="Kategorie Produktów / Stanowiska pracowników" Name="tabItem5">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="662*" />
+                        <ColumnDefinition Width="101*" />
+                    </Grid.ColumnDefinitions>
                     <TextBox Height="23" Text="{Binding NewCategoryName}" HorizontalAlignment="Left" Margin="36,65,0,0" Name="textBoxNewCategory" VerticalAlignment="Top" Width="203" />
                     <CheckBox IsChecked="{Binding IsRootCategory}" Content="Kategoria główna" Height="16" HorizontalAlignment="Left" Margin="36,105,0,0" Name="checkBoxIsMainCategory" VerticalAlignment="Top" Width="118" />
                     <TreeView Height="294" ItemsSource="{Binding RootCategories}" HorizontalAlignment="Left" Margin="36,185,0,0" Name="treeViewShowProductCategory" VerticalAlignment="Top" Width="314" >
@@ -245,13 +249,13 @@
                     <Label Content="Stanowiska pracy" Height="28" HorizontalAlignment="Left" Margin="403,15,0,0" Name="label34" VerticalAlignment="Top" Width="106" />
                     <TextBox Text="{Binding Path=NewPositionTextBox}" Height="23" HorizontalAlignment="Left" Margin="403,65,0,0" Name="textBoxNewPosition" VerticalAlignment="Top" Width="183" />
                     <Button Command="{Binding Path=AddNewPositionButtonCommand}" Content="Dodaj nowe stanowisko" Height="23" HorizontalAlignment="Left" Margin="403,105,0,0" Name="buttAddNewPosition" VerticalAlignment="Top" Width="133" />
-                    <DataGrid SelectedItem="{Binding Path=PositionSelectedToDeleteInDataGrid}" IsReadOnly="True" ItemsSource="{Binding Path=ListAllPositionsDataGrid}" AutoGenerateColumns="False" Height="294" HorizontalAlignment="Left" Margin="403,185,0,0" Name="dataGridListAllPositions" VerticalAlignment="Top" Width="313">
+                    <DataGrid SelectedItem="{Binding Path=PositionSelectedToDeleteInDataGrid}" IsReadOnly="True" ItemsSource="{Binding Path=ListAllPositionsDataGrid}" AutoGenerateColumns="False" Height="294" HorizontalAlignment="Left" Margin="403,185,0,0" Name="dataGridListAllPositions" VerticalAlignment="Top" Width="313" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=PO_ID}" Header="ID" Width="40" />
                             <DataGridTextColumn Binding="{Binding Path=PO_NAME}" Header="Stanowisko" Width="265" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Command="{Binding Path=RefreshListOfPositionButtonCommand}" Content="Odśwież" Height="23" HorizontalAlignment="Left" Margin="641,137,0,0" Name="buttRefreshPositionList" VerticalAlignment="Top" Width="75" />
+                    <Button Command="{Binding Path=RefreshListOfPositionButtonCommand}" Content="Odśwież" Height="23" HorizontalAlignment="Left" Margin="641,137,0,0" Name="buttRefreshPositionList" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" />
                     <Label Visibility="{Binding Path=AddNewPositionFailedVisibilityLabel}" Content="Wprowadź nazwę stanowiska" Height="28" HorizontalAlignment="Left" Margin="403,41,0,0" Name="labelSetPositionName" Foreground="#FFD10505" VerticalAlignment="Top" />
                     <Button Content="Usuń" Command="{Binding Path= DeleteCategoryCommand}" Height="23" HorizontalAlignment="Left" Margin="164,137,0,0" Name="butDeleteCategory" VerticalAlignment="Top" Width="75" />
                     <Button Command="{Binding Path=DeletePositionCommand}" Content="Usuń" Height="23" HorizontalAlignment="Left" Margin="542,105,0,0" Name="buttDeletePosition" VerticalAlignment="Top" Width="75" />
@@ -259,19 +263,35 @@
             </TabItem>
             <TabItem h:HelpProvider.HelpString="Zakładka umożliwiająca modyfikację danych firmy" Header="Dane firmy" Name="tabItemInformationOfCompany">
                 <Grid>
-                    <Label Content="Informacje o firmie:" Height="28" HorizontalAlignment="Left" Margin="60,62,0,0" Name="labelInformationOfCompany" VerticalAlignment="Top" FontSize="16" />
-                    <Label Content="Nazwa:" Height="28" HorizontalAlignment="Left" Margin="60,125,0,0" Name="labelNameOfCompany" VerticalAlignment="Top" />
-                    <TextBox Text="{Binding Path=NameOfCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="162,127,0,0" Name="textBoxNameOfCompany" VerticalAlignment="Top" Width="282" />
-                    <Label Content="Ulica:" Height="28" HorizontalAlignment="Left" Margin="60,171,0,0" Name="labelStreetOfCompany" VerticalAlignment="Top" />
-                    <TextBox Text="{Binding Path=StreetCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="162,173,0,0" Name="textBoxStreetOfCompany" VerticalAlignment="Top" Width="282" />
-                    <Label Content="Kod Pocztowy:" Height="28" HorizontalAlignment="Left" Margin="60,217,0,0" Name="labelPostCodeOfCompany" VerticalAlignment="Top" />
-                    <TextBox Text="{Binding Path=PostCodeOfCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="162,219,0,0" Name="textBoxPostCodeOfCompany" VerticalAlignment="Top" Width="282" />
-                    <Label Content="Miasto:" Height="28" HorizontalAlignment="Left" Margin="60,263,0,0" Name="labelTownOfCompany" VerticalAlignment="Top" />
-                    <TextBox Text="{Binding Path=TownOfCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="162,265,0,0" Name="textBoxTownOfCompany" VerticalAlignment="Top" Width="282" />
-                    <Label Content="Telefon:" Height="28" HorizontalAlignment="Left" Margin="60,309,0,0" Name="labelPhoneCompany" VerticalAlignment="Top" />
-                    <TextBox Text="{Binding Path=PhoneOfCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="162,311,0,0" Name="textBoxCompanyPhone" VerticalAlignment="Top" Width="282" />
-                    <Button Content="Edytuj Informacje o firmie" Height="26" HorizontalAlignment="Left" Margin="502,407,0,0" Name="button1" VerticalAlignment="Top" Width="174" FontSize="14" />
-                    <Button Command="{Binding Path=RefreshInformationOfCompanyCommand}" Content="Wczytaj dane" Height="26" HorizontalAlignment="Left" Margin="502,359,0,0" Name="buttonRefreshCompanyInformation" VerticalAlignment="Top" Width="174" FontSize="14" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="384*" />
+                        <ColumnDefinition Width="379*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Informacje o firmie:" Height="28" HorizontalAlignment="Left" Margin="34,36,0,0" Name="labelInformationOfCompany" VerticalAlignment="Top" FontSize="12" />
+                    <Label Content="Nazwa:" Height="28" HorizontalAlignment="Left" Margin="61,81,0,0" Name="labelNameOfCompany" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Path=NameOfCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="132,86,0,0" Name="textBoxNameOfCompany" VerticalAlignment="Top" Width="225" />
+                    <Label Content="Ulica:" Height="28" HorizontalAlignment="Left" Margin="71,116,0,0" Name="labelStreetOfCompany" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Path=StreetCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="132,118,0,0" Name="textBoxStreetOfCompany" VerticalAlignment="Top" Width="225" />
+                    <Label Content="Kod Pocztowy:" Height="28" HorizontalAlignment="Left" Margin="22,150,0,0" Name="labelPostCodeOfCompany" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Path=PostCodeOfCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="132,152,0,0" Name="textBoxPostCodeOfCompany" VerticalAlignment="Top" Width="225" />
+                    <Label Content="Miasto:" Height="28" HorizontalAlignment="Left" Margin="60,184,0,0" Name="labelTownOfCompany" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Path=TownOfCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="132,186,0,0" Name="textBoxTownOfCompany" VerticalAlignment="Top" Width="225" />
+                    <Label Content="Telefon:" Height="28" HorizontalAlignment="Left" Margin="57,218,0,0" Name="labelPhoneCompany" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Path=PhoneOfCompanyTextBox}" IsReadOnly="True" Height="23" HorizontalAlignment="Left" Margin="132,220,0,0" Name="textBoxCompanyPhone" VerticalAlignment="Top" Width="225" />
+                    <Button Command="{Binding Path=EditCompanyInformationCommand}" IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Content="Edytuj Informacje o firmie" Height="26" HorizontalAlignment="Left" Margin="149,302,0,0" Name="button1" VerticalAlignment="Top" Width="174" FontSize="14" Grid.Column="1" />
+                    <Button Command="{Binding Path=RefreshInformationOfCompanyCommand}" Content="Wczytaj dane" Height="26" HorizontalAlignment="Left" Margin="183,302,0,0" Name="buttonRefreshCompanyInformation" VerticalAlignment="Top" Width="174" FontSize="14" />
+                    <Label IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Content="Edytuj dane firmy:" Height="28" HorizontalAlignment="Left" Margin="15,36,0,0" Name="labelEditCompanyInformation" VerticalAlignment="Top" Grid.Column="1" />
+                    <Label IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Content="Nazwa:" Height="28" HorizontalAlignment="Left" Margin="39,84,0,0" Name="labelNewCompanyName" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBox Text="{Binding Path=NewNameOfCompanyTextBox}" IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Height="23" HorizontalAlignment="Left" Margin="97,86,0,0" Name="textBoxNewNameOfCompany" VerticalAlignment="Top" Width="226" Grid.Column="1" />
+                    <Label IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Content="Ulica:" Height="28" HorizontalAlignment="Left" Margin="49,116,0,0" Name="labelNewStreetOfCompany" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBox Text="{Binding Path=NewStreetCompanyTextBox}" IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Height="23" Margin="97,118,56,0" Name="textBoxNewStreetOfCompany" VerticalAlignment="Top" Grid.Column="1" />
+                    <Label IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Content="Kod Pocztowy:" Height="28" HorizontalAlignment="Left" Margin="0,150,0,0" Name="labelNewPostCodeOfCompany" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBox Text="{Binding Path=NewPostCodeOfCompanyTextBox}" IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Height="23" HorizontalAlignment="Left" Margin="97,152,0,0" Name="textBoxNewPostCodeOfCompany" VerticalAlignment="Top" Width="226" Grid.Column="1" />
+                    <Label IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Content="Miasto:" Height="28" HorizontalAlignment="Left" Margin="38,184,0,0" Name="labelNewTownOfCompany" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBox Text="{Binding Path=NewTownOfCompanyTextBox}" IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Height="23" HorizontalAlignment="Left" Margin="97,186,0,0" Name="textBoxNewTownOfCompany" VerticalAlignment="Top" Width="226" Grid.Column="1" />
+                    <Label IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Content="Telefon:" Height="28" HorizontalAlignment="Left" Margin="35,218,0,0" Name="labelNewPhoneOfCompany" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBox Text="{Binding Path=NewPhoneOfCompanyTextBox}" IsEnabled="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Height="23" HorizontalAlignment="Left" Margin="97,220,0,0" Name="textBoxNewCompanyPhone" VerticalAlignment="Top" Width="226" Grid.Column="1" />
+                    <CheckBox IsChecked="{Binding Path=UnlockEditingCompanyInformationCheckBox}" Content="Odblokuj" Grid.Column="1" Height="16" HorizontalAlignment="Left" Margin="255,265,0,0" Name="checkBoxUnlockEditCompanyInformation" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
         </TabControl>
