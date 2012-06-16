@@ -1,22 +1,25 @@
 ﻿<Window x:Class="WarehouseElectric.StorekeeperView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="StorekeeperView" Height="500" Width="670" >
+        Title="StorekeeperView" Height="500" Width="670" 
+        xmlns:h="clr-namespace:WarehouseElectric.Helpers"
+        h:HelpProvider.HelpString="Panel magazyniera">
     <Window.InputBindings>
         <KeyBinding Key="Return" Command="{Binding Path=ProductSearchCommand}" />
     </Window.InputBindings>
     <Grid Height="450" Width="652">
-        <Button Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
-        <Button Command="{Binding Path=ChoosePanelCommand}" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
+        <Button h:HelpProvider.HelpString="Przycisk wylogowujący użytkownika" Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Right" Margin="0,12,12,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
+        <Button h:HelpProvider.HelpString="Przycisk zmieniający panel bez wylogowania użytkownika" Command="{Binding Path=ChoosePanelCommand}" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
         <Label Content="Użytkownik:" Height="25" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" Width="74" />
         <TabControl Height="394" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControl1" VerticalAlignment="Top" Width="629">
-            <TabItem Background="#FFF5893F" Header="Magazyn" Name="tabItemStore">
+            <TabItem h:HelpProvider.HelpString="Zakładka umożliwiająca przeglądanie produktów" Background="#FFF5893F" Header="Magazyn" Name="tabItemStore">
                 <Grid Background="#FFDEDEDE">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="449*" />
+                        <ColumnDefinition Width="41*" />
+                        <ColumnDefinition Width="451*" />
                     </Grid.ColumnDefinitions>
-                    <TreeView ItemsSource="{Binding RootCategories}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120">
+                    <TreeView h:HelpProvider.HelpString="Lista kategori produktów" ItemsSource="{Binding RootCategories}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseProductCategory" VerticalAlignment="Top" Width="120">
                         <TreeView.ItemContainerStyle>
                             <Style TargetType="{x:Type TreeViewItem}">
                                 <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
@@ -36,22 +39,22 @@
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
-                    <Button Command="{Binding ClearChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" />
-                    <DataGrid IsEnabled="True" ItemsSource="{Binding Path=ListProductsToShow}" AutoGenerateColumns="False" Height="276" HorizontalAlignment="Left" Margin="132,49,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" Grid.ColumnSpan="2" >
+                    <Button h:HelpProvider.HelpString="Naciśnij aby wyczyścić listę wyświetlanych produktów" Command="{Binding ClearChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" />
+                    <DataGrid h:HelpProvider.HelpString="Lista produktów" IsEnabled="True" ItemsSource="{Binding Path=ListProductsToShow}" AutoGenerateColumns="False" Height="276" HorizontalAlignment="Left" Margin="6,49,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" Grid.ColumnSpan="2" Grid.Column="1">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=PR_NAME}" Header="Nazwa" Width="100" /> 
                         <DataGridTextColumn Binding="{Binding Path=PR_DEPOT_QUANTITY}" Header="Ilość" Width="100" />
                         <DataGridTextColumn Binding="{Binding Path=PR_UNIT_PRICE}" Header="Jednostka" Width="100" />
                         </DataGrid.Columns>
                        </DataGrid>
-                    <TextBox Text="{Binding Path=ProductNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBox1" VerticalAlignment="Top" Width="448" Grid.ColumnSpan="2" />
-                    <Button Command="{Binding ProductSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button2" VerticalAlignment="Top" Width="27" Grid.Column="1" />
-                    <Button Command="{Binding ShowProductsCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="132,331,0,0" Name="buttonOpenProduct" VerticalAlignment="Top" Width="481" Grid.ColumnSpan="2" />
+                    <TextBox h:HelpProvider.HelpString="Wprowadź w pole produkt do wyszukania" Text="{Binding Path=ProductNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="6,7,0,0" Name="textBox1" VerticalAlignment="Top" Width="448" Grid.ColumnSpan="2" Grid.Column="1" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby wyszukać produkt" Command="{Binding ProductSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button2" VerticalAlignment="Top" Width="27" Grid.Column="2" />
+                    <Button Command="{Binding ShowProductsCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="6,331,0,0" Name="buttonOpenProduct" VerticalAlignment="Top" Width="481" Grid.ColumnSpan="2" Grid.Column="1" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Braki" Name="tabItem1">
+            <TabItem h:HelpProvider.HelpString="Zakładka umożliwiająca przeglądanie braków wśród produktów" Header="Braki" Name="tabItem1">
                 <Grid Background="#FFDEDEDE">
-                    <TreeView ItemsSource="{Binding RootCategories}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseLackProductCategory" VerticalAlignment="Top" Width="120" >
+                    <TreeView h:HelpProvider.HelpString="Lista kategori produktów" ItemsSource="{Binding RootCategories}" Height="315" HorizontalAlignment="Left" Margin="6,40,0,0" Name="treeViewChooseLackProductCategory" VerticalAlignment="Top" Width="120" >
                         <TreeView.ItemContainerStyle>
                             <Style TargetType="{x:Type TreeViewItem}">
                                 <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
@@ -72,8 +75,8 @@
                         </TreeView.ItemTemplate>
                     </TreeView>
 
-                    <Button Command="{Binding ClearChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button15" VerticalAlignment="Top" Width="120" />
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=ListLackProductsToShow}" Height="285" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid5" VerticalAlignment="Top" Width="481" >
+                    <Button h:HelpProvider.HelpString="Naciśnij aby wyczyścić listę wyświetlanych produktów"  Command="{Binding ClearChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button15" VerticalAlignment="Top" Width="120" />
+                    <DataGrid h:HelpProvider.HelpString="Lista produktów" AutoGenerateColumns="False" ItemsSource="{Binding Path=ListLackProductsToShow}" Height="285" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid5" VerticalAlignment="Top" Width="481" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=PR_NAME}" Header="Nazwa" Width="100" />
                         <DataGridTextColumn Binding="{Binding Path=PR_DEPOT_QUANTITY}" Header="Ilość" Width="100" />
@@ -81,15 +84,15 @@
                     </DataGrid.Columns>
                     </DataGrid>
 
-                    <TextBox Text="{Binding Path=LackProductsNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBox5" VerticalAlignment="Top" Width="448" />
-                    <Button Command="{Binding LackProductSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button25" VerticalAlignment="Top" Width="27" />
+                    <TextBox h:HelpProvider.HelpString="Wprowadź w pole produkt do wyszukania" Text="{Binding Path=LackProductsNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="132,7,0,0" Name="textBox5" VerticalAlignment="Top" Width="448" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby wyszukać produkt" Command="{Binding LackProductSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button25" VerticalAlignment="Top" Width="27" />
                     <Button Command="{Binding ShowLackProductsCommand}" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="132,331,0,0" Name="buttonOpenProduct2" VerticalAlignment="Top" Width="481" />
                 </Grid>
             </TabItem>
 
-            <TabItem Background="#FF3EE5CB" Header="Dostawcy" Name="tabItemCustomers">
+            <TabItem h:HelpProvider.HelpString="Zakładka umożliwiająca przeglądanie i dodawanie dostawców" Background="#FF3EE5CB" Header="Dostawcy" Name="tabItemCustomers">
                 <Grid Background="#FFDEDEDE">
-                    <DataGrid IsEnabled="True" ItemsSource="{Binding Path=ListSuppliersToShow}" AutoGenerateColumns="False" Height="304" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGrid2" VerticalAlignment="Top" Width="504" >
+                    <DataGrid h:HelpProvider.HelpString="Lista dostawców" IsEnabled="True" ItemsSource="{Binding Path=ListSuppliersToShow}" AutoGenerateColumns="False" Height="304" HorizontalAlignment="Left" Margin="6,51,0,0" Name="dataGrid2" VerticalAlignment="Top" Width="504" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=SU_NAME}" Header="Nazwa" Width="100" />
                         <DataGridTextColumn Binding="{Binding Path=SU_STREET}" Header="Ulica" Width="100" />
@@ -98,9 +101,9 @@
                         <DataGridTextColumn Binding="{Binding Path=SU_PHONE}" Header="Telefon" Width="100" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBox Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBox2" Text="{Binding Path=SupplierNameToSearch}" VerticalAlignment="Top" Width="471" />
-                    <Button Command="{Binding SupplierSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="button4" VerticalAlignment="Top" Width="27" />
-                    <Button Command="{Binding Path=GoAddNewSupplierCommand}" Background="#FFD1BA3E" Content="Dodaj" Height="97" HorizontalAlignment="Left" Margin="516,51,0,0" Name="button3" VerticalAlignment="Top" Width="97" />
+                    <TextBox h:HelpProvider.HelpString="Wprowadź w pole dostawcę do wyszukania" Height="27" HorizontalAlignment="Left" Margin="6,18,0,0" Name="textBox2" Text="{Binding Path=SupplierNameToSearch}" VerticalAlignment="Top" Width="471" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby wyszukać dostawcę" Command="{Binding SupplierSearchCommand}" Content="O" Height="27" HorizontalAlignment="Right" Margin="0,18,109,0" Name="button4" VerticalAlignment="Top" Width="27" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby dodać nowego dostawcę" Command="{Binding Path=GoAddNewSupplierCommand}" Background="#FFD1BA3E" Content="Dodaj" Height="97" HorizontalAlignment="Left" Margin="516,51,0,0" Name="button3" VerticalAlignment="Top" Width="97" />
                     <Button Background="#FF59D879" Content="Dodaj notatkę" Height="97" HorizontalAlignment="Left" Margin="516,154,0,0" Name="button5" VerticalAlignment="Top" Width="97" />
                     <Button Background="#FF4949DB" Content="Zobacz notatki" Height="97" HorizontalAlignment="Left" Margin="516,258,0,0" Name="button6" VerticalAlignment="Top" Width="97" />
                     <Button Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="516,18,0,0" Name="button7" VerticalAlignment="Top" Width="97" />
