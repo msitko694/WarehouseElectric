@@ -5,7 +5,7 @@
         xmlns:h="clr-namespace:WarehouseElectric.Helpers"
         h:HelpProvider.HelpString="Okno dodawania nowego dostawcy. Wypełnij dane a następnie potwierdź przyciskiem dodaj aby dodać nowego dostawcę">
     <Grid Height="317" Width="555">
-        <Button Command="{Binding Path=AddSupplierCommand}" Content="Dodaj" Height="83" HorizontalAlignment="Left" Margin="426,222,0,0" Name="button1" VerticalAlignment="Top" Width="117" />
+        <Button Command="{Binding Path=AddSupplierCommand}" Content="Dodaj" Height="83" HorizontalAlignment="Left" Margin="426,222,0,0" Name="buttonAdd" VerticalAlignment="Top" Width="117" />
         <Label Content="Nazwa" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="label7" VerticalAlignment="Top" />
         <TextBox h:HelpProvider.HelpString="Wprowadź nazwę dostawcy" Text="{Binding Path=SupplierNameToAddTextBox}" Name="textBoxNameToAdd" Height="23" HorizontalAlignment="Left" Margin="105,12,0,0"  VerticalAlignment="Top" Width="203" />
         <Label Content="Ulica" Height="28" HorizontalAlignment="Left" Margin="10,47,0,0" Name="label8" VerticalAlignment="Top" />

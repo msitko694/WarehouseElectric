@@ -36,6 +36,7 @@ namespace WarehouseElectric
            {
                storekeeperViewModel.ShowLackProducts(this);
            };
+           
         }
 
     }

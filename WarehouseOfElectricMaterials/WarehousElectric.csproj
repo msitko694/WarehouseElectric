@@ -129,6 +129,10 @@
     <Compile Include="StorekeeperView.xaml.cs">
       <DependentUpon>StorekeeperView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddNewProductView.xaml.cs">
+      <DependentUpon>AddNewProductView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AddNewPoductViewModel.cs" />
     <Compile Include="ViewModels\AddNewSupplierViewModel.cs" />
     <Compile Include="ViewModels\CashierViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
@@ -189,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StorekeeperView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddNewProductView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -248,9 +248,6 @@ namespace WarehouseElectric.ViewModels
 
                 MessageBox.Show("Dostawca został dodany");
                 _addNewSupplierView.Close();
-
-                SuppliersManager supplierManager = new SuppliersManager();
-                ListSuppliersToShow = supplierManager.GetAll();
          }
         }
         #endregion //Methods
