@@ -47,6 +47,11 @@ namespace WarehouseElectric.Models
            return (from category in DataContext.PC_ProductCategories 
                    select category).ToList<PC_ProductCategory>();
         }
+        public List<String> GetAllName()
+        {
+            return (from category in DataContext.PC_ProductCategories
+                    select category.PC_NAME).ToList();
+        }
 
         public IList<PC_ProductCategory> GetAllOnBaseLevel()
         {

@@ -45,6 +45,10 @@ namespace WarehouseElectric.Models
         {
            return (from quantityT in DataContext.QT_QuantityTypes select quantityT).ToList<QT_QuantityType>();
         }
+        public List<String> GetAllName()
+        {
+            return (from quantityT in DataContext.QT_QuantityTypes select quantityT.QT_NAME).ToList();
+        }
 
         /// <summary>
         /// Gets the specified type.
