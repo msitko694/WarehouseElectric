@@ -382,7 +382,7 @@ void LogOut(Object obj)
 
         public void GoAddNewProduct(Object obj)
         {
-            AddNewSupplierView window = new AddNewSupplierView();
+            AddNewProductView window = new AddNewProductView();
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
         }
