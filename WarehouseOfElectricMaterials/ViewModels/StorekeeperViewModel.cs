@@ -46,12 +46,11 @@ namespace WarehouseElectric.ViewModels
         private String _lackProductNameToSearch;
 
         private RelayCommand _clearChoiceCommand;
+        private RelayCommand _ClearLackChoiceCommand;
 
         private RelayCommand _goAddNewProductCommand;
         #endregion //Fields
         #region "Properties"
-        public CategoryViewModel CategoryViewModel { get; set; }
-        public CategoryViewModel LackCategoryViewModel { get; set; }
         public RelayCommand LogOutCommand
         {
             get
@@ -156,6 +155,8 @@ namespace WarehouseElectric.ViewModels
                 _productCategoriesManager = value;
             }
         }
+        public CategoryViewModel CategoryViewModel { get; set; }
+        public CategoryViewModel LackCategoryViewModel { get; set; }
 
         public IList<PR_Product> ListProductsToShow
         {
@@ -277,7 +278,20 @@ namespace WarehouseElectric.ViewModels
                 _clearChoiceCommand = value;
             }
         }
+        public RelayCommand ClearLackChoiceCommand
+        {
+            get
+            {
+                _ClearLackChoiceCommand = new RelayCommand(ClearLackChoice);
+                _ClearLackChoiceCommand.CanUndo = (obj) => (false);
 
+                return _ClearLackChoiceCommand;
+            }
+            set
+            {
+                _ClearLackChoiceCommand = value;
+            }
+        }
         public RelayCommand GoAddNewProductCommand
         {
             get
@@ -297,7 +311,7 @@ namespace WarehouseElectric.ViewModels
         #endregion //Properties
         #region "Methods"
         public
-void LogOut(Object obj)
+        void LogOut(Object obj)
         {
             SessionHelper.LogOut();
             Application.Current.MainWindow = new LoginView();
@@ -378,6 +392,10 @@ void LogOut(Object obj)
         public void ClearChoice(Object obj)
         {
             ListProductsToShow = null;
+        }
+        public void ClearLackChoice(Object obj)
+        {
+            ListLackProductsToShow = null;
         }
 
         public void GoAddNewProduct(Object obj)

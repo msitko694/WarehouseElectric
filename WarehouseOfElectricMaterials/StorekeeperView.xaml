@@ -75,7 +75,7 @@
                         </TreeView.ItemTemplate>
                     </TreeView>
 
-                    <Button h:HelpProvider.HelpString="Naciśnij aby wyczyścić listę wyświetlanych produktów"  Command="{Binding ClearChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button15" VerticalAlignment="Top" Width="120" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby wyczyścić listę wyświetlanych produktów"  Command="{Binding ClearLackChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button15" VerticalAlignment="Top" Width="120" />
                     <DataGrid h:HelpProvider.HelpString="Lista produktów" AutoGenerateColumns="False" ItemsSource="{Binding Path=ListLackProductsToShow}" Height="285" HorizontalAlignment="Left" Margin="132,40,0,0" Name="dataGrid5" VerticalAlignment="Top" Width="481" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=PR_NAME}" Header="Nazwa" Width="100" />
