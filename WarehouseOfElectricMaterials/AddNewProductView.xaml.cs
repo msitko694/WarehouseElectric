@@ -23,7 +23,7 @@ namespace WarehouseElectric.ViewModels
             InitializeComponent();
             CategoryViewModel categoryViewModel = new CategoryViewModel(true);
             treeViewChooseProductCategory.DataContext = categoryViewModel;
-            AddNewProductViewModel addNewProductViewModel = new AddNewProductViewModel(this);
+            AddNewProductViewModel addNewProductViewModel = new AddNewProductViewModel(this,categoryViewModel);
             DataContext = addNewProductViewModel;
         }
     }

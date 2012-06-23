@@ -12,9 +12,10 @@ namespace WarehouseElectric.ViewModels
     class AddNewProductViewModel : ViewModelBase
     {
          #region "Constructors"
-        public AddNewProductViewModel(AddNewProductView addNewProductView)
+        public AddNewProductViewModel(AddNewProductView addNewProductView, CategoryViewModel categoryViewModel)
         {
             _addNewProductView = addNewProductView;
+            CategoryViewModel = categoryViewModel;
             //ukrycie etykiet informujących o niepoprawnym uzupełnieniu formularza
             AddProductFailedNameVisibilityLabel = Visibility.Hidden;
             AddProductFailedCategoryVisibilityLabel = Visibility.Hidden;
@@ -29,6 +30,8 @@ namespace WarehouseElectric.ViewModels
             //wypełnienie listy jednostek
             QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
             ProductQuantityTypeToAddComboBox = quantityTypesManager.GetAllName();
+            
+            
            }
         #endregion //Constructors
         #region "Fields"
@@ -205,16 +208,21 @@ namespace WarehouseElectric.ViewModels
                 OnPropertyChanged("SelectedProductQuantityTypeComboBox");
             }
         }
+
+        public CategoryViewModel CategoryViewModel { get; set; }
+
         #endregion //Properties
         #region "Methods"
         public void AddProduct ( Object obj)
         {
             Int32 result,result2;
+            int selectedCategoryId=2;
           //sprawdzenie poprawności wpisania nazwy produktu
             if (ProductNameToAddTextBox == null || ProductNameToAddTextBox == "" || ProductNameToAddTextBox == " ")
                        AddProductFailedNameVisibilityLabel = Visibility.Visible;
                   else
                         AddProductFailedNameVisibilityLabel = Visibility.Hidden;
+
             if (!Int32.TryParse(ProductDepotQuantityToAddTextBox, out result))
                 AddProductFailedDepotQuantityVisibilityLabel = Visibility.Visible;
             else
@@ -224,13 +232,22 @@ namespace WarehouseElectric.ViewModels
                 AddProductFailedUnitPriceVisibilityLabel=Visibility.Visible;
             else
                 AddProductFailedUnitPriceVisibilityLabel=Visibility.Hidden;
+
             if (_SelectedProductQuantityTypeComboBox != null)
                 AddProductFailedQuantityTypeVisibilityLabel = Visibility.Hidden;
             else
                 AddProductFailedQuantityTypeVisibilityLabel = Visibility.Visible;
 
+            if (CategoryViewModel.GetSelectedCategory().ProductCategory != null)
+            {
+                selectedCategoryId = CategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
+                AddProductFailedCategoryVisibilityLabel = Visibility.Hidden;
+            }
+            else
+                AddProductFailedCategoryVisibilityLabel = Visibility.Visible;
            if (AddProductFailedNameVisibilityLabel == Visibility.Hidden && AddProductFailedDepotQuantityVisibilityLabel ==Visibility.Hidden 
-               && AddProductFailedUnitPriceVisibilityLabel == Visibility.Hidden && AddProductFailedQuantityTypeVisibilityLabel ==Visibility.Hidden)
+               && AddProductFailedUnitPriceVisibilityLabel == Visibility.Hidden && AddProductFailedQuantityTypeVisibilityLabel ==Visibility.Hidden
+               && AddProductFailedCategoryVisibilityLabel==Visibility.Hidden)
             {
                 QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
                 QT_QuantityType QuantityType = quantityTypesManager.GetByName(SelectedProductQuantityTypeComboBox);
@@ -242,7 +259,7 @@ namespace WarehouseElectric.ViewModels
                 newProduct.PR_IS_ACTIVE = true;
                 newProduct.PR_USED = true;
                 newProduct.PR_QT_ID = QuantityType.QT_ID;
-                newProduct.PR_PC_ID = 2;
+                newProduct.PR_PC_ID = selectedCategoryId;
                 newProduct.PR_ADDED = DateTime.Now;
                 newProduct.PR_LAST_MODIFIED = DateTime.Now;
 
