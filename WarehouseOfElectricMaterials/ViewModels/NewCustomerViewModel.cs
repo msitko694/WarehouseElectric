@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using WarehouseElectric.DataLayer;
 using WarehouseElectric.Models;
+using WarehouseElectric.Helpers;
+using System.Windows;
 
 namespace WarehouseElectric.ViewModels
 {
@@ -28,7 +30,7 @@ namespace WarehouseElectric.ViewModels
             _isUpdating = true;
         }
 
-        #endregion 
+        #endregion
 
         #region "Fields"
 
@@ -74,25 +76,31 @@ namespace WarehouseElectric.ViewModels
 
         }
 
-        #endregion 
+        #endregion
 
         #region "Methods"
 
         public void SaveCustomer(object obj)
         {
-            if(!_isUpdating)
+            ValidationHelper.ValidationOfTextBoxes(_newCustomerView);
+            if(ValidationHelper.IsValid((DependencyObject)_newCustomerView))
             {
-                Customer.CU_ADDED = DateTime.Now;
-                Customer.CU_LAST_MODIFIED = DateTime.Now;
-                _customersManager.Add(Customer);
+                if(!_isUpdating)
+                {
+                    Customer.CU_ADDED = DateTime.Now;
+                    Customer.CU_LAST_MODIFIED = DateTime.Now;
+
+
+                    _customersManager.Add(Customer);
+                }
+                else
+                {
+                    Customer.CU_LAST_MODIFIED = DateTime.Now;
+                    _customersManager.Update();
+                }
+                _cashierViewModel.LoadCustomersList();
+                _newCustomerView.Close();
             }
-            else
-            {
-                Customer.CU_LAST_MODIFIED = DateTime.Now;
-                _customersManager.Update();
-            }
-            _cashierViewModel.LoadCustomersList();
-            _newCustomerView.Close();
         }
 
         #endregion

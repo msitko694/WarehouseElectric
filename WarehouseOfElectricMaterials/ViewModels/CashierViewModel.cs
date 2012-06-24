@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace WarehouseElectric.ViewModels
 {
-    public class CashierViewModel:ViewModelBase
+    public class CashierViewModel : ViewModelBase
     {
         #region "Contructors"
         public CashierViewModel(CashierView cashierView)
@@ -37,7 +37,7 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _addNewCustomerCommand;
         private RelayCommand _editCustomerCommand;
         private Boolean _isEnabledButtonOpenCustomerFullView;
-        private IList<CU_Customer> _listCustomersToShow;
+        private ObservableCollection<CU_Customer> _listCustomersToShow;
         private RelayCommand _logOutCommand;
         private RelayCommand _openCustomerFullViewCommand;
         private RelayCommand _choosePanelCommand;
@@ -63,7 +63,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if (_editCustomerCommand == null)
+                if(_editCustomerCommand == null)
                 {
                     _editCustomerCommand = new RelayCommand((x) =>
                     {
@@ -81,13 +81,13 @@ namespace WarehouseElectric.ViewModels
             {
                 _choosePanelCommand = value;
             }
-            
+
         }
         public RelayCommand ChoosePanelCommand
         {
             get
             {
-                if (_choosePanelCommand == null)
+                if(_choosePanelCommand == null)
                 {
                     _choosePanelCommand = new RelayCommand((x) =>
                     {
@@ -130,7 +130,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if (_userDeleteCommand == null)
+                if(_userDeleteCommand == null)
                 {
                     _userDeleteCommand = new RelayCommand((x) =>
                     {
@@ -153,7 +153,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if (_openCustomerFullViewCommand == null)
+                if(_openCustomerFullViewCommand == null)
                 {
                     _openCustomerFullViewCommand = new RelayCommand(OpenCustomerFullView);
                     _openCustomerFullViewCommand.CanUndo = (obj) => false;
@@ -175,7 +175,7 @@ namespace WarehouseElectric.ViewModels
             {
                 _selectedCustomer = value;
                 OnPropertyChanged("SelectedCustomer");
-                if (value != null)
+                if(value != null)
                     IsEnabledButtonOpenCustomerFullView = true;
                 else
                     IsEnabledButtonOpenCustomerFullView = false;
@@ -185,7 +185,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if (_logOutCommand == null)
+                if(_logOutCommand == null)
                 {
                     _logOutCommand = new RelayCommand(LogOut);
                     _logOutCommand.CanUndo = (obj) => false;
@@ -201,19 +201,19 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if (_customerSearchCommand == null)
+                if(_customerSearchCommand == null)
                 {
                     _customerSearchCommand = new RelayCommand(CustomerSearch);
                     _customerSearchCommand.CanUndo = (obj) => false;
                 }
-                return _customerSearchCommand; 
+                return _customerSearchCommand;
             }
             set
             {
-                _customerSearchCommand = value;   
+                _customerSearchCommand = value;
             }
         }
-        public IList<CU_Customer> ListCustomersToShow
+        public ObservableCollection<CU_Customer> ListCustomersToShow
         {
             get
             {
@@ -250,12 +250,12 @@ namespace WarehouseElectric.ViewModels
             }
         }
         #endregion //Properties
-        
+
         #region "Methods"
         public void CustomerSearch(Object obj)
         {
             ListCustomersToShow.Clear();
-            ListCustomersToShow = _customersManager.GetByName(CustomerNameToSearch);          
+            ListCustomersToShow = new ObservableCollection<CU_Customer>(_customersManager.GetByName(CustomerNameToSearch));
         }
         public void OpenCustomerFullView(Object obj)
         {
@@ -274,8 +274,9 @@ namespace WarehouseElectric.ViewModels
         }
         public void LoadCustomersList()
         {
-                ListCustomersToShow = _customersManager.GetAll();
-                ListCustomersToShow = _customersManager.GetAll().ToList();
+            ListCustomersToShow = new ObservableCollection<CU_Customer>(_customersManager.GetAll());
+            var bindingExpression = _cashierView.dataGridCustomers.GetBindingExpression(DataGrid.ItemsSourceProperty);
+            bindingExpression.UpdateTarget();
         }
         #endregion //Methods
     }

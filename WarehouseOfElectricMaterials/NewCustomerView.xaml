@@ -1,6 +1,7 @@
 ﻿<Window x:Class="WarehouseElectric.NewCustomerView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:validators="clr-namespace:WarehouseElectric.Helpers"
         Title="NewCustomerView" Height="321" Width="364" xmlns:my="clr-namespace:WarehouseElectric.Helpers">
     <Grid>
         <Label Content="Dane firmy:" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="labelCustomerInfo" VerticalAlignment="Top" Width="74" />
@@ -9,11 +10,51 @@
         <Label Content="Miasto:" Height="28" HorizontalAlignment="Left" Margin="12,112,0,0" Name="labelCustomerTown" VerticalAlignment="Top" />
         <Label Content="Kod pocztowy:" Height="28" HorizontalAlignment="Left" Margin="13,146,0,0" Name="labelCustomerPostCode" VerticalAlignment="Top" />
         <Label Content="Telefon:" Height="28" HorizontalAlignment="Left" Margin="13,180,0,0" Name="labelCustomerPhone" VerticalAlignment="Top" />
-        <TextBox Text="{Binding Customer.CU_NAME}" Height="23" my:HelpProvider.HelpString="Wprowadź nazwę klienta" HorizontalAlignment="Left" Margin="64,49,0,0" Name="textBlockCustomerName"  VerticalAlignment="Top" Width="120" />
-        <TextBox Text="{Binding Customer.CU_STREET}" Height="23" my:HelpProvider.HelpString="Wprowadź adres klienta - ulica" HorizontalAlignment="Left" Margin="49,83,0,0" Name="textBlockCustomerStreet"  VerticalAlignment="Top" Width="135" />
-        <TextBox Text="{Binding Customer.CU_TOWN}" Height="23" my:HelpProvider.HelpString="Wprowadź adres klienta - miasto" HorizontalAlignment="Left" Margin="64,117,0,0" Name="textBlockCustomerTown"  VerticalAlignment="Top" Width="120" />
-        <TextBox Text="{Binding Customer.CU_POST_CODE}" Height="23" my:HelpProvider.HelpString="Wprowadź adres klienta - kod pocztowy" HorizontalAlignment="Left" Margin="100,151,0,0" Name="textBlockCustomerZipCode"  VerticalAlignment="Top" Width="84" />
-        <TextBox Text="{Binding Customer.CU_PHONE}" Height="23" my:HelpProvider.HelpString="Wprowadź numer telefonu klienta" HorizontalAlignment="Left" Margin="64,185,0,0" Name="textBlockCustomerPhone" VerticalAlignment="Top" Width="120" />
+        <TextBox  Height="23" my:HelpProvider.HelpString="Wprowadź nazwę klienta" HorizontalAlignment="Left" Margin="64,49,0,0" Name="textBlockCustomerName"  VerticalAlignment="Top" Width="120" >
+            <TextBox.Text>
+                <Binding Path="Customer.CU_NAME">
+                    <Binding.ValidationRules>
+                        <validators:RequiredFieldValidator ErrorMessage="Wprowadź nazwę klienta"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Height="23" my:HelpProvider.HelpString="Wprowadź adres klienta - ulica" HorizontalAlignment="Left" Margin="49,83,0,0" Name="textBlockCustomerStreet"  VerticalAlignment="Top" Width="135" >
+            <TextBox.Text>
+                <Binding Path="Customer.CU_STREET">
+                    <Binding.ValidationRules>
+                        <validators:RequiredFieldValidator ErrorMessage="Wprowadź nazwę ulicy"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox  Height="23" my:HelpProvider.HelpString="Wprowadź adres klienta - miasto" HorizontalAlignment="Left" Margin="64,117,0,0" Name="textBlockCustomerTown"  VerticalAlignment="Top" Width="120" >
+            <TextBox.Text>
+                <Binding Path="Customer.CU_TOWN">
+                    <Binding.ValidationRules>
+                        <validators:RequiredFieldValidator ErrorMessage="Wprowadź nazwę miasta"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Height="23" my:HelpProvider.HelpString="Wprowadź adres klienta - kod pocztowy" HorizontalAlignment="Left" Margin="100,151,0,0" Name="textBlockCustomerZipCode"  VerticalAlignment="Top" Width="84">
+            <TextBox.Text>
+                <Binding Path="Customer.CU_POST_CODE">
+                    <Binding.ValidationRules>
+                        <validators:RequiredFieldValidator ErrorMessage="Wprowadź kod pocztowy"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Height="23" my:HelpProvider.HelpString="Wprowadź numer telefonu klienta" HorizontalAlignment="Left" Margin="64,185,0,0" Name="textBlockCustomerPhone" VerticalAlignment="Top" Width="120" >
+            <TextBox.Text>
+                <Binding Path="Customer.CU_PHONE">
+                    <Binding.ValidationRules>
+                        <validators:RequiredFieldValidator ErrorMessage="Wprowadź kod pocztowy"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Button Content="Zapisz" my:HelpProvider.HelpString="Naciśnij aby zapisać" Command="{Binding SaveCustomerCommand}" Height="23" HorizontalAlignment="Left" Margin="31,247,0,0" Name="butAdd" VerticalAlignment="Top" Width="275" />
     </Grid>
 </Window>

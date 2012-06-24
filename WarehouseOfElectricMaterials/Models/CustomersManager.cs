@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using WarehouseElectric.DataLayer;
 using WarehouseElectric.Entities;
+using System.Diagnostics;
 
 namespace WarehouseElectric.Models
 {
@@ -65,7 +66,9 @@ namespace WarehouseElectric.Models
         /// <returns>All customers</returns>
         public IList<CU_Customer> GetAll()
         {
-           return (from customer in DataContext.CU_Customers select customer).ToList<CU_Customer>();
+           var customersList = (from customer in DataContext.CU_Customers select customer).ToList<CU_Customer>();
+           DataContext.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, customersList);
+           return customersList;
         }
 
         public IList<CU_Customer> GetByName(string name)

@@ -83,6 +83,8 @@
     <Compile Include="Helpers\HelpProvider.cs" />
     <Compile Include="Helpers\HtmlExporter.cs" />
     <Compile Include="Helpers\IExporter.cs" />
+    <Compile Include="Helpers\RequiredFieldValidator.cs" />
+    <Compile Include="Helpers\Validation.cs" />
     <Compile Include="InvoiceDetailsControl.xaml.cs">
       <DependentUpon>InvoiceDetailsControl.xaml</DependentUpon>
     </Compile>

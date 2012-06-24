@@ -73,7 +73,7 @@
                     <Button h:HelpProvider.HelpString="Wyświetl zaawansowane opcje wyszukiwania klienta" Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="380,18,0,0" Name="buttonAdvancedCustomerSearch" VerticalAlignment="Top" Width="97" Grid.Column="1" />
                     <Button h:HelpProvider.HelpString="Otwórz szczegółowe informację na temat wybranego klienta" IsEnabled="{Binding Path=IsEnabledButtonOpenCustomerFullView}" Command="{Binding Path=OpenCustomerFullViewCommand}" Content="Otwórz" Height="24" Margin="6,330,0,0" Name="buttonOpenCustomer" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="140" />
                     <Button Content="Nowy" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="32,331,0,0" Command="{Binding AddNewCustomerCommand}" Name="butNew" VerticalAlignment="Top" Width="126" />
-                    <Button Content="Edytuj" Command="{Binding EditUserCommand}" Grid.Column="1" Height="23" HorizontalAlignment="Right" Margin="0,331,170,0" Name="butEditUser" VerticalAlignment="Top" Width="130" />
+                    <Button Content="Edytuj" Command="{Binding EditCustomerCommand}" Grid.Column="1" Height="23" HorizontalAlignment="Right" Margin="0,331,170,0" Name="butEditUser" VerticalAlignment="Top" Width="130" />
                     <Button Content="Usuń" Command="{Binding UserDeleteCommand}" Grid.Column="1" Height="23" HorizontalAlignment="Right" Margin="0,331,6,0" Name="butUserDelete" VerticalAlignment="Top" Width="140" />
                 </Grid>
             </TabItem>
