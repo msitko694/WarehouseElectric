@@ -26,6 +26,7 @@ namespace WarehouseElectric.ViewModels
         }
         #endregion //Constructors
         #region "Fields"
+
         private StorekeeperView _storekeeperView;
         private RelayCommand _logOutCommand;
         private RelayCommand _choosePanelCommand;
@@ -51,6 +52,7 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _goAddNewProductCommand;
         #endregion //Fields
         #region "Properties"
+        
         public RelayCommand LogOutCommand
         {
             get
@@ -310,8 +312,8 @@ namespace WarehouseElectric.ViewModels
         }
         #endregion //Properties
         #region "Methods"
-        public
-        void LogOut(Object obj)
+        
+        public void LogOut(Object obj)
         {
             SessionHelper.LogOut();
             Application.Current.MainWindow = new LoginView();
@@ -366,7 +368,7 @@ namespace WarehouseElectric.ViewModels
         {
             using (ProductsManager productsManager = new ProductsManager())
             {
-                if (LackCategoryViewModel.GetSelectedCategory().ProductCategory != null)
+                if (CategoryViewModel.GetSelectedCategory().ProductCategory != null)
                 {
                     int selectedCategoryId = CategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
                     ListLackProductsToShow = (from product in productsManager.GetAllFromCategory(selectedCategoryId)
@@ -379,13 +381,16 @@ namespace WarehouseElectric.ViewModels
         {
             using (ProductsManager productsManager = new ProductsManager())
             {
-                int selectedCategoryId = LackCategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
-                IList<PR_Product> tmp = (from product in productsManager.GetAllFromCategory(selectedCategoryId)
-                                         where product.PR_DEPOT_QUANTITY < 20
-                                         select product).ToList<PR_Product>();
-                ListLackProductsToShow = (from product in tmp
-                                          where product.PR_NAME == LackProductNameToSearch
-                                          select product).ToList<PR_Product>();
+                if (LackCategoryViewModel.GetSelectedCategory().ProductCategory != null)
+                {
+                    int selectedCategoryId = LackCategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
+                    IList<PR_Product> tmp = (from product in productsManager.GetAllFromCategory(selectedCategoryId)
+                                             where product.PR_DEPOT_QUANTITY < 20
+                                             select product).ToList<PR_Product>();
+                    ListLackProductsToShow = (from product in tmp
+                                              where product.PR_NAME == LackProductNameToSearch
+                                              select product).ToList<PR_Product>();
+                }
             }
         }
 
