@@ -25,6 +25,9 @@ namespace WarehouseElectric.ViewModels
             // część "Magazyn"
             ProductCategoriesManager productCategoriesManager = new ProductCategoriesManager();
             ProductCategoriesToShow = productCategoriesManager.GetAllOnBaseLevel();
+
+            InvoicesManager invoicesManager = new InvoicesManager();
+            InvoicesListToShow = invoicesManager.GetAll();
         }
 
         #endregion //Constructors
@@ -32,6 +35,8 @@ namespace WarehouseElectric.ViewModels
         #region "Fields"
         private CashierView _cashierView;
         private String _customerNameToSearch;
+        private RelayCommand _openInvoiceCommand;
+        private RelayCommand _addInvoiceCommand;
         private RelayCommand _userDeleteCommand;
         private RelayCommand _customerSearchCommand;
         private RelayCommand _addNewCustomerCommand;
@@ -41,12 +46,43 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _logOutCommand;
         private RelayCommand _openCustomerFullViewCommand;
         private RelayCommand _choosePanelCommand;
+        private RelayCommand _deleteInvoiceCommand;
         private CU_Customer _selectedCustomer;
         private CustomersManager _customersManager;
         private IList<PC_ProductCategory> _productCategoriesToShow;
+        private IList<IN_Invoice> _invoicesListToShow;
+        private IN_Invoice _selectedInvoice;
         #endregion //Fields
 
         #region "Properties"
+
+        public IList<IN_Invoice> InvoicesListToShow
+        {
+            get
+            {
+                return _invoicesListToShow;
+            }
+            set
+            {
+                _invoicesListToShow = value;
+                OnPropertyChanged("InvoicesListToShow");
+            }
+        }
+
+        public IN_Invoice SelectedInvoice
+        {
+            get
+            {
+                return _selectedInvoice;
+            }
+            set
+            {
+                _selectedInvoice = value;
+                OnPropertyChanged("SelectedInvoice");
+            }
+
+        }
+
         public Boolean IsEnabledButtonOpenCustomerFullView
         {
             get
@@ -59,15 +95,83 @@ namespace WarehouseElectric.ViewModels
                 OnPropertyChanged("IsEnabledButtonOpenCustomerFullView");
             }
         }
+        public RelayCommand AddInvoiceCommand
+        {
+            get
+            {
+                if (_addInvoiceCommand == null)
+                {
+                    _addInvoiceCommand = new RelayCommand((x) =>
+                    {
+                        EditInvoiceView editInvoiceView = new EditInvoiceView();
+                        InvoiceFullViewModel invoiceFullViewModel = new InvoiceFullViewModel(0);
+                        editInvoiceView.DataContext = invoiceFullViewModel;
+                        invoiceFullViewModel.CloseEventHandler += () =>
+                        {
+                            editInvoiceView.Close();
+                            InvoicesListToShow = (new InvoicesManager()).GetAll();
+                        };
+                        editInvoiceView.Show();
+                    });
+                    _addInvoiceCommand.CanUndo = (obj) => false;
+                }
+                return _addInvoiceCommand;
+            }
+        }
+        public RelayCommand OpenInvoiceCommand
+        {
+            get
+            {
+                if (_openInvoiceCommand == null)
+                {
+                    _openInvoiceCommand = new RelayCommand((x) =>
+                    {
+                        InvoiceFullView invoiceFullView = new InvoiceFullView(SelectedInvoice.IN_ID);
+                        InvoiceFullViewModel invoiceFullViewModel = new InvoiceFullViewModel(0);
+                        invoiceFullView.Show();
+                    });
+                    _openInvoiceCommand.CanUndo = (obj) => false;
+                }
+                return _openInvoiceCommand;
+            }
+        }
+        public RelayCommand DeleteInvoiceCommand
+        {
+            get
+            {
+                if (_deleteInvoiceCommand == null)
+                {
+                    _deleteInvoiceCommand = new RelayCommand((x) =>
+                    {
+                        if (SelectedInvoice != null)
+                        {
+                            InvoicesManager invoicesManager = new InvoicesManager();
+                            var invoice = invoicesManager.Get(SelectedInvoice.IN_ID);
+                            if (invoice != null)
+                            {
+                                invoicesManager.Delete(invoice);
+                            }
+                            InvoicesListToShow = invoicesManager.GetAll();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie wybrałeś żadnej faktury do usunięcia", "Brak faktury", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    });
+                    _deleteInvoiceCommand.CanUndo = (obj) => false;
+                }
+                return _deleteInvoiceCommand;
+            }
+        }
         public RelayCommand EditCustomerCommand
         {
             get
             {
-                if(_editCustomerCommand == null)
+                if (_editCustomerCommand == null)
                 {
                     _editCustomerCommand = new RelayCommand((x) =>
                     {
-                        if(SelectedCustomer != null)
+                        if (SelectedCustomer != null)
                         {
                             Window newCustomerView = new NewCustomerView(this, SelectedCustomer.CU_ID);
                             newCustomerView.Show();
@@ -87,7 +191,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if(_choosePanelCommand == null)
+                if (_choosePanelCommand == null)
                 {
                     _choosePanelCommand = new RelayCommand((x) =>
                     {
@@ -109,7 +213,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if(_addNewCustomerCommand == null)
+                if (_addNewCustomerCommand == null)
                 {
                     _addNewCustomerCommand = new RelayCommand((x) =>
                     {
@@ -130,11 +234,11 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if(_userDeleteCommand == null)
+                if (_userDeleteCommand == null)
                 {
                     _userDeleteCommand = new RelayCommand((x) =>
                     {
-                        if(SelectedCustomer != null)
+                        if (SelectedCustomer != null)
                         {
                             _customersManager.Delete(SelectedCustomer);
                             LoadCustomersList();
@@ -153,7 +257,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if(_openCustomerFullViewCommand == null)
+                if (_openCustomerFullViewCommand == null)
                 {
                     _openCustomerFullViewCommand = new RelayCommand(OpenCustomerFullView);
                     _openCustomerFullViewCommand.CanUndo = (obj) => false;
@@ -175,7 +279,7 @@ namespace WarehouseElectric.ViewModels
             {
                 _selectedCustomer = value;
                 OnPropertyChanged("SelectedCustomer");
-                if(value != null)
+                if (value != null)
                     IsEnabledButtonOpenCustomerFullView = true;
                 else
                     IsEnabledButtonOpenCustomerFullView = false;
@@ -185,7 +289,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if(_logOutCommand == null)
+                if (_logOutCommand == null)
                 {
                     _logOutCommand = new RelayCommand(LogOut);
                     _logOutCommand.CanUndo = (obj) => false;
@@ -201,7 +305,7 @@ namespace WarehouseElectric.ViewModels
         {
             get
             {
-                if(_customerSearchCommand == null)
+                if (_customerSearchCommand == null)
                 {
                     _customerSearchCommand = new RelayCommand(CustomerSearch);
                     _customerSearchCommand.CanUndo = (obj) => false;

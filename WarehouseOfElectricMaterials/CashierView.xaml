@@ -11,15 +11,23 @@
         <TabControl Height="394" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControlCashierView" VerticalAlignment="Top" Width="629">
             <TabItem h:HelpProvider.HelpString="Zakładka faktury umożliwia zarządzanie fakturami" Header="Faktury" Name="tabItemInvoices" Background="#FF4BE255">
                 <Grid Background="#FFDEDEDE" Height="360" Width="622">
-                    <Button h:HelpProvider.HelpString="Przycisk tworzy nową fakturę" Content="NOWA FAKTURA" Height="113" Margin="6,12,0,0" Name="buttonNewInvoice" VerticalAlignment="Top" Background="#FF4599CE" HorizontalAlignment="Left" Width="196" />
-                    <DataGrid h:HelpProvider.HelpString="Tablea wyświetla wystawione faktury" AutoGenerateColumns="True" Height="281" HorizontalAlignment="Left" Margin="208,45,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="408" />
+                    <Button h:HelpProvider.HelpString="Przycisk tworzy nową fakturę" Command="{Binding AddInvoiceCommand}"  Content="NOWA FAKTURA" Height="113" Margin="6,12,0,0" Name="buttonNewInvoice" VerticalAlignment="Top" Background="#FF4599CE" HorizontalAlignment="Left" Width="196" />
                     <TextBox h:HelpProvider.HelpString="Pole służące do wszyukiwania faktur" Height="27" HorizontalAlignment="Left" Margin="208,12,0,0" Name="textBoxSearchInvoice" VerticalAlignment="Top" Width="282" />
+                    <DataGrid  h:HelpProvider.HelpString="Wyświetla wszystkie faktury wystawione dla danej firmy" SelectedItem="{Binding Path=SelectedInvoice}" ItemsSource ="{Binding Path=InvoicesListToShow}" AutoGenerateColumns="False" Height="271" HorizontalAlignment="Left" Margin="218,55,0,0" Name="dataGridInvoices" VerticalAlignment="Top" Width="389" IsReadOnly="True" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Path=IN_ADDED}" Header="Data (do zmiany - ma być data wystawienia" />
+                            <DataGridTextColumn Binding="{Binding Path=IN_TOTAL}" Header="Suma całkowita" />
+                            <DataGridTextColumn Binding="{Binding Path=SP_Spedition.SP_NAME}" Header="Typ wysyłki" />
+                            <DataGridTextColumn Binding="{Binding Path=IN_SPEDITION_COST}" Header="Koszt wysyłki" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <Button Content="O" Height="27" HorizontalAlignment="Right" Margin="0,12,99,0" VerticalAlignment="Top" Width="27" Name="buttonFindInvoice" />
-                    <Button h:HelpProvider.HelpString="Przycisk otwórz wyświetla szczegóły wybranej faktury" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="207,332,0,0" Name="buttonOpenInvoice" VerticalAlignment="Top" Width="409" />
+                    <Button Command="{Binding OpenInvoiceCommand}" h:HelpProvider.HelpString="Przycisk otwórz wyświetla szczegóły wybranej faktury" Content="Otwórz" Height="24" HorizontalAlignment="Left" Margin="218,332,0,0" Name="buttonOpenInvoice" VerticalAlignment="Top" Width="178" />
                     <Label Height="28" HorizontalAlignment="Left" Margin="20,156,0,0" Name="label2" VerticalAlignment="Top" Width="174" Content="Dzisiejsze statystyki faktur:" FontSize="13" />
                     <Label Content="ilość:" HorizontalAlignment="Left" Margin="20,182,0,0" Name="label3" Width="49" Height="28" VerticalAlignment="Top" />
                     <Label Content="wartość:" Height="28" HorizontalAlignment="Left" Margin="20,208,0,0" Name="label4" VerticalAlignment="Top" />
                     <Button h:HelpProvider.HelpString="Przycisk Zaawansowane wyświetla zaawansowane opcje wyszukiwania faktur" Content="Zaawansowane" Height="27" HorizontalAlignment="Left" Margin="529,12,0,0" Name="buttonAdvancedInvoiceSearch" VerticalAlignment="Top" Width="87" />
+                    <Button Command="{Binding DeleteInvoiceCommand}" Content="Usuń" Height="24" h:HelpProvider.HelpString="Przycisk usuń - usuwa wybraną fakturę" HorizontalAlignment="Left" Margin="434,332,0,0" Name="butDelete" VerticalAlignment="Top" Width="173" />
                 </Grid>
             </TabItem>
             <TabItem h:HelpProvider.HelpString="Zakładka umożliwia przeglądanie stanu magazynu" Header="Magazyn" Name="tabItemStore" Background="#FFF5893F">

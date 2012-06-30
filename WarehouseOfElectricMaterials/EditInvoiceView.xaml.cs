@@ -10,19 +10,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WarehouseElectric.ViewModels;
 
 namespace WarehouseElectric
 {
     /// <summary>
-    /// Interaction logic for InvoiceFullView.xaml
+    /// Interaction logic for EditInvoiceView.xaml
     /// </summary>
-    public partial class InvoiceFullView : Window
+    public partial class EditInvoiceView : Window
     {
-        public InvoiceFullView(int invoiceId)
+        public EditInvoiceView()
         {
             InitializeComponent();
-            DataContext = new InvoiceFullViewModel(invoiceId);
         }
     }
 }

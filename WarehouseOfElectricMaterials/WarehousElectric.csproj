@@ -11,7 +11,8 @@
     <RootNamespace>WarehouseElectric</RootNamespace>
     <AssemblyName>WarehouseOfElectricMaterials</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -77,6 +78,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LinqDataLayer.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="EditInvoiceView.xaml.cs">
+      <DependentUpon>EditInvoiceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\ProductCategory.cs" />
     <Compile Include="Helpers\DataBaseHelper.cs" />
@@ -144,6 +148,7 @@
     <Compile Include="ViewModels\CustomerFullViewModel.cs" />
     <Compile Include="ViewModels\InvoiceFullViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ProductOnInvoiceViewModel.cs" />
     <Compile Include="ViewModels\StorekeeperViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Page Include="AddNewSupplierView.xaml">
@@ -163,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomerFullView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditInvoiceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

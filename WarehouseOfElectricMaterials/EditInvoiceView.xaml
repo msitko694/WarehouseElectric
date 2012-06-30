@@ -1,17 +1,17 @@
-﻿<Window x:Class="WarehouseElectric.InvoiceFullView"
+﻿<Window x:Class="WarehouseElectric.EditInvoiceView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="InvoiceFullView"
+        Title="EditInvoiceView"
+        Height="447"
+        Width="700"
         xmlns:h="clr-namespace:WarehouseElectric.Helpers"
         xmlns:view="clr-namespace:WarehouseElectric"
-        Height="620"
-        Width="680"
         h:HelpProvider.HelpString="Okno wyświetlające szczegółowe dane o wybranej fakturze" ResizeMode="CanMinimize">
-    <Grid>
+    <Grid Height="596">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="110" />
             <ColumnDefinition Width="220" />
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="250" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -20,13 +20,15 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="231*" />
         </Grid.RowDefinitions>
-        <view:InvoiceDetailsControl  x:Name="IvoiceDetails" Grid.ColumnSpan="4" Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
-        <DataGrid Grid.ColumnSpan="4" Grid.Row="1" Margin="0,25,0,0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" HorizontalAlignment="Center" IsReadOnly="True" ItemsSource="{Binding Path=InvoiceItemsToShow}" Grid.Column="0" Name="dataGridInvoiceItems" SelectionMode="Single" VerticalAlignment="Stretch" Width="592" Height="200">
+        <DataGrid Grid.ColumnSpan="4" Grid.Row="1" Margin="0,25,0,0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" HorizontalAlignment="Center" IsReadOnly="False" ItemsSource="{Binding Path=ProductsCollection}" Grid.Column="0" Name="dataGridInvoiceItems" SelectionMode="Single" VerticalAlignment="Stretch" Width="592" Height="200">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=PR_Product.PR_NAME}" Header="Nazwa" Width="Auto" />
-                <DataGridTextColumn Binding="{Binding Path=IE_QUANTITY}" Header="Ilość" Width="Auto" />
-                <DataGridTextColumn Binding="{Binding Path=IE_UNIT_PRICE}" Header="Cena jednostkowa" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding Path=Product.PR_NAME}" IsReadOnly="True" Header="Nazwa" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding Path=Product.PR_DEPOT_QUANTITY}" IsReadOnly="True" Header="Ilość" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding Path=Product.PR_UNIT_PRICE}" IsReadOnly="True" Header="Cena jednostkowa" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding Path=AmmountOnInvoice, Mode=TwoWay}" IsReadOnly="False" Header="Ilość na fakturze" Width="Auto" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Razem NETTO:" Height="28" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2"  Name="labelTotalNetto" VerticalAlignment="Center"  />
@@ -36,8 +38,9 @@
         <TextBlock h:HelpProvider.HelpString="Kwota naliczonego podatku" Text="{Binding Path=TotalVat}" Height="23" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="3" Name="textBlockTotalVAT"  VerticalAlignment="Center" Width="90"/>
         <TextBlock h:HelpProvider.HelpString="Sumaryczna kwota brutto do zapłaty" Text="{Binding Path=TotalBrutto}" Height="23" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="3" Name="textBlockTotalBrutto" Width="90" FontStyle="Normal" VerticalAlignment="Center" FontWeight="ExtraBold"/>
         <Label Content="Typ dostawy:" Height="28" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="2" Name="labelSpedition" VerticalAlignment="Center" />
-        <TextBlock Text="{Binding Path=SpeditionType}" Height="23" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Name="TextBlockSpedition" VerticalAlignment="Center" Width="200" Grid.ColumnSpan="2" />
-        <Label Content="Fakturę wystawił:" Height="28" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="3" Name="labelIssuedBy" VerticalAlignment="Center" />
-        <TextBlock Text="{Binding Path=IssuedByWorker}" Height="23" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Name="TextBlockIssuedByWorkerId" VerticalAlignment="Center"  Width="200" />
+        <ComboBox SelectedItem="{Binding SelectedSpedition}" SelectedIndex="0" ItemsSource="{Binding SpeditionTypes}" DisplayMemberPath="SP_NAME" Height="23" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" IsEditable="False" Name="cmbSpeditionType" VerticalAlignment="Center" Width="200" Grid.ColumnSpan="2" />
+        <Button Name="btnSaveInvoice" Command="{Binding SaveInvoiceCommand}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Content="Zapisz" />
+        <Label Content="Klient:" Grid.Row="3" Grid.Column="0" Height="28" HorizontalAlignment="Right" Name="labClient" VerticalAlignment="Center" />
+        <ComboBox SelectedIndex="0" IsEditable="False" Grid.Row="3" Height="23" h:HelpProvider.HelpString="Wybrany klient" HorizontalAlignment="Left" Name="cmbCustomer" SelectedItem="{Binding SelectedCustomer}" ItemsSource="{Binding Customers}" DisplayMemberPath="CU_NAME" VerticalAlignment="Center" Width="90" Grid.Column="1" />
     </Grid>
 </Window>

@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="680" xmlns:my="clr-namespace:WarehouseElectric.Helpers">
-    <Grid Height="502" Width="682">
+             d:DesignHeight="232" d:DesignWidth="680" xmlns:my="clr-namespace:WarehouseElectric.Helpers">
+    <Grid Height="230" Width="682">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="220"/>
@@ -19,7 +19,6 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label FontWeight="Bold" VerticalAlignment="Center" Content="Dane firmy:" Height="28" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" Name="labelCustomerInfo"  Width="74" />
         <Label Content="Nazwa:" Height="28" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Name="labelCustomerName" VerticalAlignment="Top" />
@@ -27,23 +26,16 @@
         <Label Content="Miejscowość:" Height="28" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" Name="labelCustomerTown" VerticalAlignment="Top" />
         <Label Content="Kod p-towy:" Height="28" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" />
         <Label Content="Telefon:" Height="28" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="0" Name="labelCustomerPhone" VerticalAlignment="Top" />
-        <TextBlock Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Nazwa klienta dla którego została wystawiona faktura" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Name="textBlockCustomerName" Text="{Binding Path=CustomerNameToShow}" VerticalAlignment="Top" Width="125" />
-        <TextBlock Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Adres klienta - ulica" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="textBlockCustomerStreet" Text="{Binding Path=CustomerStreetToShow}" VerticalAlignment="Top" Width="125" />
-        <TextBlock Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Adres klienta - miejscowość" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1"  Name="textBlockCustomerTown" Text="{Binding Path=CustomerTownToShow}" VerticalAlignment="Top" Width="125" />
-        <TextBlock Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Adres klienta - kod pocztowy" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1"  Name="textBlockCustomerZipCode" Text="{Binding Path=CustomerPostCodeToShow}" VerticalAlignment="Top" Width="125" />
-        <TextBlock Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Numer telefonu klienta" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1"  Name="textBlockCustomerPhone" Text="{Binding Path=CustomerPhoneToShow}" VerticalAlignment="Top" Width="125" />
+        <TextBox IsReadOnly="{Binding IsReadOnly}" Height="23" Margin="0,5,0,0"  my:HelpProvider.HelpString="Nazwa klienta dla którego została wystawiona faktura" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Name="textBlockCustomerName" Text="{Binding Path=CustomerNameToShow}" VerticalAlignment="Top" Width="125" />
+        <TextBox IsReadOnly="{Binding IsReadOnly}" Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Adres klienta - ulica" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="textBlockCustomerStreet" Text="{Binding Path=CustomerStreetToShow}" VerticalAlignment="Top" Width="125" />
+        <TextBox IsReadOnly="{Binding IsReadOnly}" Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Adres klienta - miejscowość" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1"  Name="textBlockCustomerTown" Text="{Binding Path=CustomerTownToShow}" VerticalAlignment="Top" Width="125" />
+        <TextBox IsReadOnly="{Binding IsReadOnly}" Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Adres klienta - kod pocztowy" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1"  Name="textBlockCustomerZipCode" Text="{Binding Path=CustomerPostCodeToShow}" VerticalAlignment="Top" Width="125" />
+        <TextBox IsReadOnly="{Binding IsReadOnly}" Height="23" Margin="0,5,0,0" my:HelpProvider.HelpString="Numer telefonu klienta" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1"  Name="textBlockCustomerPhone" Text="{Binding Path=CustomerPhoneToShow}" VerticalAlignment="Top" Width="125" />
         <Label FontWeight="Bold" Content="FVAT nr:" FontSize="15" Height="28" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2"  Name="labelInvoiceHeader" VerticalAlignment="Top" />
         <Label Content="Data wystawienia:" Height="28" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2" Name="labelIssueDate" VerticalAlignment="Top" />
         <Label Content="Data sprzedaży:" Height="28" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2" Name="labelSaleDate" VerticalAlignment="Top" />
         <TextBlock Margin="0,5,0,0" Height="23" my:HelpProvider.HelpString="Data wystawienia faktury" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="3" Name="textBlockIssueDate" Text="{Binding Path=IssueDate}" VerticalAlignment="Top" Width="90" />
         <TextBlock Margin="0,5,0,0" Height="23" my:HelpProvider.HelpString="Data sprzedaży towaru" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="3" Name="textBlockSaleDate" Text="{Binding Path=SaleDate}" VerticalAlignment="Top" Width="90" />
-        <DataGrid Grid.ColumnSpan="4" Margin="0,25,0,0" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" Height="178" HorizontalAlignment="Center" IsReadOnly="True" ItemsSource="{Binding Path=InvoiceItemsToShow}" Grid.Row="6" Grid.Column="0" Name="dataGridInvoiceItems" SelectionMode="Single" VerticalAlignment="Top" Width="592">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=PR_Product.PR_NAME}" Header="Nazwa" Width="Auto" />
-                <DataGridTextColumn Binding="{Binding Path=IE_QUANTITY}" Header="Ilość" Width="Auto" />
-                <DataGridTextColumn Binding="{Binding Path=IE_UNIT_PRICE}" Header="Cena jednostkowa" Width="Auto" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBlock Margin="0,5,0,0" Height="23" my:HelpProvider.HelpString="Numer faktury" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="3" Name="labelFvatNo" VerticalAlignment="Center" Width="90" />
+        <TextBlock Margin="0,5,0,0" Height="23" Text="{Binding InvoiceNumber}" my:HelpProvider.HelpString="Numer faktury" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="3" Name="labelFvatNo" VerticalAlignment="Center" Width="90" />
     </Grid>
 </UserControl>
