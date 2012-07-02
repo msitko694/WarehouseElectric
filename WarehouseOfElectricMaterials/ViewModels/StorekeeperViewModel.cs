@@ -6,6 +6,7 @@ using System.Windows;
 using WarehouseElectric.Models;
 using WarehouseElectric.DataLayer;
 using System.Windows.Controls;
+using System.Data.SqlClient;
 
 
 namespace WarehouseElectric.ViewModels
@@ -50,6 +51,9 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _ClearLackChoiceCommand;
 
         private RelayCommand _goAddNewProductCommand;
+        private RelayCommand _goEditProductCommand;
+        private RelayCommand _goDeleteProductCommand;
+        private PR_Product _productSelectedToDelete;
         #endregion //Fields
         #region "Properties"
         
@@ -310,6 +314,50 @@ namespace WarehouseElectric.ViewModels
                 _goAddNewProductCommand = value;
             }
         }
+        public RelayCommand GoEditProductCommand
+        {
+            get
+            {
+                if (_goEditProductCommand == null)
+                {
+                    _goEditProductCommand = new RelayCommand(GoEditProduct);
+                    _goEditProductCommand.CanUndo = (obj) => false;
+                }
+                return _goEditProductCommand;
+            }
+            set
+            {
+                _goEditProductCommand = value;
+            }
+        }
+        public RelayCommand GoDeleteProductCommand
+        {
+            get
+            {
+                if (_goDeleteProductCommand == null)
+                {
+                    _goDeleteProductCommand = new RelayCommand(GoDeleteProduct);
+                    _goDeleteProductCommand.CanUndo = (obj) => false;
+                }
+                return _goDeleteProductCommand;
+            }
+            set
+            {
+                _goDeleteProductCommand = value;
+            }
+        }
+        public PR_Product ProductSelectedToDelete
+        {
+            get
+            {
+                return _productSelectedToDelete;
+            }
+            set
+            {
+                _productSelectedToDelete = value;
+                OnPropertyChanged("ProductSelectedToDelete");
+            }
+        }
         #endregion //Properties
         #region "Methods"
         
@@ -409,6 +457,35 @@ namespace WarehouseElectric.ViewModels
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
         }
+        public void GoEditProduct(Object obj)
+        {
+            AddNewProductView window = new AddNewProductView();
+            Application.Current.MainWindow = window;
+            Application.Current.MainWindow.Show();
+        }
+        public void GoDeleteProduct(Object obj)
+        {
+            if (ProductSelectedToDelete != null)
+            {
+                ProductsManager productsManager = new ProductsManager();
+                PR_Product product = productsManager.GetByProductName(ProductSelectedToDelete.PR_NAME);
+                try
+                {
+                    productsManager.Delete(product);
+                    MessageBox.Show("Produkt został usunięty.");
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("Nie można usunąć produktu, ponieważ jest używany w bazie danych.");
+                }
+            }
+                else
+                    MessageBox.Show("Nie można usunąć produktu, ponieważ nie zaznaczyłeś żadnego.");
+                   
+            
+
+        }
+
         #endregion //Methods
     }
 }
