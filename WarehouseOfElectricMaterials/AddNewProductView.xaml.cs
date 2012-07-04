@@ -18,13 +18,17 @@ namespace WarehouseElectric.ViewModels
     /// </summary>
     public partial class AddNewProductView : Window
     {
-        public AddNewProductView()
+        public AddNewProductView(String flag)
         {
             InitializeComponent();
             CategoryViewModel categoryViewModel = new CategoryViewModel(true);
             treeViewChooseProductCategory.DataContext = categoryViewModel;
-            AddNewProductViewModel addNewProductViewModel = new AddNewProductViewModel(this,categoryViewModel);
-            DataContext = addNewProductViewModel;
+            AddNewProductViewModel addNewProductViewModel;
+            if(flag!=null)
+                addNewProductViewModel = new AddNewProductViewModel(this, categoryViewModel, flag);
+            else
+            addNewProductViewModel = new AddNewProductViewModel(this,categoryViewModel);
+             DataContext = addNewProductViewModel;
         }
     }
 }

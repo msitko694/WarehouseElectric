@@ -22,6 +22,7 @@ namespace WarehouseElectric.ViewModels
             AddProductFailedUnitPriceVisibilityLabel = Visibility.Hidden;
             AddProductFailedDepotQuantityVisibilityLabel = Visibility.Hidden;
             AddProductFailedQuantityTypeVisibilityLabel = Visibility.Hidden;
+            AddProductFailedVATVisibilityLabel = Visibility.Hidden;
 
             //wypełnienie listy kategori
             ProductCategoriesManager productCategoriesManager = new ProductCategoriesManager();
@@ -33,6 +34,40 @@ namespace WarehouseElectric.ViewModels
             
             
            }
+        public AddNewProductViewModel(AddNewProductView addNewProductView, CategoryViewModel categoryViewModel, String flag)
+        {
+            _addNewProductView = addNewProductView;
+            CategoryViewModel = categoryViewModel;
+            //ukrycie etykiet informujących o niepoprawnym uzupełnieniu formularza
+            AddProductFailedNameVisibilityLabel = Visibility.Hidden;
+            AddProductFailedCategoryVisibilityLabel = Visibility.Hidden;
+            AddProductFailedUnitPriceVisibilityLabel = Visibility.Hidden;
+            AddProductFailedDepotQuantityVisibilityLabel = Visibility.Hidden;
+            AddProductFailedQuantityTypeVisibilityLabel = Visibility.Hidden;
+            AddProductFailedVATVisibilityLabel = Visibility.Hidden;
+
+            //wypełnienie listy kategori
+            ProductCategoriesManager productCategoriesManager = new ProductCategoriesManager();
+            ProductCategoryToAddComboBox = productCategoriesManager.GetAllName();
+
+            //wypełnienie listy jednostek
+            QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
+            ProductQuantityTypeToAddComboBox = quantityTypesManager.GetAllName();
+              
+            ProductsManager productsManager = new ProductsManager();
+            PR_Product product = productsManager.GetByProductName(flag);
+              
+            Int32 tmp;
+            ProductNameToAddTextBox = product.PR_NAME;
+            SelectedProductQuantityTypeComboBox = "metr";//product.QT_QuantityType.ToString();
+       
+            ProductDepotQuantityToAddTextBox=product.PR_DEPOT_QUANTITY.ToString();
+        
+            ProductUnitPriceToAddTextBox=product.PR_UNIT_PRICE.ToString();
+            tmp = 34;
+            ProductVATToAddTextBox = tmp.ToString();
+            
+        }
         #endregion //Constructors
         #region "Fields"
         private AddNewProductView _addNewProductView;
@@ -40,11 +75,13 @@ namespace WarehouseElectric.ViewModels
         private String _ProductNameToAddTextBox;
         private String _ProductDepotQuantityToAddTextBox;
         private String _ProductUnitPriceToAddTextBox;
+        private String _ProductVATToAddTextBox;
         private Visibility _AddProductFailedQuantityTypeVisibilityLabel;
         private Visibility _AddProductFailedCategoryVisibilityLabel;
         private Visibility _AddProductFailedDepotQuantityVisibilityLabel;
         private Visibility _AddProductFailedUnitPriceVisibilityLabel;
         private Visibility _addProductFailedNameVisibilityLabel;
+        private Visibility _addProductFailedVATVisibilityLabel;
         private IList<PR_Product> _listProductsToShow;
         private List<String> _ProductQuantityTypeToAddComboBox;
         private List<String> _ProductCategoryToAddComboBox;
@@ -99,6 +136,18 @@ namespace WarehouseElectric.ViewModels
             {
                 _ProductUnitPriceToAddTextBox = value;
                 OnPropertyChanged("ProductUnitPriceToAddTextBox");
+            }
+        }
+        public String ProductVATToAddTextBox
+        {
+            get
+            {
+                return _ProductVATToAddTextBox;
+            }
+            set
+            {
+                _ProductVATToAddTextBox = value;
+                OnPropertyChanged("ProductVATToAddTextBox");
             }
         }
         public Visibility AddProductFailedNameVisibilityLabel
@@ -161,6 +210,19 @@ namespace WarehouseElectric.ViewModels
                 OnPropertyChanged("AddProductFailedUnitPriceVisibilityLabel");
             }
         }
+        public Visibility AddProductFailedVATVisibilityLabel
+        {
+            get
+            {
+                return _addProductFailedVATVisibilityLabel;
+            }
+            set
+            {
+                _addProductFailedVATVisibilityLabel = value;
+                OnPropertyChanged("AddProductFailedVATVisibilityLabel");
+            }
+        }
+
        public IList<PR_Product> ListProductsToShow
         {
             get
@@ -215,7 +277,7 @@ namespace WarehouseElectric.ViewModels
         #region "Methods"
         public void AddProduct ( Object obj)
         {
-            Int32 result,result2;
+            Int32 result,result2,result3;
             int selectedCategoryId=2;
           //sprawdzenie poprawności wpisania nazwy produktu
             if (ProductNameToAddTextBox == null || ProductNameToAddTextBox == "" || ProductNameToAddTextBox == " ")
@@ -233,7 +295,7 @@ namespace WarehouseElectric.ViewModels
             else
                 AddProductFailedUnitPriceVisibilityLabel=Visibility.Hidden;
 
-            if (_SelectedProductQuantityTypeComboBox != null)
+            if (SelectedProductQuantityTypeComboBox != null)
                 AddProductFailedQuantityTypeVisibilityLabel = Visibility.Hidden;
             else
                 AddProductFailedQuantityTypeVisibilityLabel = Visibility.Visible;
@@ -245,9 +307,14 @@ namespace WarehouseElectric.ViewModels
             }
             else
                 AddProductFailedCategoryVisibilityLabel = Visibility.Visible;
+            if (!Int32.TryParse(ProductVATToAddTextBox, out result3))
+                AddProductFailedVATVisibilityLabel = Visibility.Visible;
+            else
+                AddProductFailedVATVisibilityLabel = Visibility.Hidden;
+
            if (AddProductFailedNameVisibilityLabel == Visibility.Hidden && AddProductFailedDepotQuantityVisibilityLabel ==Visibility.Hidden 
                && AddProductFailedUnitPriceVisibilityLabel == Visibility.Hidden && AddProductFailedQuantityTypeVisibilityLabel ==Visibility.Hidden
-               && AddProductFailedCategoryVisibilityLabel==Visibility.Hidden)
+               && AddProductFailedCategoryVisibilityLabel==Visibility.Hidden && AddProductFailedVATVisibilityLabel==Visibility.Hidden)
             {
                 QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
                 QT_QuantityType QuantityType = quantityTypesManager.GetByName(SelectedProductQuantityTypeComboBox);
@@ -262,7 +329,7 @@ namespace WarehouseElectric.ViewModels
                 newProduct.PR_PC_ID = selectedCategoryId;
                 newProduct.PR_ADDED = DateTime.Now;
                 newProduct.PR_LAST_MODIFIED = DateTime.Now;
-
+               //newProduct.PR_VAT=result3;
                 ProductsManager.Add(newProduct);
 
                 MessageBox.Show("Produkt został dodany.");

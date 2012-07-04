@@ -453,15 +453,26 @@ namespace WarehouseElectric.ViewModels
 
         public void GoAddNewProduct(Object obj)
         {
-            AddNewProductView window = new AddNewProductView();
+            AddNewProductView window = new AddNewProductView(null);
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
         }
         public void GoEditProduct(Object obj)
         {
-            AddNewProductView window = new AddNewProductView();
+             if (ProductSelectedToDelete != null)
+            {
+                ProductsManager productsManager = new ProductsManager();
+                PR_Product product = productsManager.GetByProductName(ProductSelectedToDelete.PR_NAME);
+                String tmp = product.PR_NAME;
+             
+            AddNewProductView window = new AddNewProductView(tmp);
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
+            }
+             else
+                 MessageBox.Show("Nie można dodać ilości do produktu, ponieważ nie zaznaczyłeś żadnego.");
+                   
+ 
         }
         public void GoDeleteProduct(Object obj)
         {
@@ -482,7 +493,7 @@ namespace WarehouseElectric.ViewModels
                 else
                     MessageBox.Show("Nie można usunąć produktu, ponieważ nie zaznaczyłeś żadnego.");
                    
-            
+ 
 
         }
 

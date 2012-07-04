@@ -6,13 +6,13 @@
         <Label Content="Nazwa" Height="28" HorizontalAlignment="Left" Margin="10,11,0,0" Name="label7" VerticalAlignment="Top" />
         <TextBox Height="23" my:HelpProvider.HelpString="Wprowadź nazwę dostawcy" HorizontalAlignment="Right" Margin="0,13,291,0" Name="TextBox" Text="{Binding Path=ProductNameToAddTextBox}" VerticalAlignment="Top" Width="203" />
         <Label Content="Wprowadź nazwę produktu" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="348,10,0,0" Name="labSetWorkerName" VerticalAlignment="Top" Visibility="{Binding Path=AddProductFailedNameVisibilityLabel}" />
-        <Label Content="Ilość minimalna na magazynie" Height="35" HorizontalAlignment="Left" Margin="10,192,0,0" Name="label1" VerticalAlignment="Top" Width="89" />
+        <Label Content="Ilość" Height="35" HorizontalAlignment="Left" Margin="10,192,0,0" Name="label1" VerticalAlignment="Top" Width="89" />
         <TextBox Height="23" my:HelpProvider.HelpString="Wprowadź nazwę dostawcy" HorizontalAlignment="Left" Margin="105,192,0,0" Name="textBox1" Text="{Binding Path=ProductDepotQuantityToAddTextBox}" VerticalAlignment="Top" Width="203" />
-        <Label Content="Wprowadź ilość minimalną na magazynie" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="348,189,0,0" Name="label2" VerticalAlignment="Top" Visibility="{Binding Path=AddProductFailedDepotQuantityVisibilityLabel}" />
+        <Label Content="Wprowadź ilość" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="348,189,0,0" Name="label2" VerticalAlignment="Top" Visibility="{Binding Path=AddProductFailedDepotQuantityVisibilityLabel}" />
         <Label Content="Cena jednostkowa" Height="28" HorizontalAlignment="Left" Margin="10,229,0,0" Name="label3" VerticalAlignment="Top" />
         <TextBox Height="23" my:HelpProvider.HelpString="Wprowadź nazwę dostawcy" HorizontalAlignment="Left" Margin="105,231,0,0" Name="textBox2" Text="{Binding Path=ProductUnitPriceToAddTextBox}" VerticalAlignment="Top" Width="203" />
         <Label Content="Wprowadź cenę jednostkową" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="348,228,0,0" Name="label4" VerticalAlignment="Top" Visibility="{Binding Path=AddProductFailedUnitPriceVisibilityLabel}" />
-        <Button Command="{Binding Path=AddProductCommand}" Content="Dodaj" Height="83" HorizontalAlignment="Left" Margin="460,265,0,0" Name="buttonAdd" VerticalAlignment="Top" Width="117" />
+        <Button Command="{Binding Path=AddProductCommand}" Content="Dodaj" Height="83" HorizontalAlignment="Left" Margin="470,265,0,0" Name="buttonAdd" VerticalAlignment="Top" Width="117" />
         <Label Content="Jednostka" Height="23" HorizontalAlignment="Left" Margin="10,53,0,0" Name="label6" VerticalAlignment="Top" />
         <ComboBox  SelectedItem="{Binding Path=SelectedProductQuantityTypeComboBox}" ItemsSource="{Binding Path=ProductQuantityTypeToAddComboBox}" Height="23" my:HelpProvider.HelpString="Wybór stanowiska na jakim pracuje pracownik" HorizontalAlignment="Left" Margin="105,53,0,0" Name="comboBoxPosition"  VerticalAlignment="Top" Width="203" />
         <Label Content="Wybierz jednostkę produktu" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="347,53,0,0" Name="labChooseWorkerPosition" VerticalAlignment="Top" Visibility="{Binding Path=AddProductFailedQuantityTypeVisibilityLabel}" />
@@ -37,5 +37,8 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
+        <Label Content="Stawka VAT" Height="28" HorizontalAlignment="Left" Margin="10,263,0,0" Name="label9" VerticalAlignment="Top" />
+        <TextBox Height="23" my:HelpProvider.HelpString="Wprowadź stawkę VAT" HorizontalAlignment="Left" Margin="105,265,0,0" Name="textBox3" Text="{Binding Path=ProductVATToAddTextBox}" VerticalAlignment="Top" Width="203" />
+        <Label Content="Wprowadź stawkę VAT" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="348,262,0,0" Name="label10" VerticalAlignment="Top" Visibility="{Binding Path=AddProductFailedVATVisibilityLabel}" />
     </Grid>
 </Window>
