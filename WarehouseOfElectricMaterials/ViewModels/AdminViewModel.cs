@@ -189,7 +189,7 @@ namespace WarehouseElectric.ViewModels
         private Visibility _addNewSpeditionTypeFailedVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu nazwy nowego typu wysyłki(zakładka typy wysyłki)
         private Visibility _addNewQuantityTypeFailedVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu nazwy nowej jednostki produktu(zakładka jednostki produktów)
         private Visibility _addNewPositionFailedVisibilityLabel; //wyświetlenia informacji o błędnym wprowadzeniu nazwy nowego stanowiska(zakładka stanowsika pracowników)
-
+        private LinqDataLayerDataContext _dataContext;
 
 
         #endregion //Fields
@@ -1394,6 +1394,11 @@ namespace WarehouseElectric.ViewModels
             {
                 _newUserIsWorkerCheckBox = value;
                 OnPropertyChanged("NewUserIsWorkerCheckBox");
+                if (value == true)
+                {
+                    WorkersManager workerManager = new WorkersManager();
+                    ListWorkersAll = workerManager.GetAll();
+                }
             }
         }
 
@@ -1722,6 +1727,21 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public LinqDataLayerDataContext DataContext
+        {
+            get
+            {
+                if (_dataContext == null)
+                {
+                    _dataContext = new LinqDataLayerDataContext();
+                }
+                return _dataContext;
+            }
+            set
+            {
+                _dataContext = value;
+            }
+        }
 
         #endregion //Properties
 
@@ -1802,7 +1822,7 @@ namespace WarehouseElectric.ViewModels
                     MessageBox.Show("Dodano użytkownika");
 
                     //pobranie aktualnej listy uzytkowników do zakładki zarządzania użytkownikami
-                    //ListUserToModificationDataGrid = userManager.GetAll().ToList();
+                    ListUserToModificationDataGrid = userManager.GetAll().ToList();
                 }
                 else
                     MessageBox.Show("Użytkownik o podanej nazwie już istnieje");
@@ -1901,7 +1921,11 @@ namespace WarehouseElectric.ViewModels
                 user.US_LAST_MODIFIED = DateTime.Now;
 
                 userManager.Update();
+                //odświeżenie listy użytkowników
+                ListUserToModificationDataGrid = userManager.GetAll().ToList();
+
                 MessageBox.Show("Użytkownik został zmodyfikowany");
+                
 
             }
         }
@@ -1916,6 +1940,7 @@ namespace WarehouseElectric.ViewModels
                 try
                 {
                     userManager.Delete(user);
+                    ListUserToModificationDataGrid = userManager.GetAll().ToList();
                     MessageBox.Show("Użytkownik został usunięty");
                 }
                 catch (SqlException)
@@ -1950,8 +1975,8 @@ namespace WarehouseElectric.ViewModels
                 AddWorkerFailedWorkerPhoneVisibilityLabel = Visibility.Hidden;
             //sprawdzenie poprawnośći wprowadzenia daty urodzenia przy dodawaniu pracownika
             if (!Int32.TryParse(WorkerYearOfBirthdayToAddTextBox, out result) || WorkerYearOfBirthdayToAddTextBox.Length != 4
-                || !Int32.TryParse(WorkerMonthOfBirthdayToAddTextBox, out result) || WorkerMonthOfBirthdayToAddTextBox.Length != 2
-                || !Int32.TryParse(WorkerDayOfBirthdayToAddTextBox, out result) || WorkerDayOfBirthdayToAddTextBox.Length != 2)
+                || !Int32.TryParse(WorkerMonthOfBirthdayToAddTextBox, out result) || WorkerMonthOfBirthdayToAddTextBox.Length != 2 || Int32.Parse(WorkerMonthOfBirthdayToAddTextBox) < 1 || Int32.Parse(WorkerMonthOfBirthdayToAddTextBox) > 12
+                || !Int32.TryParse(WorkerDayOfBirthdayToAddTextBox, out result) || WorkerDayOfBirthdayToAddTextBox.Length != 2 || Int32.Parse(WorkerDayOfBirthdayToAddTextBox) < 1 || Int32.Parse(WorkerDayOfBirthdayToAddTextBox) > 31)
                
                 AddWorkerFailedWorkerBirthDateVisibilityLabel = Visibility.Visible;
             else
@@ -1965,8 +1990,8 @@ namespace WarehouseElectric.ViewModels
            
             //sprawdzenie poprawnośći wprowadzneia daty zatrudnienia 
             if (!Int32.TryParse(WorkerYearOfEmploymentToAddTextBox, out result) || WorkerYearOfEmploymentToAddTextBox.Length != 4
-                || !Int32.TryParse(WorkerMonthOfEmploymentToAddTextBox, out result) || WorkerMonthOfEmploymentToAddTextBox.Length != 2
-                || !Int32.TryParse(WorkerDayOfEmploymentToAddTextBox, out result) || WorkerDayOfEmploymentToAddTextBox.Length != 2)
+                || !Int32.TryParse(WorkerMonthOfEmploymentToAddTextBox, out result) || WorkerMonthOfEmploymentToAddTextBox.Length != 2 || Int32.Parse(WorkerMonthOfEmploymentToAddTextBox) < 1 || Int32.Parse(WorkerMonthOfEmploymentToAddTextBox) > 12
+                || !Int32.TryParse(WorkerDayOfEmploymentToAddTextBox, out result) || WorkerDayOfEmploymentToAddTextBox.Length != 2 || Int32.Parse(WorkerDayOfEmploymentToAddTextBox) < 1 || Int32.Parse(WorkerDayOfEmploymentToAddTextBox) > 31)
                 AddWorkerFailedWorkerEmploymentDateVisibilityLabel = Visibility.Visible;
             else
                 AddWorkerFailedWorkerEmploymentDateVisibilityLabel = Visibility.Hidden;
@@ -2018,6 +2043,8 @@ namespace WarehouseElectric.ViewModels
 
                 birthDate = null;
                 workerManager.Add(newWorker);
+                //odświeżenie listy pracowników
+                ListAllWorkersToModifyDataGrid = workerManager.GetAll();
                 MessageBox.Show("Pracownik został dodany");
             }
             
@@ -2055,8 +2082,8 @@ namespace WarehouseElectric.ViewModels
                     || NewWorkerDayOfBirthdayTextBox != null && NewWorkerDayOfBirthdayTextBox != "")
                 {
                     if (!Int32.TryParse(NewWorkerYearOfBirthdayTextBox, out result) || NewWorkerYearOfBirthdayTextBox.Length != 4
-                         || !Int32.TryParse(NewWorkerMonthOfBirthdayTextBox, out result) || NewWorkerMonthOfBirthdayTextBox.Length != 2
-                         || !Int32.TryParse(NewWorkerDayOfBirthdayTextBox, out result) || NewWorkerDayOfBirthdayTextBox.Length != 2)
+                         || !Int32.TryParse(NewWorkerMonthOfBirthdayTextBox, out result) || NewWorkerMonthOfBirthdayTextBox.Length != 2 || Int32.Parse(NewWorkerMonthOfBirthdayTextBox) < 1 || Int32.Parse(NewWorkerMonthOfBirthdayTextBox) > 12
+                         || !Int32.TryParse(NewWorkerDayOfBirthdayTextBox, out result) || NewWorkerDayOfBirthdayTextBox.Length != 2 || Int32.Parse(NewWorkerDayOfBirthdayTextBox) < 1 || Int32.Parse(NewWorkerDayOfBirthdayTextBox) > 31)
 
                         ModifyWorkerFailedBirthDateVisibilityLabel = Visibility.Visible;
                     else
@@ -2091,8 +2118,8 @@ namespace WarehouseElectric.ViewModels
                 {
 
                     if (!Int32.TryParse(NewWorkerYearOfEmploymentTextBox, out result) || NewWorkerYearOfEmploymentTextBox.Length != 4
-                        || !Int32.TryParse(NewWorkerMonthOfEmploymentTextBox, out result) || NewWorkerMonthOfEmploymentTextBox.Length != 2
-                        || !Int32.TryParse(NewWorkerDayOfEmploymentTextBox, out result) || NewWorkerDayOfEmploymentTextBox.Length != 2)
+                        || !Int32.TryParse(NewWorkerMonthOfEmploymentTextBox, out result) || NewWorkerMonthOfEmploymentTextBox.Length != 2 || Int32.Parse(NewWorkerMonthOfEmploymentTextBox) < 1 || Int32.Parse(NewWorkerMonthOfEmploymentTextBox) > 12
+                        || !Int32.TryParse(NewWorkerDayOfEmploymentTextBox, out result) || NewWorkerDayOfEmploymentTextBox.Length != 2 || Int32.Parse(NewWorkerDayOfEmploymentTextBox) < 1 || Int32.Parse(NewWorkerDayOfEmploymentTextBox) > 31)
 
                         ModifyWorkerFailedEmploymentDateVisibilityLabel = Visibility.Visible;
                     else
@@ -2125,7 +2152,7 @@ namespace WarehouseElectric.ViewModels
                 if (ModifyWorkerFailedSelectedWorkerVisibilityLabel == Visibility.Hidden && ModifyWorkerFailedBirthDateVisibilityLabel == Visibility.Hidden
                     && ModifyWorkerFailedPeselVisibilityLabel == Visibility.Hidden && ModifyWorkerFailedEmploymentDateVisibilityLabel == Visibility.Hidden)
                 {
-
+                    
                     if (PositionSelectedToModifyWorker != null)
                     {
                         PositionsManager positionManager = new PositionsManager();
@@ -2134,9 +2161,13 @@ namespace WarehouseElectric.ViewModels
                     }
 
                     newWorker.WO_LAST_MODIFIED = DateTime.Now;
-
+                    
                     workerManager.Update();
+                    //odświeżenie listy pracowników
+                    ListAllWorkersToModifyDataGrid = workerManager.GetAll();
+
                     MessageBox.Show("Zmodyfikowano Pracownika");
+                    
                 }
             }
 
@@ -2159,6 +2190,8 @@ namespace WarehouseElectric.ViewModels
                 {
 
                     workersManager.Delete(worker);
+                    //odświeżenie listy pracowników
+                    ListAllWorkersToModifyDataGrid = workersManager.GetAll();
                     MessageBox.Show("Usunięto Pracownika");
                 }
                 catch(SqlException)
@@ -2185,6 +2218,7 @@ namespace WarehouseElectric.ViewModels
                 {
                     newSpedition.SP_NAME = NewSpeditionTypeTextBox;
                     speditionManager.Add(newSpedition);
+                    ListSpeditionsTypeDataGrid = speditionManager.GetAll().ToList();
                     MessageBox.Show("Dodano nowy typ wysyłki");
                     
                 }
@@ -2211,6 +2245,7 @@ namespace WarehouseElectric.ViewModels
                 {
                     speditionType = speditionManager.Get(SpeditionSelectedToDeleteDataGrid.SP_ID);
                     speditionManager.Delete(speditionType);
+                    ListSpeditionsTypeDataGrid = speditionManager.GetAll().ToList();
                     MessageBox.Show("Typ Wysyłki został usunięty");
                 }
                 catch (SqlException)
@@ -2262,6 +2297,8 @@ namespace WarehouseElectric.ViewModels
                 {
                     quantityTypes = quantityTypesManager.Get(QuantityTypesSelectedToDeleteDataGrid.QT_ID);
                     quantityTypesManager.Delete(quantityTypes);
+                    //odświeżenie listy w datagrid
+                    ListQuantityTypeDataGrid = quantityTypesManager.GetAll().ToList();
                     MessageBox.Show("Jednostak produktów została usunięta");
                 }
                 catch(SqlException)
@@ -2293,6 +2330,7 @@ namespace WarehouseElectric.ViewModels
                     newPosition.PO_NAME = NewPositionTextBox;
                     positionsManager.Add(newPosition);
                     ListPositionsToAddWorkerComboBox = positionsManager.GetAllName();
+                    ListAllPositionsDataGrid = positionsManager.GetAll();
                     MessageBox.Show("Dodano nowe stanowisko");
                 }
                 else
@@ -2313,6 +2351,7 @@ namespace WarehouseElectric.ViewModels
                     position = positionManager.Get(PositionSelectedToDeleteInDataGrid.PO_ID);
                     positionManager.Delete(position);
                     ListPositionsToAddWorkerComboBox = positionManager.GetAllName();
+                    ListAllPositionsDataGrid = positionManager.GetAll();
                     MessageBox.Show("Stanowisko zostało usunięte");
                 }
                 catch (SqlException)

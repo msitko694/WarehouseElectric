@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WarehouseElectric.AdminView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AdminView" Height="669" Width="816" ResizeMode="NoResize"
+        Title="Panel Administratora" Height="669" Width="816" ResizeMode="NoResize"
         xmlns:h="clr-namespace:WarehouseElectric.Helpers"
         h:HelpProvider.HelpString="Panel administratora umożliwia zarządzanie użytkownikami, pracownikami, konfigurację całej aplikacji jak np. używane jednostki miary i modyfikację kategorii produktów. Umożliwia również modyfikację danych firmy."
         >
