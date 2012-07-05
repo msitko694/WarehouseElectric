@@ -4,8 +4,8 @@
         Title="InvoiceFullView"
         xmlns:h="clr-namespace:WarehouseElectric.Helpers"
         xmlns:view="clr-namespace:WarehouseElectric"
-        Height="620"
-        Width="680"
+        Height="641"
+        Width="682"
         h:HelpProvider.HelpString="Okno wyświetlające szczegółowe dane o wybranej fakturze" ResizeMode="CanMinimize">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
@@ -39,5 +40,6 @@
         <TextBlock Text="{Binding Path=SpeditionType}" Height="23" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Name="TextBlockSpedition" VerticalAlignment="Center" Width="200" Grid.ColumnSpan="2" />
         <Label Content="Fakturę wystawił:" Height="28" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="3" Name="labelIssuedBy" VerticalAlignment="Center" />
         <TextBlock Text="{Binding Path=IssuedByWorker}" Height="23" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Name="TextBlockIssuedByWorkerId" VerticalAlignment="Center"  Width="200" />
+        <Button Command="{Binding GenerateReportCommand}" Content="Generuj raport" Grid.Column="2" Grid.Row="5" Height="23" HorizontalAlignment="Right"  Name="butReport" VerticalAlignment="Center" Width="131" Grid.ColumnSpan="2"  />
     </Grid>
 </Window>

@@ -7,6 +7,8 @@ using WarehouseElectric.Models;
 using WarehouseElectric.DataLayer;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using WarehouseElectric.Helpers;
+using Microsoft.Win32;
 
 
 namespace WarehouseElectric.ViewModels
@@ -94,6 +96,7 @@ namespace WarehouseElectric.ViewModels
         private ObservableCollection<ProductOnInvoiceViewModel> _productsCollection;
         private bool _isReadOnly;
         private RelayCommand _saveInvoiceCommand;
+        private RelayCommand _generateReportCommand;
 
         #endregion  //Fields
         #region "Properties"
@@ -173,6 +176,34 @@ namespace WarehouseElectric.ViewModels
                     _saveInvoiceCommand.CanUndo = (obj) => false;
                 }
                 return _saveInvoiceCommand;
+            }
+        }
+
+
+        public RelayCommand GenerateReportCommand
+        {
+            get
+            {
+                if (_generateReportCommand == null)
+                {
+                    _generateReportCommand = new RelayCommand(new System.Action<object>((obj) =>{
+                        IExporter exporter = new HtmlExporter();
+                        String filePath;
+                        SaveFileDialog fileDialog = new SaveFileDialog();
+                        fileDialog.DefaultExt = "*.html";
+                        fileDialog.Filter = "Html document (*.html) | *.html";
+                        fileDialog.AddExtension = true;
+                        fileDialog.ShowDialog();
+                        filePath = fileDialog.FileName;
+                        if (!String.IsNullOrWhiteSpace(filePath))
+                        {
+                            filePath += ".html";
+                            exporter.ExportInvoice(Invoice, filePath);
+                        }
+                    }));
+                    _generateReportCommand.CanUndo = (obj) => false;
+                }
+                return _generateReportCommand;
             }
         }
 

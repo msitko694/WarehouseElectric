@@ -64,7 +64,7 @@ namespace WarehouseElectric.Helpers
             XslCompiledTransform xslTransform = new XslCompiledTransform();
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             Stream stream = assembly.GetManifestResourceStream("WarehouseElectric.Helpers.InvoiceTransform.xslt");
-            XmlWriter xmlWriter = XmlWriter.Create("test.html");
+            XmlWriter xmlWriter = XmlWriter.Create(filePath);
 
             XmlReader xmlReader = XmlReader.Create(stream);
             xslTransform.Load(xmlReader);
@@ -76,8 +76,6 @@ namespace WarehouseElectric.Helpers
             {
                 Debug.Write(e);
             }
-                
-            xmlTree.Save(filePath);
         }
 
         #endregion

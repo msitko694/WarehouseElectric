@@ -145,7 +145,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ElectricWarehouseSetup"
         "ProductCode" = "8:{A59184F9-241B-452F-9CBF-B138820FCCFE}"
-        "PackageCode" = "8:{27E6BB8E-190B-4DC4-8BB5-3836E1EAC75C}"
+        "PackageCode" = "8:{392407AD-4E9A-46B6-9D26-1F26C368CD33}"
         "UpgradeCode" = "8:{DED89941-F627-4E07-8541-8FC55047E76D}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
