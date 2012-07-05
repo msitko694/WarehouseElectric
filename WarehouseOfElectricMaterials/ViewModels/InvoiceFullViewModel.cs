@@ -456,23 +456,26 @@ namespace WarehouseElectric.ViewModels
             InvoicesItemsManager invoicesItemsManager = new InvoicesItemsManager();
             foreach (var product in ProductsCollection)
             {
-                IE_InvoicesItem invoiceItem = new IE_InvoicesItem()
+                if (product.AmmountOnInvoice > 0)
                 {
-                    IE_ADDED = DateTime.Now,
-                    IE_LAST_MODIFIED = DateTime.Now,
-                    IE_TOTAL_NETTO = product.AmmountOnInvoice * product.Product.PR_UNIT_PRICE,
-                    IE_UNIT_PRICE = product.Product.PR_UNIT_PRICE,
-                    IE_VAT_RATE = _VAT_PERCENTAGE_VALUE,
-                    IE_PR_ID = product.Product.PR_ID,
-                    IE_IN_ID = invoice.IN_ID,
-                    IE_QUANTITY = product.AmmountOnInvoice
-                };
-                invoiceItem.IE_TOTAL_VAT = _VAT_PERCENTAGE_VALUE * invoiceItem.IE_TOTAL_NETTO;
-                invoiceItem.IE_TOTAL_BRUTTO = invoiceItem.IE_TOTAL_NETTO + invoiceItem.IE_TOTAL_VAT;
-                invoicesItemsManager.Add(invoiceItem);
+                    IE_InvoicesItem invoiceItem = new IE_InvoicesItem()
+                    {
+                        IE_ADDED = DateTime.Now,
+                        IE_LAST_MODIFIED = DateTime.Now,
+                        IE_TOTAL_NETTO = product.AmmountOnInvoice * product.Product.PR_UNIT_PRICE,
+                        IE_UNIT_PRICE = product.Product.PR_UNIT_PRICE,
+                        IE_VAT_RATE = _VAT_PERCENTAGE_VALUE,
+                        IE_PR_ID = product.Product.PR_ID,
+                        IE_IN_ID = invoice.IN_ID,
+                        IE_QUANTITY = product.AmmountOnInvoice
+                    };
+                    invoiceItem.IE_TOTAL_VAT = _VAT_PERCENTAGE_VALUE * invoiceItem.IE_TOTAL_NETTO;
+                    invoiceItem.IE_TOTAL_BRUTTO = invoiceItem.IE_TOTAL_NETTO + invoiceItem.IE_TOTAL_VAT;
+                    invoicesItemsManager.Add(invoiceItem);
 
-                var productToChange = productsManager.Get(product.Product.PR_ID);
-                productToChange.PR_DEPOT_QUANTITY = product.Product.PR_DEPOT_QUANTITY.Value - product.AmmountOnInvoice;
+                    var productToChange = productsManager.Get(product.Product.PR_ID);
+                    productToChange.PR_DEPOT_QUANTITY = product.Product.PR_DEPOT_QUANTITY.Value - product.AmmountOnInvoice;
+                }
             }
             productsManager.Update();
             CloseEventHandler();
