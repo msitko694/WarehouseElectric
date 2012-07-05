@@ -45,6 +45,8 @@ namespace WarehouseElectric.ViewModels
                 InvoiceItemsToShow = _invoice.IE_InvoicesItems;
 
                 IssuedByWorker = _invoice.WO_Worker.PO_Position.PO_NAME + " " + _invoice.WO_Worker.WO_NAME + " " + _invoice.WO_Worker.WO_SURNAME;
+                TotalNetto = _invoice.IN_TOTAL_NETTO;
+                TotalVat = _invoice.IN_TOTAL_VAT;
                 TotalBrutto = _invoice.IN_TOTAL;
                 SpeditionType = _invoice.SP_Spedition.SP_NAME;
                 IsReadOnly = true;
