@@ -13,6 +13,7 @@
             <ColumnDefinition Width="220" />
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="30*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -21,6 +22,7 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
+            <RowDefinition Height="7*" />
         </Grid.RowDefinitions>
         <view:InvoiceDetailsControl  x:Name="IvoiceDetails" Grid.ColumnSpan="4" Grid.Row="0" Grid.Column="0" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" />
         <DataGrid Grid.ColumnSpan="4" Grid.Row="1" Margin="0,25,0,0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" HorizontalAlignment="Center" IsReadOnly="True" ItemsSource="{Binding Path=InvoiceItemsToShow}" Grid.Column="0" Name="dataGridInvoiceItems" SelectionMode="Single" VerticalAlignment="Stretch" Width="592" Height="200">
@@ -41,5 +43,6 @@
         <Label Content="Fakturę wystawił:" Height="28" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="3" Name="labelIssuedBy" VerticalAlignment="Center" />
         <TextBlock Text="{Binding Path=IssuedByWorker}" Height="23" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Name="TextBlockIssuedByWorkerId" VerticalAlignment="Center"  Width="200" />
         <Button Command="{Binding GenerateReportCommand}" Content="Generuj raport" Grid.Column="2" Grid.Row="5" Height="23" HorizontalAlignment="Right"  Name="butReport" VerticalAlignment="Center" Width="131" Grid.ColumnSpan="2"  />
+        <Button Content="Drukuj" Command="{Binding PrintInvoiceCommand}" Grid.Column="2" Grid.Row="5" Height="23" HorizontalAlignment="Left"  Name="butPrintInvoice" VerticalAlignment="Center" Width="132" Margin="0,6" />
     </Grid>
 </Window>

@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using WarehouseElectric.Helpers;
 using Microsoft.Win32;
+using System.Windows.Documents;
 
 
 namespace WarehouseElectric.ViewModels
@@ -97,6 +98,7 @@ namespace WarehouseElectric.ViewModels
         private bool _isReadOnly;
         private RelayCommand _saveInvoiceCommand;
         private RelayCommand _generateReportCommand;
+        private RelayCommand _prinvInvoiceCommand;
 
         #endregion  //Fields
         #region "Properties"
@@ -179,6 +181,43 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
+        public RelayCommand PrintInvoiceCommand
+        {
+            get
+            {
+                if (_prinvInvoiceCommand == null)
+                {
+                    _prinvInvoiceCommand = new RelayCommand(new System.Action<object>((obj) =>
+                    {
+                        try
+                        {
+                            IExporter exporter = new HtmlExporter();
+                            String filePath = "forPrint.html";
+                            if (!String.IsNullOrWhiteSpace(filePath))
+                            {
+                                filePath += ".html";
+                                exporter.ExportInvoice(Invoice, filePath);
+                            }
+                            System.Windows.Forms.WebBrowser webBrowserForPrinting = new System.Windows.Forms.WebBrowser();
+                            webBrowserForPrinting.DocumentCompleted += (sender, e) =>
+                                {
+                                    ((System.Windows.Forms.WebBrowser)sender).Print();
+                                    ((System.Windows.Forms.WebBrowser)sender).Dispose();
+                                };
+                            string absoulteUri = System.Environment.CurrentDirectory + "\\" + filePath;
+                            webBrowserForPrinting.Url = new Uri(absoulteUri);
+                        }
+                        catch(Exception)
+                        {
+                          
+                        }
+
+                    }));
+                    _prinvInvoiceCommand.CanUndo = (obj) => false;
+                }
+                return _prinvInvoiceCommand;
+            }
+        }
 
         public RelayCommand GenerateReportCommand
         {
