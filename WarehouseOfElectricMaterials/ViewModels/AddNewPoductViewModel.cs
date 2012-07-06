@@ -34,7 +34,7 @@ namespace WarehouseElectric.ViewModels
             
             
            }
-        public AddNewProductViewModel(AddNewProductView addNewProductView, CategoryViewModel categoryViewModel, String flag)
+        public AddNewProductViewModel(AddNewProductView addNewProductView, CategoryViewModel categoryViewModel, Int32 flag)
         {
             _addNewProductView = addNewProductView;
             CategoryViewModel = categoryViewModel;
@@ -53,19 +53,20 @@ namespace WarehouseElectric.ViewModels
             //wypełnienie listy jednostek
             QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
             ProductQuantityTypeToAddComboBox = quantityTypesManager.GetAllName();
+
+            InvoicesItemsManager invoicesItemsManager = new InvoicesItemsManager();
+            IE_InvoicesItem item=invoicesItemsManager.Get(flag);
+
+            PR_Product product = item.PR_Product;
               
-            ProductsManager productsManager = new ProductsManager();
-            PR_Product product = productsManager.GetByProductName(flag);
-              
-            Int32 tmp;
+            
             ProductNameToAddTextBox = product.PR_NAME;
-            SelectedProductQuantityTypeComboBox = "metr";//product.QT_QuantityType.ToString();
-       
+            SelectedProductQuantityTypeComboBox = product.QT_QuantityType.QT_NAME.ToString();
+            //CategoryViewModel.RootCategories
             ProductDepotQuantityToAddTextBox=product.PR_DEPOT_QUANTITY.ToString();
         
             ProductUnitPriceToAddTextBox=product.PR_UNIT_PRICE.ToString();
-            tmp = 34;
-            ProductVATToAddTextBox = tmp.ToString();
+            ProductVATToAddTextBox = item.IE_VAT_RATE.ToString();
             
         }
         #endregion //Constructors
@@ -277,7 +278,8 @@ namespace WarehouseElectric.ViewModels
         #region "Methods"
         public void AddProduct ( Object obj)
         {
-            Int32 result,result2,result3;
+            Int32 result,result3;
+            Double result2;
             int selectedCategoryId=2;
           //sprawdzenie poprawności wpisania nazwy produktu
             if (ProductNameToAddTextBox == null || ProductNameToAddTextBox == "" || ProductNameToAddTextBox == " ")
@@ -290,7 +292,7 @@ namespace WarehouseElectric.ViewModels
             else
                 AddProductFailedDepotQuantityVisibilityLabel = Visibility.Hidden;
 
-            if(!Int32.TryParse(ProductUnitPriceToAddTextBox,out result2))
+            if(!Double.TryParse(ProductUnitPriceToAddTextBox,out result2))
                 AddProductFailedUnitPriceVisibilityLabel=Visibility.Visible;
             else
                 AddProductFailedUnitPriceVisibilityLabel=Visibility.Hidden;
@@ -319,20 +321,20 @@ namespace WarehouseElectric.ViewModels
                 QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
                 QT_QuantityType QuantityType = quantityTypesManager.GetByName(SelectedProductQuantityTypeComboBox);
                 ProductsManager ProductsManager = new ProductsManager();
+                InvoicesItemsManager InvoicesItemsManager = new InvoicesItemsManager();
                 PR_Product newProduct = new PR_Product();
                 newProduct.PR_NAME = ProductNameToAddTextBox;
                 newProduct.PR_DEPOT_QUANTITY = result;
-                newProduct.PR_UNIT_PRICE = result2;
+                newProduct.PR_UNIT_PRICE = (decimal)result2;
                 newProduct.PR_IS_ACTIVE = true;
                 newProduct.PR_USED = true;
                 newProduct.PR_QT_ID = QuantityType.QT_ID;
                 newProduct.PR_PC_ID = selectedCategoryId;
                 newProduct.PR_ADDED = DateTime.Now;
                 newProduct.PR_LAST_MODIFIED = DateTime.Now;
-               //newProduct.PR_VAT=result3;
                 ProductsManager.Add(newProduct);
 
-                MessageBox.Show("Produkt został dodany.");
+                MessageBox.Show("Produkt został dodany. ");
                 _addNewProductView.Close();
          }
         }

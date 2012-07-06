@@ -453,7 +453,7 @@ namespace WarehouseElectric.ViewModels
 
         public void GoAddNewProduct(Object obj)
         {
-            AddNewProductView window = new AddNewProductView(null);
+            AddNewProductView window = new AddNewProductView(-1);
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
         }
@@ -463,9 +463,25 @@ namespace WarehouseElectric.ViewModels
             {
                 ProductsManager productsManager = new ProductsManager();
                 PR_Product product = productsManager.GetByProductName(ProductSelectedToDelete.PR_NAME);
-                String tmp = product.PR_NAME;
+                IE_InvoicesItem item = new IE_InvoicesItem();
+                
+                item.IE_PR_ID = product.PR_ID;
+                item.IE_QUANTITY = 1;
+                item.IE_TOTAL_BRUTTO = 0;
+                item.IE_TOTAL_NETTO = 0;
+                item.IE_TOTAL_VAT = 0;
+                item.IE_UNIT_PRICE = 0;
+                item.IE_VAT_RATE = 0;
+                item.IE_IN_ID = 1;
+                 item.IE_ADDED = DateTime.Now;
+                item.IE_LAST_MODIFIED = DateTime.Now;
+               
+                
+                 InvoicesItemsManager invoicesItemsManager = new InvoicesItemsManager();
+                invoicesItemsManager.Add(item);
+          
              
-            AddNewProductView window = new AddNewProductView(tmp);
+            AddNewProductView window = new AddNewProductView(item.IE_ID);
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
             }
