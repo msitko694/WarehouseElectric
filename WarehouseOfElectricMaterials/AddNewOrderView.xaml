@@ -1,0 +1,51 @@
+﻿<Window x:Class="WarehouseElectric.AddNewOrderView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Nowe Zamówienie" Height="648" Width="688"
+        xmlns:h="clr-namespace:WarehouseElectric.Helpers"
+        h:HelpProvider.HelpString="Nowe zamówienie">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="333*" />
+            <ColumnDefinition Width="333*" />
+        </Grid.ColumnDefinitions>
+        <TreeView h:HelpProvider.HelpString="Lista kategori produktów" Height="152" HorizontalAlignment="Left"  ItemsSource="{Binding RootCategories}" Margin="12,105,0,0" Name="treeViewSelectProductCategory" VerticalAlignment="Top" Width="311" >
+        
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Style.Triggers>
+                        <Trigger Property="TreeViewItem.IsSelected" Value="True">
+                            <Setter Property="Control.FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                    <Setter Property="TreeViewItem.IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="TreeViewItem.IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="Control.FontWeight" Value="Normal" />
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding ProductCategory.PC_NAME}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <DataGrid h:HelpProvider.HelpString="Wybierz produkt a następnie wprowadź ilość do zamówienia" ItemsSource="{Binding Path=ProductsCollection}" AutoGenerateColumns="false" Height="152" Margin="10,105,0,0" Name="dataGridSelectProductToOrder" VerticalAlignment="Top" HorizontalAlignment="Left" Width="308" Grid.Column="1" >
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Path=Product.PR_NAME}" IsReadOnly="True" Header="Nazwa" Width="204" />
+                <DataGridTextColumn Binding="{Binding Path=QuantityOnOrder, Mode=TwoWay}" IsReadOnly="False" Header="Ilość" Width="100" />
+        </DataGrid.Columns>
+        </DataGrid>
+        <Button h:HelpProvider.HelpString="Naciśnij aby dodać produkt do zamówienia" Command="{Binding Path=AddProductToOrderCommand}" Content="Dodaj produkt do zamówienia" Height="23" HorizontalAlignment="Left" Margin="10,272,0,0" Name="buttAddToOrder" VerticalAlignment="Top" Width="252" Grid.Column="1" />
+        <ComboBox h:HelpProvider.HelpString="Wybierz Dostawcę z listy" SelectedItem="{Binding Path=SelectedSuppliersName}" ItemsSource="{Binding Path=ListOfSuppliersComboBox}" Height="23" HorizontalAlignment="Left" Margin="12,55,0,0" Name="comboBox1" VerticalAlignment="Top" Width="311" />
+        <Label FontWeight="Bold" Content="Wybierz firmę przyjmującą zamówienie" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelSlelectSuppliers" VerticalAlignment="Top" />
+        <DataGrid h:HelpProvider.HelpString="Lista produktów na zamówieniu" ItemsSource="{Binding Path=ProductsOnOrder}" AutoGenerateColumns="False" Height="196" HorizontalAlignment="Left" Margin="12,354,0,0" Name="dataGridOrderItem" VerticalAlignment="Top" Width="639" Grid.ColumnSpan="2" >
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Path=Product.PR_NAME}" IsReadOnly="True" Header="Nazwa" Width="204" />
+            <DataGridTextColumn Binding="{Binding Path=QuantityOnOrder, Mode=TwoWay}" IsReadOnly="False" Header="Ilość" Width="100" />
+        </DataGrid.Columns>
+        </DataGrid>
+        <Label FontWeight="Bold" Content="Zamówienie" Height="28" HorizontalAlignment="Left" Margin="12,320,0,0" Name="labelOrder" VerticalAlignment="Top" />
+        <Button h:HelpProvider.HelpString="Naciśnij aby zapisać zamówienie" Command="{Binding Path=SaveOrderCommand}" Content="Zapisz" Height="23" HorizontalAlignment="Left" Margin="294,574,0,0" Name="buttonEndOrder" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" />
+        <Label FontWeight="Bold" Content="Wybierz produkt" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="10,71,0,0" Name="label1" VerticalAlignment="Top" />
+    </Grid>
+</Window>

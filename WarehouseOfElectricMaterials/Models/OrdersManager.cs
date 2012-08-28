@@ -41,6 +41,13 @@ namespace WarehouseElectric.Models
         /// Gets all orders.
         /// </summary>
         /// <returns>All orders</returns>
+        /// 
+        public IList<OR_Order> GetBySupplierName(String name)
+        {
+            return (from order in DataContext.OR_Orders
+                    where order.SU_Supplier.SU_NAME.Contains(name)
+                    select order).ToList<OR_Order>();
+        }
         public IList<OR_Order> GetAll()
         {
            return (from order in DataContext.OR_Orders select order).ToList<OR_Order>();

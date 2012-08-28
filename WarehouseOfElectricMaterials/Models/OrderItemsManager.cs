@@ -45,6 +45,14 @@ namespace WarehouseElectric.Models
         {
            return (from orderItem in DataContext.OE_OrderItems select orderItem).ToList<OE_OrderItem>();
         }
+        /// <summary>
+        /// Gets all Order items by order Id.
+        /// </summary>
+        /// <returns>All Order items</returns>
+        public IList<OE_OrderItem> GetAllByOrderID(int id)
+        {
+            return (from orderItem in DataContext.OE_OrderItems where orderItem.OE_OR_ID == id select orderItem).ToList<OE_OrderItem>();
+        }
 
         /// <summary>
         /// Gets the specified order item.

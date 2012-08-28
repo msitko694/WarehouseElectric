@@ -5,10 +5,18 @@
     <Setting Name="ElectricWarehouseConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=OLESZ;Initial Catalog=warehouse;Integrated Security=True&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=FROMEK-PC\SERW;Initial Catalog=WarehouseElectric;Integrated Security=True&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=OLESZ;Initial Catalog=warehouse;Integrated Security=True</Value>
+      <Value Profile="(Default)">Data Source=FROMEK-PC\SERW;Initial Catalog=WarehouseElectric;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="ElectricWarehouseConnectionString2" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=MSITKO;Initial Catalog=ElectricWarehouse;Persist Security Info=True;User ID=test&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=MSITKO;Initial Catalog=ElectricWarehouse;Persist Security Info=True;User ID=test</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -1,0 +1,61 @@
+﻿<Window x:Class="WarehouseElectric.EditOrderView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Edycja zamówienia" Height="719" Width="688"
+        xmlns:h="clr-namespace:WarehouseElectric.Helpers"
+        h:HelpProvider.HelpString="Edycja zamówienia">
+    <Grid>
+        <Grid Margin="10,10,-398,-130">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="333*" />
+                <ColumnDefinition Width="721*" />
+            </Grid.ColumnDefinitions>
+            <Label FontWeight="Bold" Content="Firma przyjmująca zamówienie:" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
+            <Label Content="Nazwa:" Height="28" HorizontalAlignment="Left" Margin="24,46,0,0" Name="label2" VerticalAlignment="Top" />
+            <TextBox Text="{Binding Path=NameOfCompany}" Height="23" HorizontalAlignment="Left" IsReadOnly="True" Margin="122,48,0,0" Name="textBoxNameOfCompany" VerticalAlignment="Top" Width="199" />
+            <Label Content="Ulica:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="28,46,0,0" Name="label3" VerticalAlignment="Top" />
+            <TextBox Text="{Binding Path=StreetOfCompany}" Grid.Column="1" Height="23" HorizontalAlignment="Left" IsReadOnly="True" Margin="102,48,0,0" Name="textBoxStreetOfCOmpany" VerticalAlignment="Top" Width="211" />
+            <Label Content="Kod Pocztowy:" Height="28" HorizontalAlignment="Left" Margin="24,80,0,0" Name="label4" VerticalAlignment="Top" />
+            <TextBox Text="{Binding Path=PostCodeOfCompany}" Height="23" HorizontalAlignment="Left" IsReadOnly="True" Margin="122,82,0,0" Name="textBoxPostCodeOfCompany" VerticalAlignment="Top" Width="199" />
+            <Label Content="Miasto:" Grid.Column="1" Height="28" HorizontalAlignment="Left" Margin="28,80,0,0" Name="label5" VerticalAlignment="Top" />
+            <TextBox Text="{Binding Path=TownOfCompany}" Grid.Column="1" Height="23" HorizontalAlignment="Left" IsReadOnly="True" Margin="102,82,0,0" Name="textBoxTownOfCompany" VerticalAlignment="Top" Width="211" />
+            <Label Content="Telefon:" Height="28" HorizontalAlignment="Left" Margin="24,114,0,0" Name="label6" VerticalAlignment="Top" />
+            <TextBox Text="{Binding Path=PhoneOfCompany}" Height="23" HorizontalAlignment="Left" IsReadOnly="True" Margin="122,116,0,0" Name="textBoxPhoneOfCompany" VerticalAlignment="Top" Width="199" />
+            <TreeView h:HelpProvider.HelpString="Lista kategori produktów" Height="175" HorizontalAlignment="Left" ItemsSource="{Binding RootCategories}"  Margin="24,436,0,0" Name="treeViewSelectCategory" VerticalAlignment="Top" Width="297" >
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Style.Triggers>
+                            <Trigger Property="TreeViewItem.IsSelected" Value="True">
+                                <Setter Property="Control.FontWeight" Value="Bold" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="TreeViewItem.IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="TreeViewItem.IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        <Setter Property="Control.FontWeight" Value="Normal" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding ProductCategory.PC_NAME}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            <DataGrid h:HelpProvider.HelpString="Wybierz produkt a następnie wprowadź ilość do zamówienia" ItemsSource="{Binding Path=ProductsCollection}" AutoGenerateColumns="False" Grid.Column="1" Height="175" HorizontalAlignment="Left" Margin="19,436,0,0" Name="dataGridListOfProduct" VerticalAlignment="Top" Width="294" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Product.PR_NAME}" IsReadOnly="True" Header="Nazwa" Width="204" />
+                <DataGridTextColumn Binding="{Binding Path=QuantityOnOrder, Mode=TwoWay}" IsReadOnly="False" Header="Ilość" Width="100" />
+            </DataGrid.Columns>
+            </DataGrid>
+            <Button h:HelpProvider.HelpString="Naciśnij aby dodać produkt do zamówienia" Command="{Binding Path=AddProductToOrderCommand}" Content="Dodaj do zamówienia" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="19,628,0,0" Name="buttonAddToOrder" VerticalAlignment="Top" Width="137" />
+            <DataGrid h:HelpProvider.HelpString="Lista produktów na zamówieniu" ItemsSource="{Binding Path=OrderItem}" AutoGenerateColumns="False" Grid.ColumnSpan="2" Height="201" HorizontalAlignment="Left" Margin="24,172,0,0" Name="dataGridProductOnOrder" VerticalAlignment="Top" Width="622" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=PR_Product.PR_NAME}" IsReadOnly="True" Header="Nazwa" Width="204" />
+                <DataGridTextColumn Binding="{Binding Path=OE_QUANTITY}" IsReadOnly="True" Header="Ilość" Width="100" />
+            </DataGrid.Columns>
+            </DataGrid>
+            <Label FontWeight="Bold" Content="Zamawiane produkty:" Height="28" HorizontalAlignment="Left" Margin="24,148,0,0" Name="label7" VerticalAlignment="Top" />
+            <Button h:HelpProvider.HelpString="Naciśnij aby zamknąć okno" Command="{Binding Path=CloseCommand}" Content="Zamknij" Height="23" HorizontalAlignment="Left" Margin="238,628,0,0" Name="button1" VerticalAlignment="Top" Width="75" Grid.Column="1" />
+            <Label FontWeight="Bold" Content="Dodaj produkty do zamówienia" Height="28" HorizontalAlignment="Left" Margin="24,402,0,0" Name="label8" VerticalAlignment="Top" />
+        </Grid>
+    </Grid>
+</Window>

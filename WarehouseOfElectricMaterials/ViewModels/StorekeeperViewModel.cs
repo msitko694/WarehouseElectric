@@ -7,6 +7,9 @@ using WarehouseElectric.Models;
 using WarehouseElectric.DataLayer;
 using System.Windows.Controls;
 using System.Data.SqlClient;
+using WarehouseElectric.Helpers;
+using Microsoft.Win32;
+using System.Windows.Documents;
 
 
 namespace WarehouseElectric.ViewModels
@@ -24,6 +27,11 @@ namespace WarehouseElectric.ViewModels
             //lista dostawców do DataGrida
             SuppliersManager suppliersManager = new SuppliersManager();
             ListSuppliersToShow = suppliersManager.GetAll().ToList();
+
+            OrdersManager orderManager = new OrdersManager();
+            ShowAllOrder = orderManager.GetAll().ToList();
+            
+
         }
         #endregion //Constructors
         #region "Fields"
@@ -54,9 +62,126 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _goEditProductCommand;
         private RelayCommand _goDeleteProductCommand;
         private PR_Product _productSelectedToDelete;
+        private RelayCommand _goAddNewOrderCommand;
+        private IList<OR_Order> _showAllOrder;
+        private OR_Order _selectedOrderToEdit;
+        private RelayCommand _editOrderCommand;
+        private RelayCommand _refreshOrderListCommand;
+        private RelayCommand _printOrderCommand;
+        private String _findOrder;
+        private RelayCommand _findOrderBySupplierCommand;
         #endregion //Fields
         #region "Properties"
-        
+
+        public RelayCommand FindOrderBySupplierCommand
+        {
+            get
+            {
+                _findOrderBySupplierCommand = new RelayCommand(FindOrderBySupplier);
+                _findOrderBySupplierCommand.CanUndo = (obj) => false;
+                return _findOrderBySupplierCommand;
+            }
+            set
+            {
+                _findOrderBySupplierCommand = value;
+            }
+        }
+        public String FindOrder
+        {
+            get
+            {
+                return _findOrder;
+            }
+            set
+            {
+                _findOrder = value;
+                OnPropertyChanged("FindOrder");
+            }
+
+        }
+
+        public RelayCommand PrintOrderCommand
+        {
+            get
+            {
+                if (_printOrderCommand == null)
+                {
+                    _printOrderCommand = new RelayCommand(new System.Action<object>((obj) =>
+                    {
+                        try
+                        {
+                            IExporter exporter = new HtmlExporter();
+                            String filePath = "forPrint.html";
+                            if (!String.IsNullOrWhiteSpace(filePath))
+                            {
+                                filePath += ".html";
+                                exporter.ExportOrder(SelectedOrderToEdit, filePath);
+                            }
+                            System.Windows.Forms.WebBrowser webBrowserForPrinting = new System.Windows.Forms.WebBrowser();
+                            webBrowserForPrinting.DocumentCompleted += (sender, e) =>
+                            {
+                                ((System.Windows.Forms.WebBrowser)sender).Print();
+                                ((System.Windows.Forms.WebBrowser)sender).Dispose();
+                            };
+                            string absoulteUri = System.Environment.CurrentDirectory + "\\" + filePath;
+                            webBrowserForPrinting.Url = new Uri(absoulteUri);
+                        }
+                        catch(Exception)
+                        {
+
+                        }
+
+                    }));
+                    _printOrderCommand.CanUndo = (obj) => false;
+                }
+                return _printOrderCommand;
+            }
+        }
+
+        public RelayCommand GoAddNewOrderCommand
+        {
+            get
+            {
+                _goAddNewOrderCommand = new RelayCommand(AddNewOrder);
+                _goAddNewOrderCommand.CanUndo = (obj) => false;
+
+                return _goAddNewOrderCommand;
+            }
+            set
+            {
+                _goAddNewOrderCommand = value;
+            }
+        }
+        public RelayCommand EditOrderCommand
+        {
+            get
+            {
+                _editOrderCommand = new RelayCommand(EditOrder);
+                _editOrderCommand.CanUndo = (obj) => false;
+
+                return _editOrderCommand;
+            }
+            set
+            {
+                _editOrderCommand = value;
+            }
+        }
+        public RelayCommand RefreshOrderListCommand
+        {
+            get
+            {
+                _refreshOrderListCommand = new RelayCommand(RefreshOrderList);
+                _refreshOrderListCommand.CanUndo = (obj) => false;
+
+                return _refreshOrderListCommand;
+            }
+            set
+            {
+                _refreshOrderListCommand = value;
+            }
+        }
+
+
         public RelayCommand LogOutCommand
         {
             get
@@ -358,6 +483,31 @@ namespace WarehouseElectric.ViewModels
                 OnPropertyChanged("ProductSelectedToDelete");
             }
         }
+        public IList<OR_Order> ShowAllOrder
+        {
+            get
+            {
+                return _showAllOrder;
+            }
+            set
+            {
+                _showAllOrder = value;
+                OnPropertyChanged("ShowAllOrder");
+            }
+        }
+        public OR_Order SelectedOrderToEdit
+        {
+            get
+            {
+                return _selectedOrderToEdit;
+            }
+            set
+            {
+                _selectedOrderToEdit = value;
+                OnPropertyChanged("SelectedOrderToEdit");
+            }
+        }
+
         #endregion //Properties
         #region "Methods"
         
@@ -462,8 +612,9 @@ namespace WarehouseElectric.ViewModels
              if (ProductSelectedToDelete != null)
             {
                 ProductsManager productsManager = new ProductsManager();
-                PR_Product product = productsManager.GetByProductName(ProductSelectedToDelete.PR_NAME);
-                IE_InvoicesItem item = new IE_InvoicesItem();
+                PR_Product product = productsManager.Get(ProductSelectedToDelete.PR_ID);
+                
+               /* IE_InvoicesItem item = new IE_InvoicesItem();
                 
                 item.IE_PR_ID = product.PR_ID;
                 item.IE_QUANTITY = 1;
@@ -479,9 +630,9 @@ namespace WarehouseElectric.ViewModels
                 
                  InvoicesItemsManager invoicesItemsManager = new InvoicesItemsManager();
                 invoicesItemsManager.Add(item);
-          
+                */
              
-            AddNewProductView window = new AddNewProductView(item.IE_ID);
+            AddNewProductView window = new AddNewProductView(product.PR_ID);
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
             }
@@ -495,7 +646,7 @@ namespace WarehouseElectric.ViewModels
             if (ProductSelectedToDelete != null)
             {
                 ProductsManager productsManager = new ProductsManager();
-                PR_Product product = productsManager.GetByProductName(ProductSelectedToDelete.PR_NAME);
+                PR_Product product = productsManager.Get(ProductSelectedToDelete.PR_ID);
                 try
                 {
                     productsManager.Delete(product);
@@ -511,6 +662,40 @@ namespace WarehouseElectric.ViewModels
                    
  
 
+        }
+
+        public void AddNewOrder(Object obj)
+        {
+            AddNewOrderView window = new AddNewOrderView();
+            Application.Current.MainWindow = window;
+            Application.Current.MainWindow.Show();
+
+        }
+        public void EditOrder(Object obj)
+        {
+            if (SelectedOrderToEdit == null)
+            {
+                MessageBox.Show("Wybierz zamówienie");
+                return;
+            }
+            EditOrderView window = new EditOrderView(SelectedOrderToEdit.OR_ID);
+            Application.Current.MainWindow = window;
+            Application.Current.MainWindow.Show();
+            
+        }
+        public void RefreshOrderList(Object obj)
+        {
+            OrdersManager orderManager = new OrdersManager();
+            ShowAllOrder = orderManager.GetAll().ToList();
+        }
+
+        public void FindOrderBySupplier(Object obj)
+        {
+            if (FindOrder != null)
+            {
+                OrdersManager ordersManager = new OrdersManager();
+                ShowAllOrder = ordersManager.GetBySupplierName(FindOrder);
+            }
         }
 
         #endregion //Methods

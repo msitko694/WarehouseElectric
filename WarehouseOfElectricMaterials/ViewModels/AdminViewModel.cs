@@ -189,7 +189,7 @@ namespace WarehouseElectric.ViewModels
         private Visibility _addNewSpeditionTypeFailedVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu nazwy nowego typu wysyłki(zakładka typy wysyłki)
         private Visibility _addNewQuantityTypeFailedVisibilityLabel; //Wyświetlenie informacji o błędnym wprowadzeniu nazwy nowej jednostki produktu(zakładka jednostki produktów)
         private Visibility _addNewPositionFailedVisibilityLabel; //wyświetlenia informacji o błędnym wprowadzeniu nazwy nowego stanowiska(zakładka stanowsika pracowników)
-        private LinqDataLayerDataContext _dataContext;
+        
 
 
         #endregion //Fields
@@ -1727,21 +1727,6 @@ namespace WarehouseElectric.ViewModels
             }
         }
 
-        public LinqDataLayerDataContext DataContext
-        {
-            get
-            {
-                if (_dataContext == null)
-                {
-                    _dataContext = new LinqDataLayerDataContext();
-                }
-                return _dataContext;
-            }
-            set
-            {
-                _dataContext = value;
-            }
-        }
 
         #endregion //Properties
 

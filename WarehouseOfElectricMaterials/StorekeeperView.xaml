@@ -40,11 +40,11 @@
                         </TreeView.ItemTemplate>
                     </TreeView>
                     <Button h:HelpProvider.HelpString="Naciśnij aby wyczyścić listę wyświetlanych produktów" Command="{Binding ClearChoiceCommand}" Background="Red" Content="Wyczyść wybór" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="button1" VerticalAlignment="Top" Width="120" />
-                    <DataGrid h:HelpProvider.HelpString="Lista produktów" IsEnabled="True" ItemsSource="{Binding Path=ListProductsToShow}" SelectedItem="{Binding Path=ProductSelectedToDelete}" AutoGenerateColumns="False" Height="276" HorizontalAlignment="Left" Margin="6,49,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" Grid.ColumnSpan="2" Grid.Column="1">
+                    <DataGrid h:HelpProvider.HelpString="Lista produktów" IsEnabled="True" IsReadOnly="True" ItemsSource="{Binding Path=ListProductsToShow}" SelectedItem="{Binding Path=ProductSelectedToDelete}" AutoGenerateColumns="False" Height="276" HorizontalAlignment="Left" Margin="6,49,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="481" Grid.ColumnSpan="2" Grid.Column="1">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=PR_NAME}" Header="Nazwa" Width="100" /> 
                         <DataGridTextColumn Binding="{Binding Path=PR_DEPOT_QUANTITY}" Header="Ilość" Width="100" />
-                        <DataGridTextColumn Binding="{Binding Path=PR_UNIT_PRICE}" Header="Jednostka" Width="100" />
+                            <DataGridTextColumn Binding="{Binding Path=PR_UNIT_PRICE}" Header="Cena Jednostkowa" Width="100" />
                         </DataGrid.Columns>
                        </DataGrid>
                     <TextBox h:HelpProvider.HelpString="Wprowadź w pole produkt do wyszukania" Text="{Binding Path=ProductNameToSearch}" Height="27" HorizontalAlignment="Left" Margin="6,7,0,0" Name="textBox1" VerticalAlignment="Top" Width="448" Grid.ColumnSpan="2" Grid.Column="1" />
@@ -114,7 +114,24 @@
             <TabItem h:HelpProvider.HelpString="Zakładka umożliwiająca dodawanie nowych raportów." Background="#FFDB46DB" Header="Raporty" Name="tabItemReports">
                 <Grid Background="#FFDEDEDE" />
             </TabItem>
-           
+            <TabItem h:HelpProvider.HelpString="Zakładka umożliwiająca dodawanie nowych zamówień." Header="Zamówienia" Name="tabItemOrders">
+                <Grid>
+                    <TextBox h:HelpProvider.HelpString="Wprowadź w pole nazwę dostawcy" Text="{Binding Path=FindOrder}" Height="27" Margin="6,19,0,0" Name="textBox3" VerticalAlignment="Top" HorizontalAlignment="Left" Width="471" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby wyszukać zamówienia po nazwie dostawcy" Command="{Binding Path=FindOrderBySupplierCommand}" Content="O" Height="27" HorizontalAlignment="Left" Margin="483,19,0,0" Name="buttonFindOrder" VerticalAlignment="Top" Width="27" />
+                    <DataGrid h:HelpProvider.HelpString="Lista zamówień" SelectedItem="{Binding Path=SelectedOrderToEdit}" ItemsSource="{Binding Path=ShowAllOrder}" AutoGenerateColumns="False" Height="304" HorizontalAlignment="Left" Margin="6,52,0,0" Name="dataGrid2" VerticalAlignment="Top" Width="504" >
+                    <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Path=SU_Supplier.SU_NAME}" IsReadOnly="True" Header="Nazwa Dostawcy" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding Path=OR_LAST_MODIFIED}" IsReadOnly="True" Header="Data ostatniej modyfikacji" Width="auto" />
+                            <DataGridTextColumn Binding="{Binding Path=WO_Worker.WO_NAME}" IsReadOnly="True" Header="Imię pracownika" Width="auto"/>
+                            <DataGridTextColumn Binding="{Binding Path=WO_Worker.WO_SURNAME}" IsReadOnly="True" Header="Nazwisko pracownika" Width="auto"/>    
+                    </DataGrid.Columns>
+                    </DataGrid>
+                    <Button h:HelpProvider.HelpString="Naciśnij aby dodać nowe zamówienie" Command="{Binding Path=GoAddNewOrderCommand}" Content="Dodaj" Height="97" HorizontalAlignment="Left" Margin="518,52,0,0" Name="button10" VerticalAlignment="Top" Width="97" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby edytować zamówienie" Command="{Binding Path=EditOrderCommand}" Content="Edytuj" Height="97" HorizontalAlignment="Left" Margin="518,155,0,0" Name="button11" VerticalAlignment="Top" Width="97" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby wydrukować zamówienie" Command="{Binding Path=PrintOrderCommand}" Content="Drukuj" Height="97" HorizontalAlignment="Left" Margin="518,259,0,0" Name="button12" VerticalAlignment="Top" Width="97" />
+                    <Button h:HelpProvider.HelpString="Naciśnij aby odświerzyć listę zamówień" Command="{Binding Path=RefreshOrderListCommand}" Content="Odświerz" Height="27" HorizontalAlignment="Left" Margin="518,19,0,0" Name="button13" VerticalAlignment="Top" Width="97" />
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

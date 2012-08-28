@@ -37,8 +37,5 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <Label Content="Stawka VAT" Height="28" HorizontalAlignment="Left" Margin="10,263,0,0" Name="label9" VerticalAlignment="Top" />
-        <TextBox Height="23" my:HelpProvider.HelpString="Wprowadź stawkę VAT" HorizontalAlignment="Left" Margin="105,265,0,0" Name="textBox3" Text="{Binding Path=ProductVATToAddTextBox}" VerticalAlignment="Top" Width="203" />
-        <Label Content="Wprowadź stawkę VAT" Foreground="#FFD10505" Height="28" HorizontalAlignment="Left" Margin="348,262,0,0" Name="label10" VerticalAlignment="Top" Visibility="{Binding Path=AddProductFailedVATVisibilityLabel}" />
     </Grid>
 </Window>

@@ -56,6 +56,14 @@ namespace WarehouseElectric.Models
                 return null;
             }
         }
+        /// <summary>
+        /// Gets all suppliers name.
+        /// </summary>
+        /// <returns>All supplier name</returns>
+        public List<String> GetAllName()
+        {
+            return (from supplier in DataContext.SU_Suppliers select supplier.SU_NAME).ToList();
+        }
 
         public IList<SU_Supplier> GetByName(string name)
         {

@@ -78,6 +78,61 @@ namespace WarehouseElectric.Helpers
             }
         }
 
+        public void ExportOrder(DataLayer.OR_Order order, String filePath)
+        {
+            ICompanyManager companyManager = new CompanyManager();
+            CI_CompanyInfo companyInfo = companyManager.GetCompanyData();
+            XDocument xmlTree = new XDocument(
+                                    new XElement("order",
+                                        new XElement("supplier",
+                                            new XElement("name", order.SU_Supplier.SU_NAME),
+                                            new XElement("phone", order.SU_Supplier.SU_PHONE),
+                                            new XElement("town", order.SU_Supplier.SU_TOWN),
+                                            new XElement("street", order.SU_Supplier.SU_STREET),
+                                            new XElement("postcode", order.SU_Supplier.SU_POST_CODE)
+                                        ),
+                                        new XElement("company",
+                                            new XElement("name", companyInfo.CI_NAME),
+                                            new XElement("phone", companyInfo.CI_PHONE),
+                                            new XElement("postcode", companyInfo.CI_POST_CODE),
+                                            new XElement("town", companyInfo.CI_TOWN),
+                                            new XElement("street", companyInfo.CI_STREET)
+                                        ),
+                                        new XElement("date", order.OR_ADDED.ToShortDateString()),
+                                        new XElement("items")
+                                    )
+                                );
+
+            XElement itemsNode = xmlTree.Element("order").Element("items");
+            int i = 1;
+            foreach (var item in order.OE_OrderItems)
+            {
+                itemsNode.Add(new XElement("item",
+                                new XElement("positionNumber", i),
+                                new XElement("name", item.PR_Product.PR_NAME),
+                                new XElement("quantityUnit", item.PR_Product.QT_QuantityType.QT_NAME),
+                                new XElement("quantity", item.OE_QUANTITY)
+                              )
+                );
+                i++;
+            }
+            XslCompiledTransform xslTransform = new XslCompiledTransform();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream("WarehouseElectric.Helpers.OrderTransform.xslt");
+            XmlWriter xmlWriter = XmlWriter.Create(filePath);
+
+            XmlReader xmlReader = XmlReader.Create(stream);
+            xslTransform.Load(xmlReader);
+            try
+            {
+                xslTransform.Transform(xmlTree.CreateReader(), xmlWriter);
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e);
+            }
+        }
+
         #endregion
     }
 }

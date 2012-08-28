@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddNewOrderView.xaml.cs">
+      <DependentUpon>AddNewOrderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddNewSupplierView.xaml.cs">
       <DependentUpon>AddNewSupplierView.xaml</DependentUpon>
     </Compile>
@@ -82,6 +85,9 @@
     </Compile>
     <Compile Include="EditInvoiceView.xaml.cs">
       <DependentUpon>EditInvoiceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditOrderView.xaml.cs">
+      <DependentUpon>EditOrderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\ProductCategory.cs" />
     <Compile Include="Helpers\DataBaseHelper.cs" />
@@ -139,19 +145,26 @@
     <Compile Include="AddNewProductView.xaml.cs">
       <DependentUpon>AddNewProductView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddNewOrderViewModel.cs" />
     <Compile Include="ViewModels\AddNewPoductViewModel.cs" />
     <Compile Include="ViewModels\AddNewSupplierViewModel.cs" />
     <Compile Include="ViewModels\CashierViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\ChoosePanelViewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\EditOrderViewModel.cs" />
     <Compile Include="ViewModels\NewCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerFullViewModel.cs" />
     <Compile Include="ViewModels\InvoiceFullViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ProductOnInvoiceViewModel.cs" />
+    <Compile Include="ViewModels\ProductOnOrderViewModel.cs" />
     <Compile Include="ViewModels\StorekeeperViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Page Include="AddNewOrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddNewSupplierView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditInvoiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditOrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -253,6 +270,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Helpers\InvoiceTransform.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Helpers\OrderTransform.xslt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

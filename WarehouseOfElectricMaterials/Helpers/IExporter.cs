@@ -9,5 +9,7 @@ namespace WarehouseElectric.Helpers
     interface IExporter
     {
        void ExportInvoice(IN_Invoice invoice, String filePath);
+
+       void ExportOrder(OR_Order order, String filePath);
     }
 }

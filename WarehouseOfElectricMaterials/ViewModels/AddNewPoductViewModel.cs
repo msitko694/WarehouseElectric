@@ -53,21 +53,24 @@ namespace WarehouseElectric.ViewModels
             //wypełnienie listy jednostek
             QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
             ProductQuantityTypeToAddComboBox = quantityTypesManager.GetAllName();
-
+            /*
             InvoicesItemsManager invoicesItemsManager = new InvoicesItemsManager();
             IE_InvoicesItem item=invoicesItemsManager.Get(flag);
 
-            PR_Product product = item.PR_Product;
-              
-            
-            ProductNameToAddTextBox = product.PR_NAME;
-            SelectedProductQuantityTypeComboBox = product.QT_QuantityType.QT_NAME.ToString();
+           PR_Product product = item.PR_Product;
+              */
+            ProductsManager productsManager = new ProductsManager();
+            //PR_Product product = productsManager.Get(flag);
+            Product = productsManager.Get(flag);
+            ProductNameToAddTextBox = Product.PR_NAME;
+            SelectedProductQuantityTypeComboBox = Product.QT_QuantityType.QT_NAME.ToString();
             //CategoryViewModel.RootCategories
-            ProductDepotQuantityToAddTextBox=product.PR_DEPOT_QUANTITY.ToString();
-        
-            ProductUnitPriceToAddTextBox=product.PR_UNIT_PRICE.ToString();
-            ProductVATToAddTextBox = item.IE_VAT_RATE.ToString();
+            ProductDepotQuantityToAddTextBox="0";
             
+            ProductUnitPriceToAddTextBox=Product.PR_UNIT_PRICE.ToString();
+            
+            //ProductVATToAddTextBox = item.IE_VAT_RATE.ToString();
+
         }
         #endregion //Constructors
         #region "Fields"
@@ -87,8 +90,22 @@ namespace WarehouseElectric.ViewModels
         private List<String> _ProductQuantityTypeToAddComboBox;
         private List<String> _ProductCategoryToAddComboBox;
         private String _SelectedProductQuantityTypeComboBox;
+        private PR_Product _product;
         #endregion //Fields
         #region "Properties"
+        public PR_Product Product
+        {
+            get
+            {
+                return _product;
+            }
+            set
+            {
+                _product = value;
+                OnPropertyChanged("Product");
+            }
+        }
+
         public RelayCommand AddProductCommand
         {
             get
@@ -301,7 +318,7 @@ namespace WarehouseElectric.ViewModels
                 AddProductFailedQuantityTypeVisibilityLabel = Visibility.Hidden;
             else
                 AddProductFailedQuantityTypeVisibilityLabel = Visibility.Visible;
-
+            if(Product == null)
             if (CategoryViewModel.GetSelectedCategory().ProductCategory != null)
             {
                 selectedCategoryId = CategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
@@ -309,32 +326,54 @@ namespace WarehouseElectric.ViewModels
             }
             else
                 AddProductFailedCategoryVisibilityLabel = Visibility.Visible;
-            if (!Int32.TryParse(ProductVATToAddTextBox, out result3))
+           /* if (!Int32.TryParse(ProductVATToAddTextBox, out result3))
                 AddProductFailedVATVisibilityLabel = Visibility.Visible;
             else
                 AddProductFailedVATVisibilityLabel = Visibility.Hidden;
-
+            */
            if (AddProductFailedNameVisibilityLabel == Visibility.Hidden && AddProductFailedDepotQuantityVisibilityLabel ==Visibility.Hidden 
                && AddProductFailedUnitPriceVisibilityLabel == Visibility.Hidden && AddProductFailedQuantityTypeVisibilityLabel ==Visibility.Hidden
                && AddProductFailedCategoryVisibilityLabel==Visibility.Hidden && AddProductFailedVATVisibilityLabel==Visibility.Hidden)
             {
                 QuantityTypesManager quantityTypesManager = new QuantityTypesManager();
                 QT_QuantityType QuantityType = quantityTypesManager.GetByName(SelectedProductQuantityTypeComboBox);
-                ProductsManager ProductsManager = new ProductsManager();
-                InvoicesItemsManager InvoicesItemsManager = new InvoicesItemsManager();
-                PR_Product newProduct = new PR_Product();
-                newProduct.PR_NAME = ProductNameToAddTextBox;
-                newProduct.PR_DEPOT_QUANTITY = result;
-                newProduct.PR_UNIT_PRICE = (decimal)result2;
-                newProduct.PR_IS_ACTIVE = true;
-                newProduct.PR_USED = true;
-                newProduct.PR_QT_ID = QuantityType.QT_ID;
-                newProduct.PR_PC_ID = selectedCategoryId;
-                newProduct.PR_ADDED = DateTime.Now;
-                newProduct.PR_LAST_MODIFIED = DateTime.Now;
-                ProductsManager.Add(newProduct);
+                ProductsManager productsManager = new ProductsManager();
+                //InvoicesItemsManager InvoicesItemsManager = new InvoicesItemsManager();
+                if (Product == null)
+                {
+                    Product = new PR_Product();
+                    Product.PR_NAME = ProductNameToAddTextBox;
+                    Product.PR_DEPOT_QUANTITY = result;
+                    Product.PR_UNIT_PRICE = (decimal)result2;
+                    Product.PR_IS_ACTIVE = true;
+                    Product.PR_USED = true;
+                    Product.PR_QT_ID = QuantityType.QT_ID;
+                    Product.PR_PC_ID = selectedCategoryId;
+                    Product.PR_ADDED = DateTime.Now;
+                    Product.PR_LAST_MODIFIED = DateTime.Now;
+                    productsManager.Add(Product);
 
-                MessageBox.Show("Produkt został dodany. ");
+                    MessageBox.Show("Produkt został dodany. ");
+                }
+                else
+                {
+                    PR_Product newProduct = new PR_Product();
+                    newProduct = productsManager.Get(Product.PR_ID);
+                    selectedCategoryId = Product.PR_PC_ID;
+
+                    newProduct.PR_NAME = Product.PR_NAME;
+                    newProduct.PR_DEPOT_QUANTITY = Product.PR_DEPOT_QUANTITY + result;
+                    newProduct.PR_UNIT_PRICE = Product.PR_UNIT_PRICE;
+                    newProduct.PR_IS_ACTIVE = true;
+                    newProduct.PR_USED = true;
+                    newProduct.PR_QT_ID = Product.PR_QT_ID;
+                    newProduct.PR_PC_ID = Product.PR_PC_ID;
+                    newProduct.PR_LAST_MODIFIED = DateTime.Now;
+                    
+                    productsManager.Update();
+                    
+                    MessageBox.Show("Produkt został dodany. ");
+                }
                 _addNewProductView.Close();
          }
         }

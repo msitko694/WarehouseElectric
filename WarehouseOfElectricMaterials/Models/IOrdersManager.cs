@@ -11,6 +11,7 @@ namespace WarehouseElectric.Models
     {
         IList<OR_Order> GetAll();
         OR_Order Get(int id);
+        IList<OR_Order> GetBySupplierName(String name);
         void Add(OR_Order order);
         void Delete(OR_Order order);
         void Update();
