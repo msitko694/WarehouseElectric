@@ -536,9 +536,16 @@ namespace WarehouseElectric.ViewModels
         }
         public void GoAddNewSupplier(Object obj)
         {
-            AddNewSupplierView window = new AddNewSupplierView();
+            AddNewSupplierView window = new AddNewSupplierView(window_OnSupplierAdded);
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
+        }
+
+        public void window_OnSupplierAdded()
+        {
+            SuppliersManager suppliersManager = new SuppliersManager();
+            ListSuppliersToShow = (from supplier in suppliersManager.GetAll()
+                                   select supplier).ToList<SU_Supplier>();
         }
 
         public void ShowProducts(Object obj)

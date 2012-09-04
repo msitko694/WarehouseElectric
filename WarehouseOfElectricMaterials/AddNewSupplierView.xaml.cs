@@ -19,10 +19,12 @@ namespace WarehouseElectric
     /// </summary>
     public partial class AddNewSupplierView : Window
     {
-        public AddNewSupplierView()
+        public AddNewSupplierView(OnSupplierAddedHandler OnSupplierAdded)
         {
             InitializeComponent();
-            DataContext = new AddNewSupplierViewModel(this);
+            AddNewSupplierViewModel addNewSupplierViewModel = new AddNewSupplierViewModel(this);
+            DataContext = addNewSupplierViewModel;
+            addNewSupplierViewModel.OnSupplierAdded += OnSupplierAdded;
         }
     }
 }

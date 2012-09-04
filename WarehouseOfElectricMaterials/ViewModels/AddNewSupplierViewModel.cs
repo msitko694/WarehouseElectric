@@ -9,8 +9,16 @@ using System.Windows.Controls;
 
 namespace WarehouseElectric.ViewModels
 {
+    public delegate void OnSupplierAddedHandler();
+
     class AddNewSupplierViewModel : ViewModelBase
     {
+        #region "events"
+
+        public event OnSupplierAddedHandler OnSupplierAdded;
+
+        #endregion
+
         #region "Constructors"
         public AddNewSupplierViewModel(AddNewSupplierView addNewSupplierView)
         {
@@ -247,6 +255,7 @@ namespace WarehouseElectric.ViewModels
                 suppliersManager.Add(newSupplier);
 
                 MessageBox.Show("Dostawca został dodany");
+                OnSupplierAdded();
                 _addNewSupplierView.Close();
          }
         }
