@@ -10,7 +10,7 @@
         <style type="text/css">
           table,th,td
           {
-          width: 1024;
+          width: 800;
           clear: right;
           border: 1px solid black;
           border-collapse: collapse;
@@ -43,7 +43,7 @@
           }
           body
           {
-          width: 1024;
+          width: 800;
           }
         </style>
       </head>

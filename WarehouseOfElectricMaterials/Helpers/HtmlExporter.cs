@@ -28,6 +28,7 @@ namespace WarehouseElectric.Helpers
                                             new XElement("town", invoice.CU_Customer.CU_TOWN),
                                             new XElement("street", invoice.CU_Customer.CU_STREET),
                                             new XElement("postcode", invoice.CU_Customer.CU_POST_CODE)
+                                            
                                         ),
                                         new XElement("company",
                                             new XElement("name", companyInfo.CI_NAME),
@@ -38,7 +39,8 @@ namespace WarehouseElectric.Helpers
                                         ),
                                         new XElement("date",  invoice.IN_ADDED.ToShortDateString()),
                                         new XElement("speditionCost", invoice.IN_SPEDITION_COST),
-                                        new XElement("totalCost" , invoice.IN_TOTAL), 
+                                        new XElement("totalCost" , invoice.IN_TOTAL),
+                                        new XElement("invoiceNumber", invoice.IN_INVOICE_NUMBER),
                                         new XElement("items")
                                     )
                                 );

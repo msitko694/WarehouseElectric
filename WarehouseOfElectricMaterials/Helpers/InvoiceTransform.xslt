@@ -48,6 +48,10 @@
 				</style>
 			</head>
 			<body>
+        <b>FVAT nr: </b>
+        <xsl:value-of select="invoice/invoiceNumber"/>
+        <br/>
+        <br/>
 				<div class="companyDiv">
 					<p class="companyParagraph">
 						<b>Sprzedawca: </b><xsl:value-of select="invoice/company/name"/>
@@ -96,10 +100,10 @@
 								<xsl:value-of select="name"/>
 							</td>
 							<td>
-								<xsl:value-of select="quantityUnit"/>
+								<xsl:value-of select="quantity"/>
 							</td>
 							<td>
-								<xsl:value-of select="quantity"/>
+								<xsl:value-of select="quantityUnit"/>
 							</td>
 							<td>
 								<xsl:value-of select="unitPrice"/>
@@ -125,6 +129,8 @@
 				<b>Koszt wysyłki: </b><xsl:value-of select="invoice/speditionCost"/>
 				<br/>
 				<b>Do zapłaty: </b><xsl:value-of select="invoice/totalCost"/>
+        <br/>
+				
 			</body>
 		</html>
 	</xsl:template>
