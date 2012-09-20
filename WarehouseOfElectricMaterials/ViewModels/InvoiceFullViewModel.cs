@@ -79,7 +79,7 @@ namespace WarehouseElectric.ViewModels
         private IList<CU_Customer> _customers;
         private IList<SP_Spedition> _speditionTypes;
         private SP_Spedition _selectedSpedition;
-        private const decimal _VAT_PERCENTAGE_VALUE = 0.22m;
+        //private const decimal _VAT_PERCENTAGE_VALUE = 0.22m;
         private IN_Invoice _invoice;
         private String _customerNameToShow;
         private String _customerPhoneToShow;
@@ -463,12 +463,14 @@ namespace WarehouseElectric.ViewModels
         /// </summary>
         public void UpdatePrices()
         {
+            
             TotalNetto = 0;
             foreach (var product in ProductsCollection)
             {                
                 TotalNetto += product.AmmountOnInvoice * product.Product.PR_UNIT_PRICE;
+                TotalVat =  TotalNetto * product.Vat;
             }
-            TotalVat =  TotalNetto * _VAT_PERCENTAGE_VALUE;
+            
             TotalBrutto = TotalVat + TotalNetto;
             TotalBrutto = Decimal.Round(TotalBrutto.Value, 2);
             TotalNetto = Decimal.Round(TotalNetto.Value, 2);
@@ -539,9 +541,10 @@ namespace WarehouseElectric.ViewModels
                         IE_VAT_RATE = product.Vat,
                         IE_PR_ID = product.Product.PR_ID,
                         IE_IN_ID = invoice.IN_ID,
-                        IE_QUANTITY = product.AmmountOnInvoice
+                        IE_QUANTITY = product.AmmountOnInvoice,
+                        IE_TOTAL_VAT = product.Vat * product.AmmountOnInvoice * product.Product.PR_UNIT_PRICE
                     };
-                    invoiceItem.IE_TOTAL_VAT = _VAT_PERCENTAGE_VALUE * invoiceItem.IE_TOTAL_NETTO;
+                    //invoiceItem.IE_TOTAL_VAT = _VAT_PERCENTAGE_VALUE * invoiceItem.IE_TOTAL_NETTO;
                     invoiceItem.IE_TOTAL_BRUTTO = invoiceItem.IE_TOTAL_NETTO + invoiceItem.IE_TOTAL_VAT;
                     invoicesItemsManager.Add(invoiceItem);
 
