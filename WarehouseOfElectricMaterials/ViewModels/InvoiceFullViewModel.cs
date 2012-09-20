@@ -536,7 +536,7 @@ namespace WarehouseElectric.ViewModels
                         IE_LAST_MODIFIED = DateTime.Now,
                         IE_TOTAL_NETTO = product.AmmountOnInvoice * product.Product.PR_UNIT_PRICE,
                         IE_UNIT_PRICE = product.Product.PR_UNIT_PRICE,
-                        IE_VAT_RATE = _VAT_PERCENTAGE_VALUE,
+                        IE_VAT_RATE = product.Vat,
                         IE_PR_ID = product.Product.PR_ID,
                         IE_IN_ID = invoice.IN_ID,
                         IE_QUANTITY = product.AmmountOnInvoice

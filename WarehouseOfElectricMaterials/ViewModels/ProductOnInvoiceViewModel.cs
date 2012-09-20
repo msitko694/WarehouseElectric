@@ -16,7 +16,7 @@ namespace WarehouseElectric.ViewModels
 
         PR_Product _product;
         decimal _ammountOnInvoice;
-
+        decimal _vat;
         #endregion 
 
         #region "Properties"
@@ -51,6 +51,19 @@ namespace WarehouseElectric.ViewModels
                         OnAmmountChangeHandler();
                     }
                 }
+            }
+        }
+
+        public decimal Vat
+        {
+            get
+            {
+                return _vat;
+            }
+            set
+            {
+                _vat = value;
+                OnPropertyChanged("Vat");
             }
         }
 

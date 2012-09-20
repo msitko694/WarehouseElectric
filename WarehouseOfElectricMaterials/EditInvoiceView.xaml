@@ -29,6 +29,7 @@
                 <DataGridTextColumn Binding="{Binding Path=Product.PR_DEPOT_QUANTITY}" IsReadOnly="True" Header="Ilość" Width="Auto" />
                 <DataGridTextColumn Binding="{Binding Path=Product.PR_UNIT_PRICE}" IsReadOnly="True" Header="Cena jednostkowa" Width="Auto" />
                 <DataGridTextColumn Binding="{Binding Path=AmmountOnInvoice, Mode=TwoWay}" IsReadOnly="False" Header="Ilość na fakturze" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding Path=Vat, Mode=TwoWay}" IsReadOnly="False" Header="Stawka Vat" Width="Auto" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Razem NETTO:" Height="28" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2"  Name="labelTotalNetto" VerticalAlignment="Center"  />

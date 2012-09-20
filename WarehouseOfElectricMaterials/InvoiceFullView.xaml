@@ -30,6 +30,7 @@
                 <DataGridTextColumn Binding="{Binding Path=PR_Product.PR_NAME}" Header="Nazwa" Width="Auto" />
                 <DataGridTextColumn Binding="{Binding Path=IE_QUANTITY}" Header="Ilość" Width="Auto" />
                 <DataGridTextColumn Binding="{Binding Path=IE_UNIT_PRICE}" Header="Cena jednostkowa" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding Path=IE_VAT_RATE}" Header="Stawka Vat" Width="Auto" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Razem NETTO:" Height="28" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2"  Name="labelTotalNetto" VerticalAlignment="Center"  />
