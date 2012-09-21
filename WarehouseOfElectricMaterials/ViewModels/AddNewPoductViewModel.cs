@@ -9,9 +9,13 @@ using System.Windows.Controls;
 
 namespace WarehouseElectric.ViewModels
 {
+    public delegate void OnProductAddedHandler();
     class AddNewProductViewModel : ViewModelBase
     {
-         #region "Constructors"
+        #region events
+        public event OnProductAddedHandler onProductAddedHandler;
+        #endregion events
+        #region "Constructors"
         public AddNewProductViewModel(AddNewProductView addNewProductView, CategoryViewModel categoryViewModel)
         {
             _addNewProductView = addNewProductView;
@@ -374,6 +378,7 @@ namespace WarehouseElectric.ViewModels
                     
                     MessageBox.Show("Produkt został dodany. ");
                 }
+               onProductAddedHandler();
                 _addNewProductView.Close();
          }
         }

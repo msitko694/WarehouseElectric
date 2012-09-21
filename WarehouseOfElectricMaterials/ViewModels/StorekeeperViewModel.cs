@@ -610,9 +610,14 @@ namespace WarehouseElectric.ViewModels
 
         public void GoAddNewProduct(Object obj)
         {
-            AddNewProductView window = new AddNewProductView(-1);
+            AddNewProductView window = new AddNewProductView(-1,window_OnProductAdded);
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
+        }
+        public void window_OnProductAdded()
+        {
+            ProductsManager productsManager = new ProductsManager();
+            ListProductsToShow = (from product in productsManager.GetAll() select product).ToList<PR_Product>();
         }
         public void GoEditProduct(Object obj)
         {
@@ -639,7 +644,7 @@ namespace WarehouseElectric.ViewModels
                 invoicesItemsManager.Add(item);
                 */
              
-            AddNewProductView window = new AddNewProductView(product.PR_ID);
+            AddNewProductView window = new AddNewProductView(product.PR_ID,window_OnProductAdded);
             Application.Current.MainWindow = window;
             Application.Current.MainWindow.Show();
             }

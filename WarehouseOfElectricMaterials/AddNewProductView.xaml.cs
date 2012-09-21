@@ -18,7 +18,7 @@ namespace WarehouseElectric.ViewModels
     /// </summary>
     public partial class AddNewProductView : Window
     {
-        public AddNewProductView(Int32 flag)
+        public AddNewProductView(Int32 flag , OnProductAddedHandler onProductAddedHandler)
         {
             InitializeComponent();
             CategoryViewModel categoryViewModel = new CategoryViewModel(true);
@@ -27,8 +27,9 @@ namespace WarehouseElectric.ViewModels
             if(flag>0)
                 addNewProductViewModel = new AddNewProductViewModel(this, categoryViewModel, flag);
             else
-            addNewProductViewModel = new AddNewProductViewModel(this,categoryViewModel);
+                addNewProductViewModel = new AddNewProductViewModel(this,categoryViewModel);
              DataContext = addNewProductViewModel;
+             addNewProductViewModel.onProductAddedHandler += onProductAddedHandler;
         }
     }
 }
