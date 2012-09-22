@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WarehouseElectric.StorekeeperView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="StorekeeperView" Height="500" Width="670" 
+        Title="Panel Magazyniera" Height="500" Width="670" 
         xmlns:h="clr-namespace:WarehouseElectric.Helpers"
         h:HelpProvider.HelpString="Panel magazyniera">
     <Window.InputBindings>

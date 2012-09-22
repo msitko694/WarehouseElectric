@@ -663,6 +663,7 @@ namespace WarehouseElectric.ViewModels
                 {
                     productsManager.Delete(product);
                     MessageBox.Show("Produkt został usunięty.");
+                    window_OnProductAdded();
                 }
                 catch (SqlException)
                 {
