@@ -299,7 +299,7 @@ namespace WarehouseElectric.ViewModels
         #region "Methods"
         public void AddProduct ( Object obj)
         {
-            Int32 result,result3;
+            Int32 result;//,result3;
             Double result2;
             int selectedCategoryId=2;
           //sprawdzenie poprawności wpisania nazwy produktu

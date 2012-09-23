@@ -23,6 +23,10 @@ namespace WarehouseElectric.ViewModels
             CategoryViewModel = categoryViewModel;
             LackCategoryViewModel = lackCategoryViewModel;
 
+            UsersManager usersManager = new UsersManager();
+            US_User user = usersManager.Get(SessionHelper.userId);
+            UsernameText = user.US_USERNAME; //Nazwa zalogowanego użytkownika
+
             //ZAKŁADKA DOSTAWCY
             //lista dostawców do DataGrida
             SuppliersManager suppliersManager = new SuppliersManager();
@@ -70,6 +74,8 @@ namespace WarehouseElectric.ViewModels
         private RelayCommand _printOrderCommand;
         private String _findOrder;
         private RelayCommand _findOrderBySupplierCommand;
+        private String _usernameText; //nazwa zalogowanego użytkownika
+
         #endregion //Fields
         #region "Properties"
 
@@ -505,6 +511,18 @@ namespace WarehouseElectric.ViewModels
             {
                 _selectedOrderToEdit = value;
                 OnPropertyChanged("SelectedOrderToEdit");
+            }
+        }
+        public String UsernameText
+        {
+            get
+            {
+                return _usernameText;
+            }
+            set
+            {
+                _usernameText = value;
+                OnPropertyChanged("UsernameText");
             }
         }
 

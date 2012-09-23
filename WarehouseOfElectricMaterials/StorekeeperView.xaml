@@ -10,7 +10,7 @@
     <Grid Height="450" Width="652">
         <Button h:HelpProvider.HelpString="Przycisk wylogowujący użytkownika" Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Right" Margin="0,12,12,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
         <Button h:HelpProvider.HelpString="Przycisk zmieniający panel bez wylogowania użytkownika" Command="{Binding Path=ChoosePanelCommand}" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
-        <Label Content="Użytkownik:" Height="25" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" Width="74" />
+        <Label Content="Użytkownik:" Height="27" HorizontalAlignment="Left" Margin="12,10,0,0" Name="label1" VerticalAlignment="Top" Width="74" />
         <TabControl Height="394" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControl1" VerticalAlignment="Top" Width="629">
             <TabItem h:HelpProvider.HelpString="Zakładka umożliwiająca przeglądanie produktów" Background="#FFF5893F" Header="Magazyn" Name="tabItemStore">
                 <Grid Background="#FFDEDEDE">
@@ -130,5 +130,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="83,14,0,0" Name="usernameTextBlock" Text="{Binding Path=UsernameText}" VerticalAlignment="Top" Width="108" />
     </Grid>
 </Window>

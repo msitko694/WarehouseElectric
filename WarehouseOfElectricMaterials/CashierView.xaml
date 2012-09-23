@@ -7,7 +7,7 @@
     <Grid Height="450" Width="652">
         <Button h:HelpProvider.HelpString="Przycisk wylogowuje bieżącego użytkownika" Command="{Binding LogOutCommand}" Content="Wyloguj" Height="25" HorizontalAlignment="Left" Margin="533,12,0,0" Name="buttonLogOut" VerticalAlignment="Top" Width="107" />
         <Button h:HelpProvider.HelpString="Przycisk umożliwiający zmienie panelu bez wylogowywania bieżącego użytkownika" Command="{Binding ChoosePanelCommand}" Content="Zmień panel" Height="25" HorizontalAlignment="Left" Margin="422,12,0,0" Name="buttonChangePanel" VerticalAlignment="Top" Width="105" />
-        <Label Content="Użytkownik:" Height="25" HorizontalAlignment="Left" Margin="12,12,0,0" Name="labelUserName" VerticalAlignment="Top" Width="74" />
+        <Label Content="Użytkownik:" Height="27" HorizontalAlignment="Left" Margin="12,10,0,0" Name="labelUserName" VerticalAlignment="Top" Width="74" />
         <TabControl Height="394" HorizontalAlignment="Left" Margin="12,56,0,0" Name="tabControlCashierView" VerticalAlignment="Top" Width="629">
             <TabItem h:HelpProvider.HelpString="Zakładka faktury umożliwia zarządzanie fakturami" Header="Faktury" Name="tabItemInvoices" Background="#FF4BE255">
                 <Grid Background="#FFDEDEDE" Height="360" Width="622">
@@ -89,5 +89,6 @@
                 <Grid Background="#FFDEDEDE" />
             </TabItem>
         </TabControl>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="83,16,0,0" Name="usernameTextBlock" Text="{Binding Path=UsernameText}" VerticalAlignment="Top" Width="108" />
     </Grid>
 </Window>

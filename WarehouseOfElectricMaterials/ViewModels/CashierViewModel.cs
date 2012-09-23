@@ -17,6 +17,11 @@ namespace WarehouseElectric.ViewModels
         public CashierViewModel(CashierView cashierView)
         {
             _customersManager = new CustomersManager();
+
+            UsersManager usersManager = new UsersManager();
+            US_User user = usersManager.Get(SessionHelper.userId);
+            UsernameText = user.US_USERNAME; //Nazwa zalogowanego użytkownika
+
             // część "Klienci" - docelowo do przeniesienia w dogodniejsze miejsce   
             IsEnabledButtonOpenCustomerFullView = false;
             _cashierView = cashierView;
@@ -52,6 +57,7 @@ namespace WarehouseElectric.ViewModels
         private IList<PC_ProductCategory> _productCategoriesToShow;
         private IList<IN_Invoice> _invoicesListToShow;
         private IN_Invoice _selectedInvoice;
+        private String _usernameText; //nazwa zalogowanego użytkownika
         #endregion //Fields
 
         #region "Properties"
@@ -353,6 +359,20 @@ namespace WarehouseElectric.ViewModels
                 OnPropertyChanged("ProductCategoriesToShow");
             }
         }
+
+        public String UsernameText
+        {
+            get
+            {
+                return _usernameText;
+            }
+            set
+            {
+                _usernameText = value;
+                OnPropertyChanged("UsernameText");
+            }
+        }
+
         #endregion //Properties
 
         #region "Methods"

@@ -8,8 +8,6 @@ namespace WarehouseElectric.ViewModels
 {
     class ProductOnOrderViewModel : ViewModelBase
     {
-        public delegate void OnQuantityChange();
-        public OnQuantityChange OnQuantityChangeHandler;
 
         #region "Fields"
 
@@ -44,10 +42,6 @@ namespace WarehouseElectric.ViewModels
                 
                     _quantityOnOrder = value;
                     OnPropertyChanged("QuantityOnOrder");
-                    if (OnQuantityChangeHandler != null)
-                    {
-                        OnQuantityChangeHandler();
-                    }
                 
             }
         }
