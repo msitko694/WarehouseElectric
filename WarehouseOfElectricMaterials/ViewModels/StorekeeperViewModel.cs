@@ -591,9 +591,9 @@ namespace WarehouseElectric.ViewModels
         {
             using (ProductsManager productsManager = new ProductsManager())
             {
-                if (CategoryViewModel.GetSelectedCategory().ProductCategory != null)
+                if (LackCategoryViewModel.GetSelectedCategory().ProductCategory != null)
                 {
-                    int selectedCategoryId = CategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
+                    int selectedCategoryId = LackCategoryViewModel.GetSelectedCategory().ProductCategory.PC_ID;
                     ListLackProductsToShow = (from product in productsManager.GetAllFromCategory(selectedCategoryId)
                                               where product.PR_DEPOT_QUANTITY < 20
                                               select product).ToList<PR_Product>();
